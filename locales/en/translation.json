@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "logout": "Logout",
+    "settings": "Settings"
+  },
+  "menu": {
+    "overview": "Overview",
+    "analytics": "Analytics",
+    "visitorsAnalytics": "Visitors",
+    "behaviourAnalytics": "Behaviour",
+    "acquisitionAnalytics": "Acquisition",
+    "ecommerceAnalytics": "Ecommerce",
+    "realtimeAnalytics": "Real-Time",
+    "catalog": "Catalog",
+    "listAllFeeds": "List All Feeds",
+    "createNewFeed": "Create New Feed",
+    "pixels": "Pixels",
+    "listAllPixels": "List All Pixels",
+    "addNewPixel": "Add New Pixel",
+    "pixelSettings": "Pixel Settings",
+    "tools": "Tools",
+    "cookieBar": "Cookie Bar"
+  },
+  "language": {
+    "selectLanguage": "Select Language",
+    "names": {
+      "en": "English",
+      "pt-BR": "Portuguese",
+      "fr": "French",
+      "es": "Spanish",
+      "it": "Italian",
+      "de": "German"
+    }
+  },
+  "login": {
+    "signInWith": "Sign in with",
+    "orSignInWithEmail": "Or sign in with email",
+    "email": "Email",
+    "password": "Password",
+    "loginButton": "Sign In",
+    "newUser": "New user?",
+    "registerHere": "Register here"
+  },
+  "register": {
+    "haveReferralCode": "Have a referral code?",
+    "pageTitle": "Register",
+    "phoneNumber": "Phone Number",
+    "signUpWith": "Sign up with",
+    "orSignUpWithEmail": "Or sign up with email",
+    "fullName": "Full Name",
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "createAccount": "Create Account",
+    "termsAgreement": "I agree to the",
+    "terms": "Terms of Service",
+    "and": "and",
+    "privacy": "Privacy Policy",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginHere": "Login here",
+    "passwordRequirements": {
+      "length": "At least 8 characters",
+      "uppercase": "At least one uppercase letter",
+      "lowercase": "At least one lowercase letter",
+      "number": "At least one number"
+    },
+    "allFieldsRequired": "All fields are required",
+    "passwordNotMeetRequirements": "Password does not meet the requirements",
+    "mustAgreeToTerms": "You must agree to the Terms of Service and Privacy Policy",
+    "emailAlreadyRegistered": "Email already registered",
+    "registrationSuccessful": "Registration successful! Creating your account...",
+    "creatingAccount": "Creating Account...",
+    "connecting": "Connecting...",
+    "loginSuccessful": "login successful! Redirecting..."
+  }
+}

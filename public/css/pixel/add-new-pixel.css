@@ -1,0 +1,60 @@
+@media (max-width: 768px) {
+  .pixel-card {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+  }
+
+  .pixel-card:active {
+    background-color: var(--surface-hover);
+    transform: translateY(0) !important;
+  }
+
+  .pixel-modal {
+    position: fixed;
+    z-index: 2000;
+  }
+
+  .pixel-modal__content {
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 15px;
+    width: calc(100% - 30px);
+  }
+
+  .pixel-form__input,
+  .pixel-form__btn,
+  .pixel-form select {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .pixel-modal--show {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
+.pixel-card__icon {
+  background-color: transparent !important;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+  width: 42px;
+  height: 42px;
+}
+
+.pixel-card:hover .pixel-card__icon {
+  border-color: var(--primary);
+}
+
+.pixel-card__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

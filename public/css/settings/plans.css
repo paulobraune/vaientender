@@ -1,0 +1,549 @@
+      .country-selector-container {
+        display: flex;
+        justify-content: center;
+      }
+      
+      .country-selector-card {
+        background-color: var(--surface);
+        border-radius: 1rem;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        max-width: 600px;
+        width: 100%;
+      }
+      
+      .country-card-header {
+        padding: 1.5rem;
+        background-color: var(--surface-accent);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      
+      .country-card-icon {
+        width: 48px;
+        height: 48px;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+      
+      .country-card-header h4 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+      
+      .country-card-body {
+        padding: 1.5rem;
+      }
+      
+      .country-card-description {
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+      
+      .country-form-group {
+        margin-bottom: 1.5rem;
+      }
+      
+      .country-form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        font-size: 0.9375rem;
+      }
+      
+      .select-wrapper {
+        position: relative;
+      }
+      
+      .select-wrapper select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border);
+        background-color: var(--surface-input);
+        color: var(--text-primary);
+        border-radius: 0.5rem;
+        font-size: 0.9375rem;
+        appearance: none;
+        padding-right: 2.5rem;
+        transition: all 0.2s ease;
+      }
+      
+      .select-wrapper select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--primary-shadow);
+      }
+      
+      .select-wrapper i {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+        pointer-events: none;
+      }
+      
+      .country-form-actions {
+        display: flex;
+        justify-content: center;
+      }
+      
+      /* Plans layout */
+      .plans-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+      
+      /* Plan Card */
+      .plan-card {
+        position: relative;
+        background-color: var(--surface);
+        border-radius: 1rem;
+        border: 1px solid var(--border);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      }
+      
+      .plan-active {
+        border: 2px solid var(--primary);
+        transform: scale(1.02);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+      
+      .plan-recommended {
+        border: 2px solid #3B82F6;
+        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);
+      }
+      
+      .plan-card:not(.plan-active):hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      }
+      
+      .plan-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      
+      .current-badge {
+        background-color: var(--primary);
+        color: white;
+      }
+      
+      .recommended-badge {
+        background-color: #3B82F6;
+        color: white;
+      }
+      
+      /* Plan header */
+      .plan-header {
+        text-align: center;
+        padding: 2rem 1.5rem 1.5rem;
+        border-bottom: 1px dashed var(--border);
+      }
+      
+      .plan-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 0 1rem;
+      }
+      
+      .plan-price {
+        display: inline-flex;
+        align-items: baseline;
+      }
+      
+      .price-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+      
+      .price-period {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin-left: 0.25rem;
+      }
+      
+      /* Plan features */
+      .highlight-feature {
+        padding: 1rem 1.5rem;
+        background-color: var(--surface-accent);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      
+      .highlight-feature i {
+        font-size: 1.5rem;
+        color: var(--primary);
+      }
+      
+      .feature-detail {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .feature-label {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+      
+      .feature-value {
+        font-weight: 600;
+      }
+      
+      .plan-features {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .plan-feature {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      
+      .excess-feature {
+        margin-bottom: 0.5rem;
+      }
+      
+      .placeholder-feature {
+        margin-bottom: 0.5rem;
+        height: 33px; /* Approximate height of excess-feature for spacing alignment */
+        visibility: hidden;
+      }
+      
+      .plan-feature i {
+        color: var(--primary);
+        font-size: 1.1rem;
+        flex-shrink: 0;
+      }
+      
+      .plan-recommended .plan-feature i {
+        color: #3B82F6;
+      }
+      
+      .feature-spacer {
+        height: 1px;
+        width: 100%;
+      }
+      
+      /* Plan action */
+      .plan-action {
+        padding: 1.5rem;
+        border-top: 1px dashed var(--border);
+        text-align: center;
+        margin-top: auto;
+      }
+      
+      .plan-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.5rem;
+        width: 100%;
+        border-radius: 0.5rem;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        transition: all 0.25s ease;
+        border: none;
+      }
+      
+      .choose-plan {
+        background-color: var(--primary);
+        color: white;
+      }
+      
+      .choose-plan:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+      
+      .current-plan {
+        background-color: var(--surface-accent);
+        color: var(--text-primary);
+        border: 1px solid var(--border);
+        cursor: not-allowed;
+      }
+      
+      .plan-recommended .choose-plan {
+        background-color: #3B82F6;
+      }
+      
+      .plan-recommended .choose-plan:hover {
+        background-color: #2563EB;
+      }
+      
+      /* FAQ Section */
+      .plans-faq-section {
+        margin-top: 3rem;
+      }
+      
+      .plans-faq-section h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+      
+      .plans-faq-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+      }
+      
+      .faq-item {
+        background-color: var(--surface);
+        border-radius: 0.75rem;
+        border: 1px solid var(--border);
+        padding: 1.5rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .faq-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+      }
+      
+      .faq-question {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+      
+      .faq-question i {
+        color: var(--primary);
+        font-size: 1.25rem;
+        flex-shrink: 0;
+      }
+      
+      .faq-answer {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        font-size: 0.9375rem;
+      }
+      
+      /* Confirmation Modal */
+      .plan-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1050;
+        padding: 1rem;
+      }
+      
+      .plan-modal.show {
+        display: flex;
+      }
+      
+      .plan-modal-content {
+        background-color: var(--surface);
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 500px;
+        overflow: hidden;
+        animation: modal-slide-up 0.3s ease forwards;
+      }
+      
+      @keyframes modal-slide-up {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .plan-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid var(--border);
+        background-color: var(--surface-accent);
+      }
+      
+      .plan-modal-title {
+        font-size: 1.25rem;
+        margin: 0;
+        font-weight: 600;
+      }
+      
+      .plan-modal-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: none;
+        background-color: transparent;
+        color: var(--text-secondary);
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      
+      .plan-modal-close:hover {
+        background-color: var(--surface-hover);
+        color: var(--text-primary);
+      }
+      
+      .plan-modal-body {
+        padding: 1.5rem;
+      }
+      
+      .plan-confirmation-details {
+        display: flex;
+        gap: 1.25rem;
+      }
+      
+      .confirmation-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: rgba(16, 185, 129, 0.1);
+        color: #10B981;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+      
+      .confirmation-info h4 {
+        font-size: 1.125rem;
+        margin: 0 0 0.5rem;
+        font-weight: 600;
+      }
+      
+      .confirmation-price {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+      }
+      
+      .confirmation-message {
+        color: var(--text-secondary);
+        margin: 0;
+      }
+      
+      .plan-modal-footer {
+        padding: 1.25rem 1.5rem;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+      }
+      
+      .plan-modal-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border: none;
+        font-size: 0.9375rem;
+      }
+      
+      .plan-modal-btn-primary {
+        background-color: var(--primary);
+        color: white;
+      }
+      
+      .plan-modal-btn-primary:hover {
+        background-color: var(--primary-dark);
+      }
+      
+      .plan-modal-btn-secondary {
+        background-color: var(--surface-accent);
+        color: var(--text-primary);
+        border: 1px solid var(--border);
+      }
+      
+      .plan-modal-btn-secondary:hover {
+        background-color: var(--surface-hover);
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+      
+      /* Toast notifications */
+      #plans-toast-container {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 1050;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .plans-container {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        
+        .plans-faq-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .plan-modal-content {
+          max-width: calc(100% - 2rem);
+        }
+        
+        .plan-confirmation-details {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        
+        .confirmation-icon {
+          margin-bottom: 0.5rem;
+        }
+      }

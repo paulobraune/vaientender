@@ -1,0 +1,165 @@
+  .card-body { height: auto !important; }
+  .chart-container { height: auto !important; }
+  .chart-card { margin-bottom: 1.5rem; height: auto; }
+  .geo-map-container { height: 380px; width: 100%; position: relative; }
+  #map { height: 100%; width: 100%; border-radius: 0.5rem; z-index: 1; }
+
+  .apexcharts-legend-text { display: none !important; }
+  .apexcharts-xaxis-title-text { display: none !important; }
+  .apexcharts-toolbar { display: none !important; }
+
+  .country-marker {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    border: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    will-change: transform, opacity;
+    cursor: pointer;
+  }
+  .country-marker:hover {
+    transform: scale(1.05);
+    opacity: 0.95 !important;
+  }
+  
+  #geoViewTypeRadioGroup {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: var(--surface-accent);
+  }
+  
+  #geoViewTypeRadioGroup label {
+    padding: 0.4rem 0.75rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0;
+  }
+  
+  #geoViewTypeRadioGroup label:hover {
+    color: var(--text-primary);
+  }
+  
+  .btn-check:checked + label {
+    background-color: var(--primary);
+    color: white !important;
+  }
+  
+  .geo-filter-group { 
+    display: flex; 
+    align-items: center; 
+    margin-right: 0; 
+  }
+  
+  .geo-filter-group label { 
+    margin-right: 8px; 
+    margin-bottom: 0; 
+    font-size: 0.9rem; 
+    color: var(--text-secondary); 
+  }
+  
+  .list-container .list-group-item { 
+    padding: 0.75rem; 
+    border-bottom: 1px solid var(--border) !important;
+  }
+  
+  .list-container .fi { 
+    font-size: 1.2em; 
+  }
+  
+  .scrollable-list { 
+    max-height: 420px; 
+    overflow-y: auto; 
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
+  
+  .scrollable-list::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+  }
+  
+  .scrollable-list::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+  
+  .scrollable-list::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: var(--scrollbar-width);
+  }
+  
+  .stats-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--surface-accent);
+    padding: 0.25rem 0.65rem;
+    border-radius: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+  
+  .stats-badge i {
+    margin-right: 0.35rem;
+    font-size: 0.7rem;
+    color: var(--primary);
+  }
+  
+  .list-group-item:last-child {
+    border-bottom: none !important;
+  }
+  
+  @media (max-width: 768px) {
+    .geo-filter-group { 
+      margin-bottom: 10px; 
+      width: 100%; 
+      justify-content: center; 
+    }
+    
+    .card-header .d-flex.align-items-center.justify-content-between > .d-flex.align-items-center {
+      width: 100%; 
+      margin-top: 0.5rem;
+    }
+    
+    .list-group-item {
+      padding: 0.75rem 0.5rem;
+    }
+    
+    .list-group-item .d-flex.justify-content-between {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+    #browserMetricsList .list-group-item .fw-semibold,
+    #deviceMetricsList .list-group-item .fw-semibold {
+      display: inline-flex;
+      align-items: center;
+    }
+    
+    .list-group-item .d-flex.flex-wrap.gap-2 {
+      width: 100%;
+      justify-content: flex-start;
+    }
+    
+    .stats-badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+    }
+    
+    #geoDistributionList, #browserMetricsList, #deviceMetricsList {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .card-header {
+      text-align: left;
+    }
+  }

@@ -1,0 +1,49 @@
+.card-body {
+  height: auto !important;
+}
+.chart-container {
+  height: auto !important;
+}
+.chart-card {
+  margin-bottom: 1.5rem;
+  height: auto;
+}
+.col-lg-12 {
+  padding: 0px !important;
+}
+.col-12 {
+  padding: 0px !important;
+}
+.col-lg-6.col-md-6.left {
+  padding-left: 0rem;
+  padding-right: 0.5rem;
+  padding-top: 0rem;
+  padding-bottom: 1rem;
+}
+.col-lg-6.col-md-6.right {
+  padding-left: 0.5rem;
+  padding-right: 0rem;
+  padding-top: 0rem;
+  padding-bottom: 1rem;
+}
+@media (max-width: 48rem) {
+.row {
+gap: 1.5rem;
+}
+.col-lg-6.col-md-6.left {
+  padding: 0px;
+}
+.col-lg-6.col-md-6.right {
+  padding: 0px;
+}
+}
+
+/* Hide xaxis title */
+.apexcharts-xaxis-title-text {
+display: none !important;
+}
+
+/* Hide toolbar */
+.apexcharts-toolbar {
+display: none !important;
+}

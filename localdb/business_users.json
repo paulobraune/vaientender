@@ -1,0 +1,31 @@
+{
+  "business_users": [
+    {
+      "_id": "bus_1745350525783_3e874537",
+      "userId": "usr_1689348762",
+      "businessId": "bus_1745350525782_799bb191",
+      "role": "admin",
+      "status": "active",
+      "createdAt": "2025-04-22T19:35:25.783Z",
+      "updatedAt": "2025-04-22T19:35:25.783Z"
+    },
+    {
+      "_id": "bus_1745464642951_df72d8b4",
+      "userId": "usr_1689348762",
+      "businessId": "bus_1745464642950_5abc56f5",
+      "role": "admin",
+      "status": "active",
+      "createdAt": "2025-04-24T03:17:22.951Z",
+      "updatedAt": "2025-04-24T03:17:22.951Z"
+    },
+    {
+      "_id": "bus_1745464870290_745bcfda",
+      "userId": "usr_1689348762",
+      "businessId": "bus_1745464870289_db098eed",
+      "role": "admin",
+      "status": "active",
+      "createdAt": "2025-04-24T03:21:10.290Z",
+      "updatedAt": "2025-04-24T03:21:10.290Z"
+    }
+  ]
+}

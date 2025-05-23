@@ -1,0 +1,16 @@
+{
+  "business_settings": [
+    {
+      "businessId": "bus_1745350525782_799bb191",
+      "completedSteps": [
+        "step1",
+        "step2",
+        "step3",
+        "step4"
+      ],
+      "createdAt": "2025-05-22T15:02:45.965Z",
+      "updatedAt": "2025-05-22T15:02:45.965Z",
+      "_id": "bus_1747926165965_ed87f572"
+    }
+  ]
+}

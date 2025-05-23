@@ -1,0 +1,46 @@
+{
+  "invoices": [
+    {
+      "_id": "inv_1745380149204_f2d8e1a3",
+      "businessId": "bus_1745350525782_799bb191",
+      "amount": 197.00,
+      "currency": "BRL",
+      "plan": "pro",
+      "status": "paid",
+      "createdAt": "2025-03-22T12:35:25.782Z",
+      "paidAt": "2025-03-22T12:38:42.123Z",
+      "dueDate": "2025-03-25T12:35:25.782Z",
+      "period": "1 mês (22/03/2025 - 21/04/2025)",
+      "description": "Assinatura Tracklead - Plano Pro",
+      "invoiceNumber": "TL-202503-001"
+    },
+    {
+      "_id": "inv_1745383749204_a5c7d9b2",
+      "businessId": "bus_1745350525782_799bb191",
+      "amount": 197.00,
+      "currency": "BRL",
+      "plan": "pro",
+      "status": "paid",
+      "createdAt": "2025-04-22T12:35:25.782Z",
+      "paidAt": "2025-04-22T12:39:42.123Z",
+      "dueDate": "2025-04-25T12:35:25.782Z",
+      "period": "1 mês (22/04/2025 - 21/05/2025)",
+      "description": "Assinatura Tracklead - Plano Pro",
+      "invoiceNumber": "TL-202504-002"
+    },
+    {
+      "_id": "inv_1744463749205_r7e4g2k9",
+      "businessId": "bus_1745350525782_799bb191",
+      "amount": 97.00,
+      "currency": "BRL",
+      "plan": "starter",
+      "status": "paid",
+      "createdAt": "2025-02-22T12:35:25.782Z",
+      "paidAt": "2025-02-22T12:40:42.123Z",
+      "dueDate": "2025-02-25T12:35:25.782Z",
+      "period": "1 mês (22/02/2025 - 21/03/2025)",
+      "description": "Assinatura Tracklead - Plano Starter",
+      "invoiceNumber": "TL-202502-001"
+    }
+  ]
+}

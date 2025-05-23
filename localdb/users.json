@@ -1,0 +1,27 @@
+{
+  "users": [
+    {
+      "_id": "usr_1689348762",
+      "name": "Admin Paulo",
+      "email": "admin@tracklead.com",
+      "password": "admin123",
+      "role": "admin",
+      "active": true,
+      "createdAt": "2023-07-14T10:45:23.156Z",
+      "updatedAt": "2025-04-23T03:46:24.681Z",
+      "phone": "+55(21) 96533-9912"
+    },
+    {
+      "_id": "use_1747305980004_9ffe5891",
+      "name": "Paulo Braune Ribeiro",
+      "email": "paulobraffffune@gmail.com",
+      "password": "admin123FFF",
+      "phone": "+5555219653399",
+      "referralCode": "",
+      "role": "user",
+      "active": true,
+      "createdAt": "2025-05-15T10:46:20.004Z",
+      "updatedAt": "2025-05-15T10:46:20.004Z"
+    }
+  ]
+}

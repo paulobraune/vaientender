@@ -1,0 +1,72 @@
+{
+  "nav": {
+    "logout": "Sair",
+    "settings": "Configurações"
+  },
+  "menu": {
+    "overview": "Visão Geral",
+    "analytics": "Análises",
+    "visitorsAnalytics": "Visitantes",
+    "behaviourAnalytics": "Comportamento",
+    "acquisitionAnalytics": "Aquisição",
+    "ecommerceAnalytics": "Ecommerce",
+    "realtimeAnalytics": "Tempo Real",
+    "catalog": "Catálogo",
+    "listAllFeeds": "Listar Feeds",
+    "createNewFeed": "Criar Novo Feed",
+    "pixels": "Pixels",
+    "listAllPixels": "Listar Pixels",
+    "addNewPixel": "Adicionar Pixel",
+    "pixelSettings": "Configurações de Pixel",
+    "tools": "Ferramentas",
+    "cookieBar": "Barra de Cookies"
+  },
+  "language": {
+    "selectLanguage": "Selecionar Idioma",
+    "names": {
+      "en": "Inglês",
+      "pt-BR": "Português",
+      "fr": "Francês",
+      "es": "Espanhol",
+      "it": "Italiano",
+      "de": "Alemão"
+    }
+  },
+  "login": {
+    "signInWith": "Entrar com",
+    "orSignInWithEmail": "Ou entrar com e-mail",
+    "email": "E-mail",
+    "password": "Senha",
+    "loginButton": "Entrar",
+    "newUser": "Novo usuário?",
+    "registerHere": "Registre-se aqui"
+  },
+  "register": {
+    "signUpWith": "Registrar com",
+    "orSignUpWithEmail": "Ou registrar com e-mail",
+    "fullName": "Nome Completo",
+    "emailAddress": "Endereço de E-mail",
+    "password": "Senha",
+    "createAccount": "Criar Conta",
+    "termsAgreement": "Eu concordo com os",
+    "terms": "Termos de Serviço",
+    "and": "e",
+    "privacy": "Política de Privacidade",
+    "alreadyHaveAccount": "Já tem uma conta?",
+    "loginHere": "Entre aqui",
+    "passwordRequirements": {
+      "length": "Pelo menos 8 caracteres",
+      "uppercase": "Pelo menos uma letra maiúscula",
+      "lowercase": "Pelo menos uma letra minúscula",
+      "number": "Pelo menos um número"
+    },
+    "allFieldsRequired": "Todos os campos são obrigatórios",
+    "passwordNotMeetRequirements": "A senha não atende aos requisitos",
+    "mustAgreeToTerms": "Você deve concordar com os Termos de Serviço e Política de Privacidade",
+    "emailAlreadyRegistered": "E-mail já registrado",
+    "registrationSuccessful": "Registro bem-sucedido! Criando sua conta...",
+    "creatingAccount": "Criando Conta...",
+    "connecting": "Conectando...",
+    "loginSuccessful": "login bem-sucedido! Redirecionando..."
+  }
+}

@@ -1,0 +1,48 @@
+.card-body {
+  height: auto !important;
+}
+.chart-container {
+  height: auto !important;
+}
+.chart-card {
+  margin-bottom: 1.5rem;
+  height: auto;
+}
+.col-lg-12 {
+  padding: 0px !important;
+}
+.col-12 {
+  padding: 0px !important;
+}
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+.metrics-row.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+.analytics-pill-filter button.active {
+  background-color: var(--primary);
+  color: white;
+}
+
+.analytics-pill-filter button.secondary-active {
+  background-color: var(--primary-dark);
+  color: white;
+}
+
+@keyframes button-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.button-pulse {
+  animation: button-pulse 0.3s ease-in-out;
+}

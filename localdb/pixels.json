@@ -1,0 +1,24 @@
+{
+  "pixels": [
+    {
+      "_id": "pix_1746869619800_c0175e70",
+      "type": "google",
+      "name": "Google Ads Pixel 01",
+      "id": "pixelid",
+      "businessId": "bus_1745350525782_799bb191",
+      "active": true,
+      "short": "ac001b",
+      "merchantId": "fghfgh",
+      "labels": {
+        "purchase": "",
+        "initiateCheckout": "",
+        "addToCart": "",
+        "viewItem": "",
+        "viewCategory": "",
+        "generateLead": ""
+      },
+      "createdAt": "2025-05-10T09:33:39.800Z",
+      "updatedAt": "2025-05-10T09:33:39.800Z"
+    }
+  ]
+}

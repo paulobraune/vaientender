@@ -1,0 +1,55 @@
+#facebook-single-pixel-status .badge.bg-warning {
+  background-color: #fd7e14 !important;
+  color: #fff;
+}
+
+.settings-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .settings-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.color-picker-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-color-picker {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: none;
+}
+
+.form-color-picker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-color-picker::-webkit-color-swatch {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.settings-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.settings-card__content {
+  flex-grow: 1;
+}
