@@ -1,0 +1,144 @@
+<div class="sidebar" id="sidebarMenu">
+  <div class="sidebar-content">
+    <% 
+    // Check if Getting Started should be hidden
+    const hideGettingStarted = locals.activeBusiness && activeBusiness.hideGettingStarted === true;
+    %>
+    <% if (!hideGettingStarted) { %>
+    <div class="nav-header" data-bs-toggle="collapse" href="#overviewSubmenu">
+      <span>Getting Started</span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="collapse show" id="overviewSubmenu">
+      <a class="nav-link" href="/overview">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>Getting Started</span>
+      </a>
+    </div>
+    <% } %>
+
+    <div class="nav-header" data-bs-toggle="collapse" href="#analyticsSubmenu">
+      <span><%= t('menu.analytics') %></span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="collapse show" id="analyticsSubmenu">
+      <a class="nav-link" href="/analytics/realtime">
+        <i class="fas fa-bolt"></i>
+        <span>Real-Time</span>
+      </a>
+      <a class="nav-link" href="/analytics/visitors">
+        <i class="fas fa-users"></i>
+        <span><%= t('menu.visitorsAnalytics') %></span>
+      </a>
+      <a class="nav-link" href="/analytics/behaviour">
+        <i class="fas fa-chart-line"></i>
+        <span><%= t('menu.behaviourAnalytics') %></span>
+      </a>
+      <a class="nav-link" href="/analytics/acquisition">
+        <i class="fas fa-bullseye"></i>
+        <span><%= t('menu.acquisitionAnalytics') %></span>
+      </a>
+      <a class="nav-link" href="/analytics/ecommerce">
+        <i class="fas fa-shopping-cart"></i>
+        <span><%= t('menu.ecommerceAnalytics') %></span>
+      </a>
+    </div>
+
+    <div class="nav-header" data-bs-toggle="collapse" href="#catalogSubmenu">
+      <span><%= t('menu.catalog') %></span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="collapse show" id="catalogSubmenu">
+      <a class="nav-link" href="/catalog/products">
+        <i class="fas fa-box"></i>
+        <span>Products</span>
+      </a>
+      <a class="nav-link" href="/catalog/taxonomy-finder">
+        <i class="fas fa-search"></i>
+        <span>Taxonomy Finder</span>
+      </a>
+      <a class="nav-link" href="/catalog/list-all-feeds">
+        <i class="fas fa-rss"></i>
+        <span><%= t('menu.listAllFeeds') %></span>
+      </a>
+      <a class="nav-link" href="/catalog/create-new-feed">
+        <i class="fas fa-plus-circle"></i>
+        <span><%= t('menu.createNewFeed') %></span>
+      </a>
+    </div>
+
+    <div class="nav-header" data-bs-toggle="collapse" href="#pixelsSubmenu">
+      <span><%= t('menu.pixels') %></span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="collapse show" id="pixelsSubmenu">
+      <a class="nav-link" href="/pixels/list-all-pixels">
+        <i class="fas fa-tags"></i>
+        <span><%= t('menu.listAllPixels') %></span>
+      </a>
+      <a class="nav-link" href="/pixels/add-new-pixel">
+        <i class="fas fa-plus-square"></i>
+        <span><%= t('menu.addNewPixel') %></span>
+      </a>
+      <a class="nav-link" href="/pixels/pixel-settings">
+        <i class="fas fa-sliders-h"></i>
+        <span><%= t('menu.pixelSettings') %></span>
+      </a>
+    </div>
+
+    <div class="nav-header" data-bs-toggle="collapse" href="#toolsSubmenu">
+      <span><%= t('menu.tools') %></span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="collapse show" id="toolsSubmenu">
+      <a class="nav-link" href="/tools/cookie-bar">
+        <i class="fas fa-cookie-bite"></i>
+        <span><%= t('menu.cookieBar') %></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="d-md-none mobile-controls-bottom">
+    <div class="p-3">
+      <button id="business-selector-btn-mobile" class="mobile-control-btn w-100 mb-2 text-start">
+        <i class="fas fa-briefcase"></i>
+        <span id="current-business-name-mobile"><%= locals.activeBusiness ? activeBusiness.name : 'My Business' %></span>
+      </button>
+
+      <div class="d-flex justify-content-between mb-2">
+        <button id="mobile-theme-toggle" class="mobile-control-btn theme-toggle">
+          <i class="bi bi-mask"></i>
+        </button>
+        <button id="mobile-language-selector-btn" class="mobile-control-btn">
+          <% if (i18n.language === 'en') { %>
+            <div class="flag uk-flag"></div>
+          <% } else if (i18n.language === 'pt-BR') { %>
+            <div class="flag br-flag"></div>
+          <% } else if (i18n.language === 'fr') { %>
+            <div class="flag fr-flag"></div>
+          <% } else if (i18n.language === 'es') { %>
+            <div class="flag es-flag"></div>
+          <% } else if (i18n.language === 'it') { %>
+            <div class="flag it-flag"></div>
+          <% } else if (i18n.language === 'de') { %>
+            <div class="flag de-flag"></div>
+          <% } %>
+        </button>
+        <a href="/settings/account" class="mobile-control-btn">
+          <i class="fas fa-user"></i>
+        </a>
+        <a href="/logout" class="mobile-control-btn">
+          <i class="fas fa-sign-out-alt"></i>
+        </a>
+      </div>
+    </div>
+    <hr class="mobile-separator">
+  </div>
+
+  <div class="settings-menu">
+    <a class="nav-link" href="/settings">
+      <i class="fas fa-cog"></i>
+      <span><%= t('nav.settings') %></span>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,256 @@
+<%
+  const userLanguage = i18n?.language || 'en';
+%>
+
+<%- include("../../dashboard-layout", {
+  pageTitle: "Products Catalog",
+  body: `
+    <link rel="stylesheet" href="/css/catalog/products.css">
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">Products Catalog</h1>
+      <p class="page-subtitle">Manage your products catalog for advertising platforms</p>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+        <h5 class="card-title mb-0">Products</h5>
+        <div class="d-flex gap-2 mt-2 mt-md-0">
+          <div class="input-group catalog-search">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search products...">
+            <button class="btn btn-outline-primary" type="button" id="searchButton">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+          <button class="btn btn-primary" id="refreshButton">
+            <i class="fas fa-sync-alt"></i> Sync
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar mx-3 mt-3">
+        <div class="filter-bar-header">
+          <div class="filter-bar-title">
+            <i class="fas fa-filter"></i> Filters
+            <span class="filter-badge" id="filterBadge" style="display:none">0</span>
+          </div>
+          <button class="filter-bar-toggle" id="filterToggle">
+            <i class="fas fa-chevron-down"></i> Show Filters
+          </button>
+        </div>
+        
+        <div id="filterOptions" style="display:none">
+          <div class="filter-options">
+            <div class="filter-option">
+              <label class="filter-option-label">Video</label>
+              <select class="filter-option-select" id="filterVideo">
+                <option value="">All Products</option>
+                <option value="true">With Video</option>
+                <option value="false">Without Video</option>
+              </select>
+            </div>
+            
+            <div class="filter-option">
+              <label class="filter-option-label">Status</label>
+              <select class="filter-option-select" id="filterStatus">
+                <option value="">All Statuses</option>
+                <option value="false">Active</option>
+                <option value="true">Inactive</option>
+              </select>
+            </div>
+            
+            <div class="filter-option">
+              <label class="filter-option-label">Age Group</label>
+              <select class="filter-option-select" id="filterAge">
+                <option value="">All Age Groups</option>
+                <option value="true">Defined</option>
+                <option value="false">Not Defined</option>
+              </select>
+            </div>
+            
+            <div class="filter-option">
+              <label class="filter-option-label">Gender</label>
+              <select class="filter-option-select" id="filterGender">
+                <option value="">All Genders</option>
+                <option value="true">Defined</option>
+                <option value="false">Not Defined</option>
+              </select>
+            </div>
+            
+            <div class="filter-option">
+              <label class="filter-option-label">Product Taxonomy</label>
+              <select class="filter-option-select" id="filterTaxonomy">
+                <option value="">All Products</option>
+                <option value="true">Defined</option>
+                <option value="false">Not Defined</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="filter-actions">
+            <button class="filter-clear" id="filterClear">
+              Clear Filters
+            </button>
+            <button class="filter-apply" id="filterApply">
+              <i class="fas fa-check"></i> Apply Filters
+            </button>
+          </div>
+        </div>
+        
+        <div id="activeFilters" class="active-filters"></div>
+      </div>
+
+      <div class="d-flex align-items-center p-3 border-bottom">
+        <div class="select-all-container">
+          <div class="dropdown select-dropdown">
+            <input type="checkbox" id="selectAllCheckbox" class="me-2">
+            <label for="selectAllCheckbox" class="select-all-checkbox-label mb-0">Select All</label>
+            <button class="btn btn-sm btn-link dropdown-toggle p-0 ms-2" type="button" id="selectDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-caret-down"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="selectDropdown">
+              <li><a class="dropdown-item" href="#" id="selectCurrentPage">Select Current Page</a></li>
+              <li><a class="dropdown-item" href="#" id="selectAllProducts">Select All Products</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" id="deselectAll">Deselect All</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bulk-actions-container ms-4">
+          <span class="selected-count">Selected: <span id="selectedCount">0</span></span>
+          <button class="bulk-edit-btn" id="bulkEditButton" disabled>
+            <i class="fas fa-edit me-1"></i> Bulk Edit
+          </button>
+        </div>
+      </div>
+      
+      <div class="table-responsive">
+        <table class="table align-middle" id="productsTable">
+          <thead>
+            <tr>
+              <th class="product-checkbox-header"></th>
+              <th style="min-width: 60px"></th>
+              <th style="min-width: 250px">Product</th>
+              <th style="min-width: 120px">Price</th>
+              <th style="min-width: 110px">Catalog</th>
+              <th style="min-width: 100px">Gender</th>
+              <th style="min-width: 120px">Age Group</th>
+              <th style="min-width: 180px">Product Taxonomy</th>
+              <th style="min-width: 80px">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody">
+            <tr id="loading-row">
+              <td colspan="9" class="text-center py-4">
+                <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                Loading products...
+              </td>
+            </tr>
+            <tr id="empty-row" style="display: none;">
+              <td colspan="9" class="text-center py-4">
+                <div class="text-muted">
+                  <i class="fas fa-info-circle me-2"></i>
+                  No products found.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer d-flex justify-content-between align-items-center">
+        <div class="pagination-info">
+          <strong>Total products: <span id="totalItems">0</span></strong>
+        </div>
+        <nav aria-label="Product pagination">
+          <ul class="pagination pagination-sm mb-0" id="pagination"></ul>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div class="pixel-modal" id="productDetailsModal">
+      <div class="pixel-modal__content">
+        <div class="pixel-modal__header">
+          <h5 class="pixel-modal__title">Edit Product Details</h5>
+          <button type="button" class="pixel-modal__close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="pixel-modal__body" id="productModalContent">
+          <div class="pixel-alert pixel-alert--info">
+            <div class="pixel-alert__icon">
+              <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="pixel-alert__content">
+              <h5 class="pixel-alert__title">Product Editor</h5>
+              <p class="pixel-alert__text">Changes here only affect your catalog feed.</p>
+            </div>
+          </div>
+        </div>
+        <div class="pixel-modal__footer">
+          <button type="button" class="pixel-form__btn pixel-form__btn--secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="pixel-form__btn pixel-form__btn--primary" id="saveProductChanges">
+            <i class="fas fa-save me-1"></i> Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bulk Edit Modal -->
+    <div class="pixel-modal" id="bulkEditModal">
+      <div class="pixel-modal__content">
+        <div class="pixel-modal__header">
+          <h5 class="pixel-modal__title">Bulk Edit Products</h5>
+          <button type="button" class="pixel-modal__close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="pixel-modal__body" id="bulkEditModalContent">
+          <div class="pixel-alert pixel-alert--info">
+            <div class="pixel-alert__icon">
+              <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="pixel-alert__content">
+              <h5 class="pixel-alert__title">Bulk Edit Mode</h5>
+              <p class="pixel-alert__text">Make changes to multiple products at once. Leave fields unchanged to keep their current values.</p>
+            </div>
+          </div>
+        </div>
+        <div class="pixel-modal__footer">
+          <button type="button" class="pixel-form__btn pixel-form__btn--secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="pixel-form__btn pixel-form__btn--primary" id="saveBulkChanges">
+            <i class="fas fa-save me-1"></i> Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Modal for All Products Selection -->
+    <div class="pixel-modal" id="selectAllLoadingModal">
+      <div class="pixel-modal__content">
+        <div class="pixel-modal__header">
+          <h5 class="pixel-modal__title">Loading Products</h5>
+        </div>
+        <div class="pixel-modal__body text-center p-4">
+          <div class="spinner-border text-primary mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mb-0">Loading all products to select them. This may take a moment...</p>
+          <div class="progress mt-3">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" id="selectAllProgressBar" role="progressbar" style="width: 0%"></div>
+          </div>
+          <p class="mt-2 mb-0"><span id="selectAllProgressText">0</span> products loaded</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/catalog/products-core.js"></script>
+    <script src="/js/catalog/products-table.js"></script>
+    <script src="/js/catalog/products-video.js"></script>
+    <script src="/js/catalog/products-edit.js"></script>
+    <script src="/js/catalog/products-ui.js"></script>
+  `
+}) %>

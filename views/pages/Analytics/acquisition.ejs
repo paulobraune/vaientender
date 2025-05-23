@@ -1,0 +1,146 @@
+<%- include("../../dashboard-layout", {
+  pageTitle: "Acquisition Analytics",
+  body: `
+<link rel="stylesheet" href="/css/analytics/analytics.css">
+<link rel="stylesheet" href="/css/analytics/acquisition.css">
+
+<div class="page-title-wrapper mb-4">
+  <h1 class="page-title">Acquisition Analytics</h1>
+  <p class="page-subtitle">Understand how users are finding your website and optimize your marketing channels</p>
+</div>
+
+<div class="analytics-filter-bar">
+  <div class="analytics-filter-group">
+    <div class="date-picker-wrapper">
+      <div class="date-picker" id="dateRangePicker">
+        <i class="fas fa-calendar-alt"></i>
+        <span class="date-range-text">Last 30 Days</span>
+        <i class="fas fa-chevron-down ms-2"></i>
+      </div>
+    </div>
+  </div>
+  <div class="analytics-pill-filter" id="granularityFilter">
+    <button class="active" data-granularity="day">Daily</button>
+    <button data-granularity="week">Weekly</button>
+    <button data-granularity="month">Monthly</button>
+  </div>
+</div>
+
+<div class="col-lg-12">
+  <div class="chart-card">
+    <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+      <h5 class="card-title mb-0" id="performanceCardTitle">Campaign Performance</h5>
+      <div class="analytics-pill-filter ms-auto" id="viewTypeFilter">
+        <button data-view="campaign" class="active">Campaigns</button>
+        <button data-view="channel">Channels</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="chart-container mb-3" style="height: 400px !important;">
+        <div id="performanceChart"></div>
+      </div>
+      <div class="list-container" id="performanceTableContainer">
+        <div class="chart-loader" style="display: none;">
+          <div class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <div class="chart-empty-state" style="display: none;">
+          <i class="fas fa-table"></i><p>No performance data available</p>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm table-hover" id="performanceTable">
+            <thead id="performanceTableHead"></thead>
+            <tbody id="performanceTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-md-6 left">
+    <div class="chart-card h-100">
+      <div class="card-header">
+        <h5 class="card-title">Top Referrer Websites</h5>
+      </div>
+      <div class="card-body">
+        <div class="list-container" id="referrerWebsitesTableContainer">
+          <div class="chart-loader" style="display: none;">
+            <div class="spinner-border spinner-border-sm text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <div class="chart-empty-state" style="display: none;">
+            <i class="fas fa-link"></i><p>No referrer website data available</p>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-sm table-hover" id="referrerWebsitesTable">
+              <thead>
+                <tr>
+                  <th>Website URL</th>
+                  <th class="text-end">Visits</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 right">
+    <div class="chart-card h-100">
+      <div class="card-header">
+        <h5 class="card-title">Top Search Engines</h5>
+      </div>
+      <div class="card-body">
+        <div class="list-container" id="searchEnginesTableContainer">
+          <div class="chart-loader" style="display: none;">
+            <div class="spinner-border spinner-border-sm text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <div class="chart-empty-state" style="display: none;">
+            <i class="fas fa-search"></i><p>No search engine data available</p>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-sm table-hover" id="searchEnginesTable">
+              <thead>
+                <tr>
+                  <th>Search Engine</th>
+                  <th class="text-end">Visits</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-lg-7 col-md-6">
+    <div class="chart-card h-100">
+      <div class="card-header">
+        <h5 class="card-title">UTM Parameter Analysis</h5>
+      </div>
+      <div class="card-body">
+        <div class="chart-container">
+          <div id="utmAnalysisChart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="/js/analytics/analytics-service.js"></script>
+<script src="/js/analytics/chart-utils.js"></script>
+<script src="/js/analytics/date-range-picker.js"></script>
+<script src="/js/analytics/acquisition.js"></script>
+`
+}) %>

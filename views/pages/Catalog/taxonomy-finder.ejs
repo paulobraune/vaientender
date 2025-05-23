@@ -1,0 +1,106 @@
+<%- include("../../dashboard-layout", {
+  pageTitle: "Taxonomy Finder",
+  body: `
+  <link rel="stylesheet" href="https://css.tracklead.com/catalog/taxonomy-finder.css">
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">Taxonomy Finder</h1>
+      <p class="page-subtitle">Find the ideal taxonomy for your products</p>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Search for Taxonomy</h5>
+      </div>
+      <div class="card-body">
+        <form id="taxonomyFinderForm" class="mb-4">
+          <div class="row mb-3">
+            <div class="col-md-8">
+              <label for="productName" class="form-label">Product Name or Keywords</label>
+              <input type="text" class="form-control" id="productName" placeholder="Enter product name or keywords" required>
+              <small class="text-muted">Enter one or more words to describe your product</small>
+            </div>
+            <div class="col-md-4">
+              <label for="productCategory" class="form-label">Main Category</label>
+              <select class="form-select" id="productCategory">
+                <option value="none" selected>Any Category</option>
+                <option value="Animals & Pet Supplies">Animals & Pet Supplies</option>
+                <option value="Apparel & Accessories">Apparel & Accessories</option>
+                <option value="Arts & Entertainment">Arts & Entertainment</option>
+                <option value="Baby & Toddler">Baby & Toddler</option>
+                <option value="Business & Industrial">Business & Industrial</option>
+                <option value="Cameras & Optics">Cameras & Optics</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Food, Beverages & Tobacco">Food, Beverages & Tobacco</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Hardware">Hardware</option>
+                <option value="Health & Beauty">Health & Beauty</option>
+                <option value="Home & Garden">Home & Garden</option>
+                <option value="Luggage & Bags">Luggage & Bags</option>
+                <option value="Mature">Mature</option>
+                <option value="Media">Media</option>
+                <option value="Office Supplies">Office Supplies</option>
+                <option value="Religious & Ceremonial">Religious & Ceremonial</option>
+                <option value="Software">Software</option>
+                <option value="Sporting Goods">Sporting Goods</option>
+                <option value="Toys & Games">Toys & Games</option>
+                <option value="Vehicles & Parts">Vehicles & Parts</option>
+              </select>
+              <small class="text-muted">Optional - Select to narrow down results</small>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-search me-2"></i>Find Taxonomy
+            </button>
+          </div>
+        </form>
+
+        <div id="searchingIndicator" style="display: none;" class="text-center my-5">
+          <div class="spinner-border text-primary mb-2" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p>Searching for taxonomies...</p>
+        </div>
+
+        <div id="noResultsMessage" style="display: none;" class="text-center my-5">
+          <i class="fas fa-exclamation-circle fs-1 text-muted mb-3"></i>
+          <p class="mb-1">No matching taxonomies found.</p>
+          <p class="text-muted">Try different keywords or select a different category.</p>
+        </div>
+
+        <div id="searchResultsContainer" style="display: none;">
+          <h5 class="border-bottom pb-2 mb-3">
+            Search Results
+            <span class="text-muted" id="searchTermDisplay"></span>
+          </h5>
+          
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Category Path</th>
+                  <th>Relevance</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="taxonomyResultsBody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="errorMessage" style="display: none;" class="alert alert-danger mt-3">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          <span id="errorText"></span>
+        </div>
+      </div>
+    </div>
+<script>
+  window.taxonomyFinderApiKey = '${process.env.API_AUTH_KEY || ''}';
+  window.taxonomyFinderUrl = '${process.env.API_TAXONOMY_FINDER || ''}';
+</script>
+<script src="https://js.tracklead.com/taxonomy-finder.js"></script>
+
+  `
+}) %>

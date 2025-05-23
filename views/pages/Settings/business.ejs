@@ -1,0 +1,136 @@
+<%
+  // contextos
+  const business = locals.activeBusiness || {};
+  const timezones = [
+    { value: "America/Sao_Paulo", text: "São Paulo - Brazil (GMT-3)" },
+    { value: "America/Buenos_Aires", text: "Buenos Aires - Argentina (GMT-3)" },
+    { value: "America/Bogota", text: "Bogota - Colombia (GMT-5)" },
+    { value: "America/Lima", text: "Lima - Peru (GMT-5)" },
+    { value: "America/Santiago", text: "Santiago - Chile (GMT-4)" },
+    { value: "America/New_York", text: "New York - USA (GMT-5/GMT-4)" },
+    { value: "America/Chicago", text: "Chicago - USA (GMT-6/GMT-5)" },
+    { value: "America/Denver", text: "Denver - USA (GMT-7/GMT-6)" },
+    { value: "America/Los_Angeles", text: "Los Angeles - USA (GMT-8/GMT-7)" },
+    { value: "America/Toronto", text: "Toronto - Canada (GMT-5/GMT-4)" },
+    { value: "Europe/London", text: "London - UK (GMT/BST)" },
+    { value: "Europe/Paris", text: "Paris - France (GMT+1/GMT+2)" },
+    { value: "Europe/Berlin", text: "Berlin - Germany (GMT+1/GMT+2)" },
+    { value: "Europe/Madrid", text: "Madrid - Spain (GMT+1/GMT+2)" },
+    { value: "Europe/Rome", text: "Rome - Italy (GMT+1/GMT+2)" }
+  ];
+  const currencies = [
+    { value: "BRL", text: "Brazilian Real (R$)" },
+    { value: "USD", text: "US Dollar ($)" },
+    { value: "EUR", text: "Euro (€)" },
+    { value: "GBP", text: "British Pound (£)" },
+    { value: "CAD", text: "Canadian Dollar (C$)" },
+    { value: "AUD", text: "Australian Dollar (A$)" },
+    { value: "MXN", text: "Mexican Peso (MX$)" },
+    { value: "ARS", text: "Argentine Peso ($)" },
+    { value: "COP", text: "Colombian Peso (COP$)" },
+    { value: "CLP", text: "Chilean Peso (CLP$)" }
+  ];
+%>
+<%- include("../../dashboard-layout", {
+  pageTitle: "Meu Negócio",
+  body: `
+    <script src="https://css.tracklead.com/settings/business.css"></script>
+
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">Meu Negócio</h1>
+      <p class="page-subtitle">Gerencie as informações do seu negócio ativo.</p>
+    </div>
+
+    <div class="business-card">
+      <div class="business-card-header">
+        <div class="business-card-icon">
+          <i class="bi bi-briefcase-fill"></i>
+        </div>
+        <div class="business-info">
+          <div class="business-name">${business.name || 'Meu Negócio'}</div>
+          <div class="business-id">${business._id || ''}</div>
+        </div>
+      </div>
+      
+      <div class="business-card-body">
+        <form id="businessSettingsForm">
+          <div class="business-form-section">
+            <div class="section-title">
+              <i class="bi bi-globe2"></i>
+              <span>Domínios</span>
+            </div>
+            
+            <div class="business-form-group">
+              <label class="business-form-label" for="mainDomain">Domínio Principal</label>
+              <div class="business-input-group">
+                <span class="business-input-addon">https://</span>
+                <input type="text" class="business-form-control" 
+                  id="mainDomain" name="domain" placeholder="seudominio.com" 
+                  value="${((business.domain || '').replace(/^https?:\/\//i, ''))}">
+              </div>
+              <div class="business-form-text">O domínio principal associado à sua loja.</div>
+            </div>
+            
+            <div class="business-form-group">
+              <label class="business-form-label" for="extraDomains">Domínios Adicionais</label>
+              <div class="business-textarea-group">
+                <textarea class="business-form-control" id="extraDomains" 
+                  name="extraDomains" rows="3" placeholder="Um domínio por linha, sem http/https">${((business.extraDomains||[]).join('\n'))}</textarea>
+              </div>
+              <div class="business-form-text">Liste outros domínios associados a este negócio, um por linha (sem http/https).</div>
+            </div>
+          </div>
+          
+          <div class="business-form-section">
+            <div class="section-title">
+              <i class="bi bi-geo-alt-fill"></i>
+              <span>Regionalização</span>
+            </div>
+            
+            <div class="business-form-grid">
+              <div class="business-form-group">
+                <label class="business-form-label" for="businessTimezone">Fuso Horário</label>
+                <div class="business-select-group">
+                  <select class="business-form-select" id="businessTimezone" name="timezone">
+                    ${timezones.map(tz => `
+                      <option value="${tz.value}"${business.timezone===tz.value?' selected':''}>${tz.text}</option>
+                    `).join('')}
+                  </select>
+                  <i class="bi bi-chevron-down"></i>
+                </div>
+                <div class="business-form-text">Fuso horário usado para análises e relatórios.</div>
+              </div>
+              
+              <div class="business-form-group">
+                <label class="business-form-label" for="businessCurrency">Moeda</label>
+                <div class="business-select-group">
+                  <select class="business-form-select" id="businessCurrency" name="currency">
+                    ${currencies.map(curr => `
+                      <option value="${curr.value}"${business.currency===curr.value?' selected':''}>${curr.text}</option>
+                    `).join('')}
+                  </select>
+                  <i class="bi bi-chevron-down"></i>
+                </div>
+                <div class="business-form-text">Moeda usada para exibição de valores monetários.</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="business-form-actions">
+            <button type="button" class="business-btn business-btn-secondary" onclick="window.history.back()">
+              <i class="bi bi-arrow-left"></i>
+              Voltar
+            </button>
+            <button type="button" class="business-btn business-btn-primary" id="saveBusinessBtn">
+              <i class="bi bi-save"></i>
+              Salvar Alterações
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="business-toast-container" class="business-toast-container"></div>
+    <script src="https://js.tracklead.com/business.js"></script>
+  `
+}) %>

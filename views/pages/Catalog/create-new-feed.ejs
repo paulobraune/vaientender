@@ -1,0 +1,240 @@
+<%- include("../../dashboard-layout", {
+  pageTitle: "Create New Feed",
+  body: `
+    <link rel="stylesheet" href="/css/pixel/pixels-style.css">
+    <link rel="stylesheet" href="https://css.tracklead.com/catalog/create-new-feed.css">
+
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">Create Catalog Feed</h1>
+      <p class="page-subtitle">Select a platform to generate a product feed for your store</p>
+    </div>
+
+    <div class="grid-container mb-4">
+      <div class="pixel-card" data-feed="facebook">
+        <div class="pixel-card__body">
+          <div class="pixel-card__icon pixel-card__icon--facebook">
+            <img src="https://assets.tracklead.com/social/facebook_ads_logo-min.png" alt="Facebook" width="42" height="42">
+          </div>
+          <div class="pixel-card__content">
+            <h5 class="pixel-card__title">Facebook</h5>
+            <p class="pixel-card__subtitle">Catalog feed for Facebook Ads</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pixel-card" data-feed="pinterest">
+        <div class="pixel-card__body">
+          <div class="pixel-card__icon pixel-card__icon--pinterest">
+            <img src="https://assets.tracklead.com/social/pinterest_ads_logo-min.png" alt="Pinterest" width="42" height="42">
+          </div>
+          <div class="pixel-card__content">
+            <h5 class="pixel-card__title">Pinterest</h5>
+            <p class="pixel-card__subtitle">Catalog feed for Pinterest Ads</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pixel-card disabled-card" data-feed="google">
+        <div class="coming-soon-badge">Coming Soon</div>
+        <div class="pixel-card__body">
+          <div class="pixel-card__icon pixel-card__icon--google">
+            <img src="https://assets.tracklead.com/social/google_ads_logo-min.png" alt="Google Merchant Center" width="42" height="42">
+          </div>
+          <div class="pixel-card__content">
+            <h5 class="pixel-card__title">Google Merchant Center</h5>
+            <p class="pixel-card__subtitle">Catalog feed for Google Shopping</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pixel-card disabled-card" data-feed="tiktok">
+        <div class="coming-soon-badge">Coming Soon</div>
+        <div class="pixel-card__body">
+          <div class="pixel-card__icon pixel-card__icon--tiktok">
+            <img src="https://assets.tracklead.com/social/tiktok_ads_logo-min.png" alt="TikTok" width="42" height="42">
+          </div>
+          <div class="pixel-card__content">
+            <h5 class="pixel-card__title">TikTok</h5>
+            <p class="pixel-card__subtitle">Catalog feed for TikTok Ads</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal for Facebook -->
+    <div class="pixel-modal" id="facebookFeedModal">
+      <div class="pixel-modal__content">
+        <div class="pixel-modal__header">
+          <h5 class="pixel-modal__title">Generate Facebook Feed</h5>
+          <button type="button" class="pixel-modal__close" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="pixel-modal__body">
+          <div class="pixel-alert pixel-alert--info">
+            <div class="pixel-alert__icon">
+              <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="pixel-alert__content">
+              <h5 class="pixel-alert__title">Generate Catalog Feed for Facebook</h5>
+              <p class="pixel-alert__text">
+                Please select the product type for your Facebook catalog feed.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-4 mb-4">
+            <label class="form-label fw-bold mb-3">Product Type:</label>
+            <div class="product-type-options">
+              <div class="product-type-option">
+                <input type="radio" class="product-type-input" name="facebookProductType" id="facebookVariant" value="variant" checked>
+                <label class="product-type-label" for="facebookVariant">
+                  <div class="product-type-icon">
+                    <i class="fas fa-tags"></i>
+                  </div>
+                  <div class="product-type-content">
+                    <h6 class="product-type-title">Product Variant</h6>
+                    <p class="product-type-description">Individual product listings including all variations like size, color, etc.</p>
+                  </div>
+                  <div class="product-type-check">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                </label>
+              </div>
+              <div class="product-type-option">
+                <input type="radio" class="product-type-input" name="facebookProductType" id="facebookGroup" value="group">
+                <label class="product-type-label" for="facebookGroup">
+                  <div class="product-type-icon">
+                    <i class="fas fa-layer-group"></i>
+                  </div>
+                  <div class="product-type-content">
+                    <h6 class="product-type-title">Product Group</h6>
+                    <p class="product-type-description">Groups products with their variations as a single product entry.</p>
+                  </div>
+                  <div class="product-type-check">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="mb-2 fw-bold">Feed will include:</p>
+            <ul class="mb-0 ps-3">
+              <li>All active products in your catalog</li>
+              <li>Product images, titles, descriptions, and prices</li>
+              <li>Inventory status and availability</li>
+              <li>Product variants (if applicable)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pixel-modal__footer">
+          <button type="button" class="pixel-form__btn pixel-form__btn--secondary" id="cancelFacebookFeedBtn">Cancel</button>
+          <button type="button" class="pixel-form__btn pixel-form__btn--primary" id="confirmFacebookFeedBtn">
+            <i class="fas fa-check me-1"></i> Generate Feed
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal for Pinterest -->
+    <div class="pixel-modal" id="pinterestFeedModal">
+      <div class="pixel-modal__content">
+        <div class="pixel-modal__header">
+          <h5 class="pixel-modal__title">Generate Pinterest Feed</h5>
+          <button type="button" class="pixel-modal__close" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="pixel-modal__body">
+          <div class="pixel-alert pixel-alert--info">
+            <div class="pixel-alert__icon">
+              <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="pixel-alert__content">
+              <h5 class="pixel-alert__title">Generate Catalog Feed for Pinterest</h5>
+              <p class="pixel-alert__text">
+                Please confirm the product type for your Pinterest catalog feed.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-4 mb-4">
+            <label class="form-label fw-bold mb-3">Product Type:</label>
+            <div class="product-type-options">
+              <div class="product-type-option">
+                <input type="radio" class="product-type-input" name="pinterestProductType" id="pinterestVariant" value="variant" checked disabled>
+                <label class="product-type-label product-type-label--disabled" for="pinterestVariant">
+                  <div class="product-type-icon">
+                    <i class="fas fa-tags"></i>
+                  </div>
+                  <div class="product-type-content">
+                    <h6 class="product-type-title">Product Variant</h6>
+                    <p class="product-type-description">Individual product listings including all variations. Pinterest only supports this format.</p>
+                  </div>
+                  <div class="product-type-check">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="mb-2 fw-bold">Feed will include:</p>
+            <ul class="mb-0 ps-3">
+              <li>All active products in your catalog</li>
+              <li>Product images, titles, descriptions, and prices</li>
+              <li>Inventory status and availability</li>
+              <li>Product variants (if applicable)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pixel-modal__footer">
+          <button type="button" class="pixel-form__btn pixel-form__btn--secondary" id="cancelPinterestFeedBtn">Cancel</button>
+          <button type="button" class="pixel-form__btn pixel-form__btn--primary" id="confirmPinterestFeedBtn">
+            <i class="fas fa-check me-1"></i> Generate Feed
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Modal (for existing feeds) -->
+    <div class="pixel-modal" id="feedAlertModal">
+      <div class="pixel-modal__content">
+        <div class="pixel-modal__header">
+          <h5 class="pixel-modal__title">Feed Already Exists</h5>
+          <button type="button" class="pixel-modal__close" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="pixel-modal__body">
+          <div class="pixel-alert pixel-alert--warning">
+            <div class="pixel-alert__icon">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="pixel-alert__content">
+              <h5 class="pixel-alert__title">Feed Already Exists</h5>
+              <p class="pixel-alert__text" id="feedAlertText">
+                A catalog feed for this platform already exists.
+                You can only have one feed per platform.
+              </p>
+            </div>
+          </div>
+          
+          <div class="mt-3 text-center">
+            <a href="/catalog/list-all-feeds" class="btn btn-primary">
+              <i class="fas fa-list me-2"></i> View All Feeds
+            </a>
+          </div>
+        </div>
+        <div class="pixel-modal__footer">
+          <button type="button" class="pixel-form__btn pixel-form__btn--secondary" id="closeFeedAlertBtn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://js.tracklead.com/create-new-feed.js"></script>
+  `
+}) %>

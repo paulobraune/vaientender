@@ -1,0 +1,66 @@
+<%- include('auth-template', {
+  pageTitle: 'Create Business',
+  cardWidth: '600px',
+  pageContent: `
+    <link rel="stylesheet" href="https://css.tracklead.com/create-business.css">
+    <div id="alert-container"></div>
+    <form id="createBusinessForm">
+      <div class="step-content" id="step1">
+        <h2 class="text-center mb-4">Business Details</h2>
+        <div class="mb-4">
+          <label class="form-label">Business Name</label>
+          <input type="text" class="form-control" id="businessName" required>
+        </div>
+        <div class="mb-4">
+          <label class="form-label">Main Domain</label>
+          <div class="input-group">
+            <span class="input-group-text">https://</span>
+            <input type="text" class="form-control" id="businessDomain" placeholder="yourdomain.com">
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="form-label">Currency</label>
+          <select class="form-control" id="businessCurrency">
+            <option value="BRL" selected>Brazilian Real (R$)</option>
+            <option value="USD">US Dollar ($)</option>
+            <option value="EUR">Euro (€)</option>
+            <option value="GBP">British Pound (£)</option>
+            <option value="CAD">Canadian Dollar (C$)</option>
+            <option value="AUD">Australian Dollar (A$)</option>
+            <option value="MXN">Mexican Peso (MX$)</option>
+            <option value="ARS">Argentine Peso ($)</option>
+            <option value="COP">Colombian Peso (COP$)</option>
+            <option value="CLP">Chilean Peso (CLP$)</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="form-label">Time Zone</label>
+          <select class="form-control" id="businessTimezone">
+            <option value="America/Sao_Paulo" selected>São Paulo - Brazil (GMT-3)</option>
+            <option value="America/Buenos_Aires">Buenos Aires - Argentina (GMT-3)</option>
+            <option value="America/Bogota">Bogota - Colombia (GMT-5)</option>
+            <option value="America/Lima">Lima - Peru (GMT-5)</option>
+            <option value="America/Santiago">Santiago - Chile (GMT-4)</option>
+            <option value="America/New_York">New York - USA (GMT-5/GMT-4)</option>
+            <option value="America/Chicago">Chicago - USA (GMT-6/GMT-5)</option>
+            <option value="America/Denver">Denver - USA (GMT-7/GMT-6)</option>
+            <option value="America/Los_Angeles">Los Angeles - USA (GMT-8/GMT-7)</option>
+            <option value="America/Toronto">Toronto - Canada (GMT-5/GMT-4)</option>
+            <option value="Europe/London">London - UK (GMT/BST)</option>
+            <option value="Europe/Paris">Paris - France (GMT+1/GMT+2)</option>
+            <option value="Europe/Berlin">Berlin - Germany (GMT+1/GMT+2)</option>
+            <option value="Europe/Madrid">Madrid - Spain (GMT+1/GMT+2)</option>
+            <option value="Europe/Rome">Rome - Italy (GMT+1/GMT+2)</option>
+          </select>
+        </div>
+        <div class="wizard-buttons">
+          <button type="button" class="btn btn-primary w-100" id="createBusinessBtn">
+            Create Business<i class="fas fa-check ms-2"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+    <script src="https://js.tracklead.com/create-business.js"></script>
+  `,
+  error: null
+}) %>

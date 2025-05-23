@@ -1,0 +1,146 @@
+<%- include("../../dashboard-layout", {
+  pageTitle: "Behaviour Analytics",
+  body: `
+<link rel="stylesheet" href="/css/analytics/analytics.css">
+<link rel="stylesheet" href="/css/analytics/behaviour.css">
+
+<div class="page-title-wrapper mb-4">
+  <h1 class="page-title">Behaviour Analytics</h1>
+  <p class="page-subtitle">Understand how users interact with your website and improve their experience</p>
+</div>
+
+<div class="analytics-filter-bar">
+  <div class="analytics-filter-group">
+    <div class="date-picker-wrapper">
+      <div class="date-picker" id="dateRangePicker">
+        <i class="fas fa-calendar-alt"></i>
+        <span class="date-range-text">Last 30 Days</span>
+        <i class="fas fa-chevron-down ms-2"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="analytics-pill-filter" id="granularityFilter">
+    <button class="active" data-granularity="day">Daily</button>
+    <button data-granularity="week">Weekly</button>
+    <button data-granularity="month">Monthly</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="chart-card mb-4">
+      <div class="card-header">
+        <h5 class="card-title">Visitor Engagement Trend</h5>
+        <div class="analytics-pill-filter ms-auto" id="engagementMetricFilter">
+          <button class="active" data-metric="sessionDuration">Avg. Duration</button>
+          <button data-metric="bounceRate">Bounce Rate</button>
+          <button data-metric="actionsPerVisit">Actions / Visit</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="metrics-row simple mb-3">
+          <div class="metric-card">
+            <h3 id="avgSessionDuration">--</h3>
+            <div class="metric-subtitle">Avg. Duration</div>
+            <div class="metric-trend neutral small">
+              <i id="avgSessionDurationTrendIcon" class="fas fa-minus"></i>
+              <span id="avgSessionDurationTrendText">vs prev period</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <h3 id="avgBounceRate">--</h3>
+            <div class="metric-subtitle">Bounce Rate</div>
+            <div class="metric-trend neutral small">
+              <i id="avgBounceRateTrendIcon" class="fas fa-minus"></i>
+              <span id="avgBounceRateTrendText">vs prev period</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <h3 id="avgActionsPerVisit">--</h3>
+            <div class="metric-subtitle">Actions / Visit</div>
+             <div class="metric-trend neutral small">
+               <i id="avgActionsPerVisitTrendIcon" class="fas fa-minus"></i>
+               <span id="avgActionsPerVisitTrendText">vs prev period</span>
+            </div>
+          </div>
+        </div>
+        <div class="chart-container">
+          <div id="engagementChart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="chart-card mb-4">
+            <div class="card-header">
+                <h5 class="card-title">Pages Performance</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-container" id="pagesTableContainer">
+                    <div class="chart-loader" style="display: none;">
+                        <div class="spinner-border spinner-border-sm text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+                    </div>
+                    <div class="chart-empty-state" style="display: none;">
+                        <i class="fas fa-file-alt"></i>
+                        <p>No page data available</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover" id="pagesTable">
+                            <thead>
+                                <tr>
+                                    <th>Page Title / URL</th>
+                                    <th class="text-end">Pageviews</th>
+                                    <th class="text-end">Unique PV</th>
+                                    <th class="text-end">Avg. Time</th>
+                                    <th class="text-end">Bounce Rate</th>
+                                    <th class="text-end">Exit Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-lg-6 col-md-6 left">
+    <div class="chart-card h-100">
+      <div class="card-header">
+        <h5 class="card-title">Top Entry Pages</h5>
+      </div>
+      <div class="card-body">
+        <div class="chart-container">
+          <div id="entryPagesChart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-md-6 right">
+    <div class="chart-card h-100">
+      <div class="card-header">
+        <h5 class="card-title">Top Exit Pages</h5>
+      </div>
+      <div class="card-body">
+        <div class="chart-container">
+          <div id="exitPagesChart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="/js/analytics/analytics-service.js"></script>
+<script src="/js/analytics/chart-utils.js"></script>
+<script src="/js/analytics/date-range-picker.js"></script>
+<script src="/js/analytics/behaviour.js"></script>
+`
+}) %>

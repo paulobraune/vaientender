@@ -1,0 +1,95 @@
+<%- include("../../dashboard-layout", {
+  pageTitle: "List All Pixels",
+  body: `
+    <link rel="stylesheet" href="/css/pixel/pixels-style.css">
+    <link rel="stylesheet" href="/css/pixel/list-all-pixels.css">
+
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">All Tracking Pixels</h1>
+      <p class="page-subtitle">Manage your tracking pixels for analytics and conversions</p>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+        <h5 class="card-title mb-0">Tracking Pixels</h5>
+        <div class="d-flex gap-2 mt-2 mt-md-0">
+          <div class="pixel-filter">
+            <select id="platformFilter" class="form-select platform-select">
+              <option value="all">All Platforms</option>
+              <option value="google">Google Ads</option>
+              <option value="facebook">Facebook</option>
+              <option value="tiktok">TikTok</option>
+              <option value="pinterest">Pinterest</option>
+              <option value="taboola">Taboola</option>
+              <option value="ga4">Google Analytics 4</option>
+            </select>
+          </div>
+          <a href="/pixels/add-new-pixel" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i> Add Pixel
+          </a>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-middle" id="pixelsTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Platform</th>
+              <th>ID</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="pixelsTableBody">
+            <tr id="loading-row">
+              <td colspan="5" class="text-center py-4">
+                <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                Loading pixels...
+              </td>
+            </tr>
+            <tr id="empty-row" style="display: none;">
+              <td colspan="5" class="text-center py-4">
+                <div class="text-muted">
+                  <i class="fas fa-info-circle me-2"></i>
+                  No pixels found. <a href="/pixels/add-new-pixel">Add your first pixel</a>.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="pixel-modal" id="deletePixelModal">
+      <div class="pixel-modal__content">
+        <div class="pixel-modal__header">
+          <h5 class="pixel-modal__title">Confirm Deletion</h5>
+          <button type="button" class="pixel-modal__close" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="pixel-modal__body">
+          <div class="pixel-alert pixel-alert--danger">
+            <div class="pixel-alert__icon">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="pixel-alert__content">
+              <h5 class="pixel-alert__title">Warning: This action cannot be undone</h5>
+              <p class="pixel-alert__text">Are you sure you want to delete the pixel <strong id="deletePixelName"></strong>?</p>
+            </div>
+          </div>
+        </div>
+        <div class="pixel-modal__footer">
+          <button type="button" class="pixel-form__btn pixel-form__btn--secondary" id="cancelDeleteBtn">Cancel</button>
+          <button type="button" class="pixel-form__btn pixel-form__btn--primary" id="confirmDeletePixel">
+            <i class="fas fa-trash-alt me-1"></i> Delete Pixel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/pixel/list-all-pixels.js"></script>
+  `
+}) %>

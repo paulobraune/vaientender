@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container-fluid">
+    <div class="d-flex align-items-center">
+      <button class="btn theme-toggle me-3" type="button" aria-label="Toggle sidebar" id="sidebarToggleBtn">
+        <i class="fas fa-bars text-light"></i>
+      </button>
+      <a class="navbar-brand" href="/overview">
+        <img id="brand-logo" alt="Logo Tracklead" class="preloaded-logo" />
+      </a>
+    </div>
+    <div class="d-flex align-items-center" style="min-width: 280px; justify-content: flex-end;">
+      <div class="d-none d-md-flex align-items-center">
+        <button id="business-selector-btn" class="theme-toggle me-3" aria-label="Select Business">
+          <div class="business-icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <span class="d-none d-sm-inline" id="current-business-name"><%= locals.activeBusiness ? activeBusiness.name : 'My Business' %></span>
+        </button>
+        <button id="theme-toggle" class="theme-toggle me-3" aria-label="Change Theme">
+          <i class="bi bi-mask"></i>
+        </button>
+        <button class="theme-toggle me-3" id="language-selector-btn" aria-label="<%= t('language.selectLanguage') %>">
+          <% if (i18n.language === 'en') { %>
+            <div class="flag uk-flag"></div>
+            <span class="d-none d-sm-inline">EN</span>
+          <% } else if (i18n.language === 'pt-BR') { %>
+            <div class="flag br-flag"></div>
+            <span class="d-none d-sm-inline">PT</span>
+          <% } else if (i18n.language === 'fr') { %>
+            <div class="flag fr-flag"></div>
+            <span class="d-none d-sm-inline">FR</span>
+          <% } else if (i18n.language === 'es') { %>
+            <div class="flag es-flag"></div>
+            <span class="d-none d-sm-inline">ES</span>
+          <% } else if (i18n.language === 'it') { %>
+            <div class="flag it-flag"></div>
+            <span class="d-none d-sm-inline">IT</span>
+          <% } else if (i18n.language === 'de') { %>
+            <div class="flag de-flag"></div>
+            <span class="d-none d-sm-inline">DE</span>
+          <% } %>
+        </button>
+        <a href="/settings/account" class="theme-toggle me-3" aria-label="User Profile">
+          <i class="fas fa-user"></i>
+        </a>
+        <a class="nav-link d-flex align-items-center" href="/logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="ms-2 d-none d-sm-inline"><%= t('nav.logout') %></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Store user information in client-side variables
+  window.userId = "<%= locals.user ? user.id : '' %>";
+  window.user = {
+    id: "<%= locals.user ? user.id : '' %>",
+    name: "<%= locals.user ? user.name : '' %>",
+    username: "<%= locals.user ? user.username : '' %>",
+    role: "<%= locals.user && user.role ? user.role : 'User' %>",
+    phone: "<%= locals.user && user.phone ? user.phone : '' %>",
+    email: "<%= locals.user && user.email ? user.email : (locals.user ? user.username : '') %>"
+  };
+
+  // Store active business information
+  <% if (locals.activeBusiness) { %>
+  window.activeBusinessData = {
+    id: "<%= activeBusiness._id %>",
+    name: "<%= activeBusiness.name %>",
+    currency: "<%= activeBusiness.currency || 'BRL' %>",
+    billingStatus: "<%= activeBusiness.billingStatus || 'none' %>",
+    timezone: "<%= activeBusiness.timezone || '-00:00' %>",
+    plan: "<%= activeBusiness.plan || 'none' %>",
+    domain: "<%= activeBusiness.domain || '' %>",
+    integration: {
+      platform: "<%= typeof activeBusiness.integration === 'object' ? (activeBusiness.integration.platform || 'none') : (activeBusiness.integration || 'none') %>",
+      checkoutType: "<%= typeof activeBusiness.integration === 'object' ? (activeBusiness.integration.checkoutType || 'none') : 'none' %>",
+      checkoutDomain: "<%= typeof activeBusiness.integration === 'object' ? (activeBusiness.integration.checkoutDomain || '') : '' %>"
+    }
+  };
+  <% } %>
+
+  // Debugging info in console to verify data is being loaded properly
+  console.log("User data loaded:", window.user);
+  console.log("Active business data loaded:", window.activeBusinessData);
+</script>

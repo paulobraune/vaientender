@@ -1,0 +1,260 @@
+<%
+  const completionStatus = [isStep1Complete, isStep2Complete, isStep3Complete, isStep4Complete];
+  const firstIncompleteIndex = completionStatus.findIndex(status => !status);
+  const completedCount = completionStatus.filter(Boolean).length;
+  const totalSteps = completionStatus.length;
+  const progressPercentage = Math.round((completedCount / totalSteps) * 100);
+
+  const errorAlert = (typeof error !== 'undefined' && error)
+    ? `<div class="alert alert-danger" role="alert">${error}</div>`
+    : '';
+  const completionHtml = completedCount === totalSteps
+    ? `
+      <div class="setup-complete mt-4">
+        <div class="alert alert-success d-flex flex-column align-items-start" role="alert">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-check2-circle fs-4 me-3"></i>
+            <div>
+              <h5 class="alert-heading mb-1">Configuração concluída!</h5>
+              <p class="mb-0">Parabéns! Você completou todas as etapas de configuração e pode começar a utilizar todas as funcionalidades.</p>
+            </div>
+          </div>
+          <button id="hideGettingStartedBtn" class="btn btn-success w-100">
+            <i class="bi bi-eye-slash me-2"></i>Não exibir mais essa tela
+          </button>
+        </div>
+      </div>`
+    : '';
+%>
+<%- include("../dashboard-layout", {
+  pageTitle: "Getting Started",
+  body: `
+    <link rel="stylesheet" href="https://css.tracklead.com/overview.css">
+    ${errorAlert}
+
+    <div class="welcome-dashboard mb-4">
+      <div class="welcome-card">
+        <div class="welcome-content">
+          <h2 class="welcome-title">Bem-vindo ao Tracklead!</h2>
+          <p class="welcome-subtitle">Vamos configurar sua conta para aproveitar todos os recursos disponíveis.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="setup-checklist mt-4 mb-5">
+      <div class="checklist-header">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h3 class="checklist-title mb-0">Configure sua conta</h3>
+          <div class="checklist-progress-text">
+            <span class="completed-count">${completedCount}</span>/<span class="total-steps">${totalSteps}</span> concluídos
+          </div>
+        </div>
+        <div class="progress mb-4">
+          <div class="progress-bar" role="progressbar" style="width: ${progressPercentage}%"
+               aria-valuenow="${progressPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+
+      <div class="checklist-steps accordion" id="setupAccordion">
+        <!-- Step 1 -->
+        <div class="checklist-step ${isStep1Complete ? 'completed' : firstIncompleteIndex === 0 ? 'active' : ''}">
+          <div class="step-header"
+               data-bs-toggle="collapse" data-bs-target="#stepContent1"
+               aria-expanded="${firstIncompleteIndex === 0 ? 'true' : 'false'}">
+            <div class="step-icon-wrapper">
+              <div class="step-icon">
+                ${isStep1Complete ? '<i class="bi bi-check-lg"></i>' : '<span>1</span>'}
+              </div>
+            </div>
+            <div class="step-info">
+              <h4>Escolha seu plano</h4>
+              <p class="step-description">Comece com nosso teste gratuito ou escolha um plano</p>
+            </div>
+            <div class="step-status">
+              ${isStep1Complete
+                ? '<span class="badge rounded-pill bg-success-subtle text-success">Concluído</span>'
+                : firstIncompleteIndex === 0
+                  ? '<span class="badge rounded-pill bg-primary-subtle text-primary">Pendente</span>'
+                  : '<span class="badge rounded-pill bg-secondary-subtle text-secondary">Pendente</span>'}
+              <i class="bi bi-chevron-down"></i>
+            </div>
+          </div>
+          <div id="stepContent1" class="step-content collapse ${firstIncompleteIndex === 0 ? 'show' : ''}" data-bs-parent="#setupAccordion">
+            <div class="step-content-inner">
+              <p>Escolha um plano que atenda às necessidades do seu negócio. Comece com um teste gratuito de 14 dias para explorar todos os recursos.</p>
+              <div class="step-benefits">
+                <div class="benefit-item">
+                  <i class="bi bi-lightning-charge"></i>
+                  <span>Acesso imediato a todos os recursos</span>
+                </div>
+                <div class="benefit-item">
+                  <i class="bi bi-credit-card"></i>
+                  <span>Sem necessidade de cartão de crédito</span>
+                </div>
+                <div class="benefit-item">
+                  <i class="bi bi-arrow-clockwise"></i>
+                  <span>Cancele a qualquer momento</span>
+                </div>
+              </div>
+              <a href="/settings/plans" class="btn btn-primary mt-3">
+                <i class="bi bi-check2-circle me-2"></i>Escolher plano
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div class="checklist-step ${isStep2Complete ? 'completed' : firstIncompleteIndex === 1 ? 'active' : ''}">
+          <div class="step-header"
+               data-bs-toggle="collapse" data-bs-target="#stepContent2"
+               aria-expanded="${firstIncompleteIndex === 1 ? 'true' : 'false'}">
+            <div class="step-icon-wrapper">
+              <div class="step-icon">
+                ${isStep2Complete ? '<i class="bi bi-check-lg"></i>' : '<span>2</span>'}
+              </div>
+            </div>
+            <div class="step-info">
+              <h4>Integrar com e-commerce</h4>
+              <p class="step-description">Conecte sua plataforma para sincronizar produtos</p>
+            </div>
+            <div class="step-status">
+              ${isStep2Complete
+                ? '<span class="badge rounded-pill bg-success-subtle text-success">Concluído</span>'
+                : firstIncompleteIndex === 1
+                  ? '<span class="badge rounded-pill bg-primary-subtle text-primary">Pendente</span>'
+                  : '<span class="badge rounded-pill bg-secondary-subtle text-secondary">Pendente</span>'}
+              <i class="bi bi-chevron-down"></i>
+            </div>
+          </div>
+          <div id="stepContent2" class="step-content collapse ${firstIncompleteIndex === 1 ? 'show' : ''}" data-bs-parent="#setupAccordion">
+            <div class="step-content-inner">
+              <p>Conecte sua plataforma de e-commerce para importar automaticamente produtos, pedidos e dados de clientes.</p>
+              <div class="step-benefits">
+                <div class="benefit-item">
+                  <i class="bi bi-arrow-repeat"></i>
+                  <span>Sincronização automática de dados</span>
+                </div>
+                <div class="benefit-item">
+                  <i class="bi bi-box-seam"></i>
+                  <span>Importação de produtos e pedidos</span>
+                </div>
+                <div class="benefit-item">
+                  <i class="bi bi-shield-check"></i>
+                  <span>Conexão segura e encriptada</span>
+                </div>
+              </div>
+              <a href="/settings/integrations" class="btn btn-primary mt-3">
+                <i class="bi bi-plug me-2"></i>Configurar integração
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div class="checklist-step ${isStep3Complete ? 'completed' : firstIncompleteIndex === 2 ? 'active' : ''}">
+          <div class="step-header"
+               data-bs-toggle="collapse" data-bs-target="#stepContent3"
+               aria-expanded="${firstIncompleteIndex === 2 ? 'true' : 'false'}">
+            <div class="step-icon-wrapper">
+              <div class="step-icon">
+                ${isStep3Complete ? '<i class="bi bi-check-lg"></i>' : '<span>3</span>'}
+              </div>
+            </div>
+            <div class="step-info">
+              <h4>Adicionar pixel de rastreamento</h4>
+              <p class="step-description">Configure pixels para plataformas de anúncios</p>
+            </div>
+            <div class="step-status">
+              ${isStep3Complete
+                ? '<span class="badge rounded-pill bg-success-subtle text-success">Concluído</span>'
+                : firstIncompleteIndex === 2
+                  ? '<span class="badge rounded-pill bg-primary-subtle text-primary">Pendente</span>'
+                  : '<span class="badge rounded-pill bg-secondary-subtle text-secondary">Pendente</span>'}
+              <i class="bi bi-chevron-down"></i>
+            </div>
+          </div>
+          <div id="stepContent3" class="step-content collapse ${firstIncompleteIndex === 2 ? 'show' : ''}" data-bs-parent="#setupAccordion">
+            <div class="step-content-inner">
+              <p>Instale nosso pixel de rastreamento para coletar dados de visitas e comportamento dos usuários em seu site.</p>
+              <div class="step-benefits">
+                <div class="benefit-item">
+                  <i class="bi bi-graph-up"></i>
+                  <span>Rastreamento avançado de conversões</span>
+                </div>
+                <div class="benefit-item">
+                  <i class="bi bi-people"></i>
+                  <span>Insights sobre seu público-alvo</span>
+                </div>
+                <div class="benefit-item">
+                  <i class="bi bi-bullseye"></i>
+                  <span>Melhore suas campanhas de marketing</span>
+                </div>
+              </div>
+              <a href="/pixels/add-new-pixel" class="btn btn-primary mt-3">
+                <i class="bi bi-code-slash me-2"></i>Adicionar pixel
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Step 4 -->
+        <div class="checklist-step ${isStep4Complete ? 'completed' : firstIncompleteIndex === 3 ? 'active' : ''}">
+          <div class="step-header"
+               data-bs-toggle="collapse" data-bs-target="#stepContent4"
+               aria-expanded="${firstIncompleteIndex === 3 ? 'true' : 'false'}">
+            <div class="step-icon-wrapper">
+              <div class="step-icon">
+                ${isStep4Complete ? '<i class="bi bi-check-lg"></i>' : '<span>4</span>'}
+              </div>
+            </div>
+            <div class="step-info">
+              <h4>Criar feed de catálogo</h4>
+              <p class="step-description">Gere feeds para campanhas de produtos</p>
+            </div>
+            <div class="step-status">
+              ${isStep4Complete
+                ? '<span class="badge rounded-pill bg-success-subtle text-success">Concluído</span>'
+                : firstIncompleteIndex === 3
+                  ? '<span class="badge rounded-pill bg-primary-subtle text-primary">Pendente</span>'
+                  : '<span class="badge rounded-pill bg-secondary-subtle text-secondary">Pendente</span>'}
+              <i class="bi bi-chevron-down"></i>
+            </div>
+          </div>
+          <div id="stepContent4" class="step-content collapse ${firstIncompleteIndex === 3 ? 'show' : ''}" data-bs-parent="#setupAccordion">
+            <div class="step-content-inner">
+              <p>Crie feeds de produtos para usar em suas campanhas de anúncios dinâmicos no Facebook, Google e outras plataformas.</p>
+              <div class="step-benefits">
+                <div class="benefit-item">
+                  <i class="bi bi-tag"></i>
+                  <span>Anúncios dinâmicos de produtos</span>
+                </div>
+                <div class="benefit-item">
+                  <i class="bi bi-clock-history"></i>
+                  <span>Atualização automática de produtos</span>
+                </div>
+                <div class="benefit-item">
+                  <i class="bi bi-arrow-up-right-circle"></i>
+                  <span>Aumente suas vendas</span>
+                </div>
+              </div>
+              <a href="/catalog/create-new-feed" class="btn btn-primary mt-3">
+                <i class="bi bi-rss me-2"></i>Criar feed de catálogo
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      ${completionHtml}
+    </div>
+
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body text-center py-4">
+            <i class="bi bi-check-circle-fill text-success fs-1 mb-3"></i>
+            <h5 class="modal-title mb-3" id="successModalLabel">Configuração salva com sucesso!</h5>
+            <p>Você será redirecionado para a tela de análise em tempo real.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://js.tracklead.com/overview.js"></script>
+  `
+}) %>

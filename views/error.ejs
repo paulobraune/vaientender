@@ -1,0 +1,30 @@
+<%- include("dashboard-layout", {
+  pageTitle: pageTitle || "Error",
+  body: `
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card text-center">
+            <div class="card-body">
+              <h1 class="display-1 text-danger mb-4">
+                <i class="fas fa-exclamation-triangle"></i>
+              </h1>
+              <h2 class="card-title mb-4">${pageTitle || "Error"}</h2>
+              <p class="card-text mb-4">${error || "An unexpected error occurred."}</p>
+              <a href="/overview" class="btn btn-primary">
+                <i class="fas fa-home me-2"></i>Return to Dashboard
+              </a>
+            </div>
+            
+            <% if (typeof stack !== 'undefined' && stack) { %>
+              <div class="card-footer text-start bg-light">
+                <h6 class="text-muted mb-2">Stack trace:</h6>
+                <pre class="border p-3 rounded bg-dark text-white overflow-auto" style="max-height: 300px"><code>${stack}</code></pre>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  `
+}) %>

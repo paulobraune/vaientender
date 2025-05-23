@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="<%= i18n ? i18n.language : 'en' %>" dir="<%= ['ar', 'fa', 'he', 'ur'].includes(i18n.language) ? 'rtl' : 'ltr' %>">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title><%= pageTitle %> | Tracklead</title>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.documentElement.style.transition = 'none';
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          document.documentElement.style.transition = '';
+        }, 50);
+      });
+    })();
+  </script>
+  <script src="https://js.tracklead.com/logo-utils.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://css.tracklead.com/base4.css" />
+  <link rel="stylesheet" href="https://css.tracklead.com/dashboard-layout.css" />
+  <link rel="stylesheet" href="https://css.tracklead.com/theme-colors.css" />
+  <link rel="stylesheet" href="https://css.tracklead.com/alert.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+</head>
+<body>
+  <%- include("componentes/navbar", { user: locals.user }) %>
+  <div class="container-fluid p-0">
+    <div class="row g-0">
+      <%- include("componentes/sidebar") %>
+      <div id="sidebar-overlay" class="sidebar-overlay"></div>
+      <main>
+        <div class="content-wrapper">
+          <%- body %>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <%- include('partials/alert') %>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://js.tracklead.com/theme-modal.js"></script>
+  <script src="https://js.tracklead.com/language-modal.js"></script>
+  <script src="https://js.tracklead.com/business-modal.js"></script>
+  <script src="https://js.tracklead.com/profile-modal.js"></script>
+  <script src="https://js.tracklead.com/alert.js"></script>
+  <script src="https://js.tracklead.com/dashboard-scripts.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.logoUtils) {
+        window.logoUtils.initLogoSystem();
+      }
+    });
+  </script>
+</body>
+</html>

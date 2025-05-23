@@ -1,0 +1,234 @@
+<% const integration = (locals.activeBusiness && locals.activeBusiness.integration) || {}; %>
+<%- include("../../dashboard-layout", {
+  pageTitle: "Integrações",
+  body: `
+  <link rel="stylesheet" href="/css/settings/integration.css">
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">Integrações</h1>
+      <p class="page-subtitle">Conecte sua plataforma de e-commerce.</p>
+    </div>
+
+    <div class="integration-container">
+      <div class="integration-cards">
+        <div class="integration-card ${integration.platform === 'shopify' ? 'integration-card-active' : ''}">
+          <div class="integration-card-platform">
+            <img src="https://assets.tracklead.com/integration/shopify-min.png" alt="Shopify Logo" class="integration-logo">
+            <div class="integration-title">
+              <h3>Shopify</h3>
+              <div class="integration-status">
+                ${integration.platform === 'shopify' ? 
+                  '<span class="status-badge status-active"><i class="bi bi-check-circle-fill"></i> Conectado</span>' : 
+                  '<span class="status-badge status-inactive">Não conectado</span>'}
+              </div>
+            </div>
+          </div>
+          
+          <p class="integration-description">Integre com o Shopify para sincronizar seus produtos, pedidos e clientes automaticamente.</p>
+          
+          <div class="integration-actions">
+            <button type="button" class="integration-btn ${integration.platform === 'shopify' ? 'integration-btn-secondary' : 'integration-btn-primary'}" data-bs-toggle="collapse" data-bs-target="#shopifySettings">
+              <i class="bi ${integration.platform === 'shopify' ? 'bi-gear-fill' : 'bi-plug-fill'}"></i>
+              ${integration.platform === 'shopify' ? 'Configurar' : 'Conectar'}
+            </button>
+          </div>
+        </div>
+
+        <div class="integration-card integration-card-disabled">
+          <div class="coming-soon-badge">Em Breve</div>
+          <div class="integration-card-platform">
+            <img src="https://assets.tracklead.com/integration/woo-min.png" alt="WooCommerce Logo" class="integration-logo">
+            <div class="integration-title">
+              <h3>WooCommerce</h3>
+              <div class="integration-status">
+                <span class="status-badge status-soon">Em Breve</span>
+              </div>
+            </div>
+          </div>
+          
+          <p class="integration-description">Integração com WordPress WooCommerce para lojas baseadas em WordPress.</p>
+          
+          <div class="integration-actions">
+            <button type="button" class="integration-btn integration-btn-primary" disabled>
+              <i class="bi bi-clock"></i>
+              Em Breve
+            </button>
+          </div>
+        </div>
+
+        <div class="integration-card integration-card-disabled">
+          <div class="coming-soon-badge">Em Breve</div>
+          <div class="integration-card-platform">
+            <img src="https://assets.tracklead.com/integration/nuvemshop-min.png" alt="Nuvemshop Logo" class="integration-logo">
+            <div class="integration-title">
+              <h3>Nuvemshop</h3>
+              <div class="integration-status">
+                <span class="status-badge status-soon">Em Breve</span>
+              </div>
+            </div>
+          </div>
+          
+          <p class="integration-description">Integração com Nuvemshop/Tiendanube para lojas da América Latina.</p>
+          
+          <div class="integration-actions">
+            <button type="button" class="integration-btn integration-btn-primary" disabled>
+              <i class="bi bi-clock"></i>
+              Em Breve
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="collapse ${integration.platform === 'shopify' ? 'show' : ''} mt-4" id="shopifySettings">
+        <div class="integration-settings-card">
+          <div class="integration-settings-header">
+            <h4>
+              <img src="https://assets.tracklead.com/integration/shopify-min.png" alt="Shopify" class="integration-settings-icon">
+              Configurações Shopify
+            </h4>
+            <button type="button" class="integration-settings-close" data-bs-toggle="collapse" data-bs-target="#shopifySettings" aria-label="Close">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+          
+          <div class="integration-settings-body">
+            <div class="integration-instructions">
+              <div class="instruction-title">
+                <i class="bi bi-info-circle-fill"></i>
+                <span>Como Configurar</span>
+              </div>
+              
+              <div class="instruction-steps">
+                <ol>
+                  <li>No seu painel Shopify, vá para <strong>Aplicativos e canais de vendas</strong> > <strong>Desenvolver aplicativos</strong>.</li>
+                  <li>Clique em <strong>Criar um aplicativo</strong> (dê um nome, ex: Tracklead Integration).</li>
+                  <li>Vá para a aba <strong>Configuração da API Admin</strong> e clique em <strong>Configurar</strong>.</li>
+                  <li>Marque as seguintes permissões de escopo da API Admin:
+                    <ul class="permission-list">
+                      <li><code>read_products</code> <span class="permission-desc">- Ler dados de produtos</span></li>
+                      <li><code>read_orders</code> <span class="permission-desc">- Acessar informações de pedidos</span></li>
+                      <li><code>read_inventory</code> <span class="permission-desc">- Verificar disponibilidade</span></li>
+                      <li><code>read_product_listings</code> <span class="permission-desc">- Listar produtos publicados</span></li>
+                    </ul>
+                  </li>
+                  <li>Clique em <strong>Salvar</strong>.</li>
+                  <li>Vá para a aba <strong>Credenciais da API</strong>.</li>
+                  <li>Clique em <strong>Instalar aplicativo</strong> e confirme.</li>
+                  <li>Copie o <strong>Token de acesso da API Admin</strong> e cole abaixo.</li>
+                </ol>
+              </div>
+            </div>
+            
+            <form id="shopifyForm">
+              <div class="integration-form-group">
+                <label for="shopifyApiToken" class="integration-form-label">Token de acesso da API Admin</label>
+                <div class="integration-input-group">
+                  <div class="integration-input-icon">
+                    <i class="bi bi-key-fill"></i>
+                  </div>
+                  <input type="password" class="integration-form-control" id="shopifyApiToken" 
+                    name="adminApiAccessToken" value="${integration.adminApiAccessToken || ''}" 
+                    required>
+                  <button type="button" class="integration-toggle-password" onclick="togglePasswordVisibility('shopifyApiToken')">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="integration-form-group">
+                <label for="shopifyDomain" class="integration-form-label">Domínio Shopify</label>
+                <div class="integration-input-group">
+                  <div class="integration-input-icon">
+                    <i class="bi bi-globe"></i>
+                  </div>
+                  <input type="text" class="integration-form-control" id="shopifyDomain" 
+                    name="shopDomain" placeholder="sualoja" 
+                    value="${(integration.shopDomain || '').replace('.myshopify.com','')}" required>
+                  <div class="integration-input-suffix">.myshopify.com</div>
+                </div>
+              </div>
+              
+              <div class="integration-section-divider">
+                <div class="divider-label">Configuração do Checkout</div>
+              </div>
+              
+              <div class="integration-form-group checkout-type-group">
+                <label class="integration-form-label">Tipo de Checkout</label>
+                
+                <div class="checkout-options">
+                  <div class="checkout-option">
+                    <input class="checkout-option-input" type="radio" name="checkoutType" 
+                      id="checkoutShopify" value="shopify" 
+                      ${integration.checkoutType === 'shopify' || !integration.checkoutType ? 'checked' : ''}>
+                    <label class="checkout-option-label" for="checkoutShopify">
+                      <div class="checkout-option-content">
+                        <div class="checkout-option-title">Shopify (Nativo)</div>
+                        <div class="checkout-option-desc">Checkout padrão hospedado pelo Shopify</div>
+                      </div>
+                      <div class="checkout-option-check"></div>
+                    </label>
+                  </div>
+                  
+                  <div class="checkout-option">
+                    <input class="checkout-option-input" type="radio" name="checkoutType" 
+                      id="checkoutYampi" value="yampi" ${integration.checkoutType === 'yampi' ? 'checked' : ''}>
+                    <label class="checkout-option-label" for="checkoutYampi">
+                      <div class="checkout-option-content">
+                        <div class="checkout-option-title">Yampi</div>
+                        <div class="checkout-option-desc">Checkout transparente da Yampi</div>
+                      </div>
+                      <div class="checkout-option-check"></div>
+                    </label>
+                  </div>
+                  
+                  <div class="checkout-option">
+                    <input class="checkout-option-input" type="radio" name="checkoutType" 
+                      id="checkoutCartpanda" value="cartpanda" ${integration.checkoutType === 'cartpanda' ? 'checked' : ''}>
+                    <label class="checkout-option-label" for="checkoutCartpanda">
+                      <div class="checkout-option-content">
+                        <div class="checkout-option-title">CartPanda</div>
+                        <div class="checkout-option-desc">Checkout transparente CartPanda</div>
+                      </div>
+                      <div class="checkout-option-check"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="integration-form-group" id="checkoutDomainWrapper" 
+                style="${['yampi','cartpanda'].includes(integration.checkoutType) ? '' : 'display: none;'}">
+                <label for="checkoutDomain" class="integration-form-label">
+                  Domínio do Checkout Transparente
+                </label>
+                <div class="integration-input-group">
+                  <div class="integration-input-addon">https://</div>
+                  <input type="text" class="integration-form-control" id="checkoutDomain" 
+                    name="checkoutDomain" placeholder="checkout.seusite.com" 
+                    value="${integration.checkoutDomain || ''}">
+                </div>
+                <div class="integration-form-text">
+                  Informe o domínio exato usado pelo seu checkout transparente.
+                </div>
+              </div>
+              
+              <div class="integration-form-actions">
+                ${integration.platform === 'shopify' ? 
+                  `<button type="button" class="integration-btn integration-btn-danger" id="disconnectShopifyBtn">
+                    <i class="bi bi-trash3-fill"></i>
+                    Desconectar
+                  </button>` : ''}
+                
+                <button type="submit" class="integration-btn integration-btn-primary" id="saveShopifyBtn">
+                  <i class="bi bi-save-fill"></i>
+                  ${integration.platform === 'shopify' ? 'Atualizar Integração' : 'Conectar Shopify'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="integration-toast-container"></div>
+    <script src="/js/settings/integration.js"></script>
+  `
+}) %>

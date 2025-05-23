@@ -1,0 +1,243 @@
+<%- include("../../dashboard-layout", {
+  pageTitle: "Cookie Bar Configuration",
+  body: `
+    <link rel="stylesheet" href="https://css.tracklead.com/tools/cookie-bar.css">
+    <link rel="stylesheet" href="/css/pixel/pixels-style.css">
+
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">Cookie Bar Configuration</h1>
+      <p class="page-subtitle">Configure the cookie consent banner for your website</p>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card mb-4">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <h5 class="card-title mb-0">Cookie Consent Settings</h5>
+              <div class="status-indicator ms-3">
+                <span id="statusEnabled" class="status-badge status-active" style="display: none">
+                  <i class="fas fa-check-circle me-1"></i> Enabled
+                </span>
+                <span id="statusDisabled" class="status-badge status-inactive">
+                  <i class="fas fa-times-circle me-1"></i> Disabled
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <form id="cookieConsentForm">
+              <div class="mb-4">
+                <div class="status-toggle-wrapper">
+                  <div class="pixel-form__switch">
+                    <input class="pixel-form__switch-input" type="checkbox" id="cookieConsentEnabled" name="enabled">
+                    <label class="pixel-form__switch-label" for="cookieConsentEnabled">
+                      Enable Cookie Consent Banner
+                    </label>
+                  </div>
+                  <div class="pixel-form__help mt-2">
+                    When enabled, a cookie consent banner will be displayed to visitors of your website.
+                  </div>
+                </div>
+              </div>
+
+              <div id="cookieConsentSettings" class="mt-4 pixel-settings-section--disabled">
+                <div class="settings-notification mb-4">
+                  <div class="alert alert-info d-flex align-items-center">
+                    <i class="fas fa-info-circle me-3 fs-4"></i>
+                    <div>Configure how your cookie consent banner looks and behaves. These settings will only take effect when the cookie banner is enabled.</div>
+                  </div>
+                </div>
+              
+                <div class="mb-4">
+                  <label class="pixel-form__label" for="bannerText">Banner Text</label>
+                  <textarea class="pixel-form__input" id="bannerText" name="bannerText" rows="3" maxlength="500" placeholder="We use cookies to improve your experience. By clicking 'Accept', you consent to our use of cookies."></textarea>
+                  <div class="d-flex justify-content-between">
+                    <div class="pixel-form__help">
+                      Text to display in your cookie banner. Maximum 500 characters.
+                    </div>
+                    <div class="text-muted small">
+                      <span id="textCounter">0</span>/500
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label class="pixel-form__label" for="privacyPolicyUrl">Privacy Policy URL</label>
+                  <input type="url" class="pixel-form__input" id="privacyPolicyUrl" name="privacyPolicyUrl" placeholder="https://yourdomain.com/privacy-policy">
+                  <div class="pixel-form__help">
+                    Link to your privacy policy page. This will be shown in the cookie consent banner.
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label class="pixel-form__label" for="fontSize">Text Font Size (px)</label>
+                  <div class="d-flex align-items-center">
+                    <input type="range" class="form-range custom-range flex-grow-1 me-2" id="fontSize" name="fontSize" min="12" max="20" step="1" value="14">
+                    <span id="fontSizeValue" class="badge font-size-badge" style="min-width: 40px; text-align: center;">14px</span>
+                  </div>
+                  <div class="pixel-form__help">
+                    Size of the text displayed in the cookie banner.
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label class="form-label mb-3">Button Style</label>
+                  <div class="d-flex mb-3">
+                    <div class="form-check me-4">
+                      <input class="form-check-input" type="radio" name="buttonStyle" id="buttonStyleSingle" value="single" checked>
+                      <label class="form-check-label" for="buttonStyleSingle">
+                        Single Button (Accept only)
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="buttonStyle" id="buttonStyleDouble" value="double">
+                      <label class="form-check-label" for="buttonStyleDouble">
+                        Two Buttons (Accept and Decline)
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <h6 class="mb-3">Colors</h6>
+
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="pixel-form__label" for="buttonBg">Accept Button Background</label>
+                      <div class="d-flex">
+                        <input type="color" class="form-control form-control-color me-2" id="buttonBg" name="buttonBg" value="#3fe45b">
+                        <input type="text" class="pixel-form__input" id="buttonBgText" value="#3fe45b">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label class="pixel-form__label" for="buttonText">Accept Button Text</label>
+                      <div class="d-flex">
+                        <input type="color" class="form-control form-control-color me-2" id="buttonText" name="buttonText" value="#ffffff">
+                        <input type="text" class="pixel-form__input" id="buttonTextText" value="#ffffff">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 decline-button-settings" style="display: none;">
+                      <label class="pixel-form__label" for="declineButtonBg">Decline Button Background</label>
+                      <div class="d-flex">
+                        <input type="color" class="form-control form-control-color me-2" id="declineButtonBg" name="declineButtonBg" value="#f0f0f0">
+                        <input type="text" class="pixel-form__input" id="declineButtonBgText" value="#f0f0f0">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 decline-button-settings" style="display: none;">
+                      <label class="pixel-form__label" for="declineButtonText">Decline Button Text</label>
+                      <div class="d-flex">
+                        <input type="color" class="form-control form-control-color me-2" id="declineButtonText" name="declineButtonText" value="#333333">
+                        <input type="text" class="pixel-form__input" id="declineButtonTextText" value="#333333">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label class="pixel-form__label" for="textColor">Text Color</label>
+                      <div class="d-flex">
+                        <input type="color" class="form-control form-control-color me-2" id="textColor" name="textColor" value="#10b21a">
+                        <input type="text" class="pixel-form__input" id="textColorText" value="#10b21a">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label class="pixel-form__label" for="linkColor">Link Color</label>
+                      <div class="d-flex">
+                        <input type="color" class="form-control form-control-color me-2" id="linkColor" name="linkColor" value="#40a216">
+                        <input type="text" class="pixel-form__input" id="linkColorText" value="#40a216">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label class="pixel-form__label" for="barBg">Banner Background</label>
+                      <div class="d-flex">
+                        <input type="color" class="form-control form-control-color me-2" id="barBg" name="barBg" value="#ffffff">
+                        <input type="text" class="pixel-form__input" id="barBgText" value="#ffffff">
+                      </div>
+                    </div>
+                  </div>
+
+                  <input type="hidden" id="logoType" name="logoType" value="dark">
+                  <input type="hidden" id="logoSize" name="logoSize">
+                </div>
+
+                <div class="mb-4">
+                  <h6 class="mb-3">Preview</h6>
+
+                  <div class="preview-mode-selector d-flex justify-content-center mb-3">
+                      <div class="form-check me-4">
+                          <input class="form-check-input" type="radio" name="previewMode" id="previewDesktopRadio" value="desktop" checked>
+                          <label class="form-check-label" for="previewDesktopRadio">
+                              <i class="fas fa-desktop me-1"></i> Desktop
+                          </label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="previewMode" id="previewMobileRadio" value="mobile">
+                          <label class="form-check-label" for="previewMobileRadio">
+                              <i class="fas fa-mobile-alt me-1"></i> Mobile
+                          </label>
+                      </div>
+                  </div>
+                  <div id="desktopPreview" class="preview-container border rounded position-relative">
+                    <div class="cookie-banner-preview desktop-preview">
+                      <div class="cookie-preview-content">
+                        <span class="cookie-preview-text">We use cookies to improve your experience. By clicking 'Accept', you consent to our use of cookies.</span>
+                        <div class="privacy-policy-row">
+                          <img class="cookie-banner-logo" src="https://assets.tracklead.com/images/preto-preto.png" alt="Company logo">
+                          <a href="#" class="cookie-preview-link">Privacy Policy</a>
+                        </div>
+                      </div>
+                      <div class="cookie-preview-buttons">
+                        <button type="button" class="cookie-preview-accept-button">Accept</button>
+                        <button type="button" class="cookie-preview-decline-button" style="display: none;">Decline</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="mobilePreview" class="preview-container border rounded position-relative" style="display: none;">
+                    <div class="mobile-device-frame">
+                      <div class="mobile-screen">
+                        <div class="mobile-content">
+                          <div class="mobile-header"></div>
+                          <div class="mobile-body">
+                            <div class="mobile-text-block"></div>
+                            <div class="mobile-text-block" style="width: 90%"></div>
+                            <div class="mobile-text-block" style="width: 75%"></div>
+                          </div>
+                          <div class="cookie-banner-preview mobile-preview">
+                            <div class="cookie-preview-content">
+                              <span class="cookie-preview-text">We use cookies to improve your experience. By clicking 'Accept', you consent to our use of cookies.</span>
+                              <div class="privacy-policy-row">
+                                <img class="cookie-banner-logo" src="https://assets.tracklead.com/images/preto-preto.png" alt="Company logo">
+                                <a href="#" class="cookie-preview-link">Privacy Policy</a>
+                              </div>
+                            </div>
+                            <div class="cookie-preview-buttons">
+                              <button type="button" class="cookie-preview-accept-button">Accept</button>
+                              <button type="button" class="cookie-preview-decline-button" style="display: none;">Decline</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <button type="submit" class="pixel-form__btn pixel-form__btn--primary">
+                  <i class="fas fa-save me-1"></i> Save Settings
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://js.tracklead.com/cookie-bar.js"></script>
+  `
+}) %>

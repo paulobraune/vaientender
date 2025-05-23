@@ -1,0 +1,148 @@
+<%- include("../../dashboard-layout", {
+  pageTitle: "Visitors Analytics",
+  body: `
+<link rel="stylesheet" href="/css/analytics/analytics.css">
+<link rel="stylesheet" href="/css/analytics/visitors.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7/css/flag-icons.min.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+<div class="page-title-wrapper mb-4">
+  <h1 class="page-title">Visitantes - Análise</h1>
+  <p class="page-subtitle">Obtenha insights sobre os padrões de tráfego e demografia dos usuários do seu site</p>
+</div>
+
+<div class="analytics-filter-bar">
+  <div class="analytics-filter-group">
+    <div class="date-picker-wrapper">
+      <div class="date-picker" id="dateRangePicker">
+        <i class="fas fa-calendar-alt"></i>
+        <span class="date-range-text">Últimos 30 Dias</span>
+        <i class="fas fa-chevron-down ms-2"></i>
+      </div>
+    </div>
+  </div>
+  <div class="analytics-pill-filter" id="granularityFilter">
+    <button class="active" data-granularity="day">Diário</button>
+    <button data-granularity="week">Semanal</button>
+    <button data-granularity="month">Mensal</button>
+  </div>
+</div>
+
+<div class="chart-card mb-4">
+  <div class="card-header">
+    <div class="d-flex align-items-center justify-content-between flex-wrap w-100">
+      <h5 class="card-title mb-2 mb-md-0">Visão Geral dos Visitantes</h5>
+      <div class="analytics-pill-filter ms-auto" id="visitorMetricFilter">
+        <button class="active" data-metric="totalVisits">Total de Visitas</button>
+        <button data-metric="uniqueVisitors">Visitantes Únicos</button>
+        <button data-metric="avgDuration">Duração Média</button>
+        <button data-metric="bounceRate">Taxa de Rejeição</button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="metrics-row simple mb-3">
+      <div class="metric-card">
+        <h3 id="summaryTotalVisitors">--</h3>
+        <div class="metric-subtitle">Total de Visitas</div>
+        <div class="metric-trend neutral small">
+          <i id="summaryTotalVisitorsTrendIcon" class="fas fa-minus"></i>
+          <span id="summaryTotalVisitorsTrendText">vs período anterior</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <h3 id="summaryUniqueVisitors">--</h3>
+        <div class="metric-subtitle">Visitantes Únicos</div>
+        <div class="metric-trend neutral small">
+          <i id="summaryUniqueVisitorsTrendIcon" class="fas fa-minus"></i>
+          <span id="summaryUniqueVisitorsTrendText">vs período anterior</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <h3 id="summaryAvgDuration">--</h3>
+        <div class="metric-subtitle">Duração Média da Visita</div>
+        <div class="metric-trend neutral small">
+          <i id="summaryAvgDurationTrendIcon" class="fas fa-minus"></i>
+          <span id="summaryAvgDurationTrendText">vs período anterior</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <h3 id="summaryAvgBounceRate">--</h3>
+        <div class="metric-subtitle">Taxa de Rejeição</div>
+        <div class="metric-trend neutral small">
+          <i id="summaryAvgBounceRateTrendIcon" class="fas fa-minus"></i>
+          <span id="summaryAvgBounceRateTrendText">vs período anterior</span>
+        </div>
+      </div>
+    </div>
+    <div class="chart-container"><div id="visitorsChart"></div></div>
+  </div>
+</div>
+
+<div class="chart-card mb-4">
+  <div class="card-header">
+    <div class="d-flex align-items-center justify-content-between flex-wrap w-100">
+      <h5 class="card-title mb-2 mb-md-0">Distribuição Geográfica</h5>
+      <div class="d-flex align-items-center">
+        <div class="geo-filter-group">
+          <label for="geoViewTypeRadioGroup">Ver por:</label>
+          <div class="analytics-pill-filter" id="geoViewTypeRadioGroup">
+            <input type="radio" class="btn-check" name="geoViewTypeRadio" id="geoViewCountry" value="country" checked>
+            <label class="btn" for="geoViewCountry">País</label>
+            <input type="radio" class="btn-check" name="geoViewTypeRadio" id="geoViewState" value="state">
+            <label class="btn" for="geoViewState">Estado</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div id="geoMapContainer" class="geo-map-container mb-4">
+      <div class="chart-loader" style="display:none;justify-content:center;align-items:center;position:absolute;inset:0;background:rgba(255,255,255,0.8);z-index:2;">
+        <div class="spinner-border spinner-border-sm text-primary" role="status"><span class="visually-hidden">A carregar...</span></div>
+      </div>
+      <div class="chart-empty-state" style="display:none;flex-direction:column;justify-content:center;align-items:center;position:absolute;inset:0;z-index:2;">
+        <i class="fas fa-map-marked-alt fa-2x text-muted mb-2"></i>
+        <p class="text-muted">Sem dados disponíveis</p>
+      </div>
+      <div id="map"></div>
+    </div>
+    <div class="list-container" id="geoDistributionListContainer" style="position:relative;">
+      <div class="chart-loader" style="display:none;justify-content:center;align-items:center;position:absolute;inset:0;background:rgba(255,255,255,0.8);z-index:2;">
+        <div class="spinner-border spinner-border-sm text-primary" role="status"><span class="visually-hidden">A carregar...</span></div>
+      </div>
+      <div class="chart-empty-state" style="display:none;flex-direction:column;justify-content:center;align-items:center;position:absolute;inset:0;z-index:2;min-height:150px;">
+        <i class="fas fa-list fa-2x text-muted mb-2"></i>
+        <p class="text-muted">Sem dados disponíveis</p>
+      </div>
+      <ul class="list-group list-group-flush scrollable-list" id="geoDistributionList"></ul>
+    </div>
+  </div>
+</div>
+
+<div class="chart-card mb-4">
+  <div class="card-header"><h5 class="card-title">Navegadores</h5></div>
+  <div class="card-body">
+    <ul class="list-group list-group-flush scrollable-list" id="browserMetricsList"></ul>
+  </div>
+</div>
+
+<div class="chart-card mb-4">
+  <div class="card-header"><h5 class="card-title">Dispositivos</h5></div>
+  <div class="card-body">
+    <ul class="list-group list-group-flush scrollable-list" id="deviceMetricsList"></ul>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="/js/analytics/analytics-service.js"></script>
+<script src="/js/analytics/chart-utils.js"></script>
+<script src="/js/analytics/date-range-picker.js"></script>
+<script src="/js/analytics/visitors.js"></script>
+
+`
+}) %>

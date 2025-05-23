@@ -1,0 +1,87 @@
+<%- include("../../dashboard-layout", {
+  pageTitle: "Add New Pixel",
+  body: `
+    <link rel="stylesheet" href="/css/pixel/pixels-style.css">
+    <link rel="stylesheet" href="/css/pixel/add-new-pixel.css">
+
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">Add New Pixel</h1>
+      <p class="page-subtitle">Select a pixel type to configure tracking for your store</p>
+    </div>
+
+    <div class="grid-container mb-4">
+      <div class="pixel-card" data-pixel="google">
+        <div class="pixel-card__body">
+          <div class="pixel-card__icon pixel-card__icon--google">
+            <img src="https://assets.tracklead.com/social/google_ads_logo-min.png" alt="Google Ads" width="42" height="42">
+          </div>
+          <div class="pixel-card__content">
+            <h5 class="pixel-card__title">Google Ads</h5>
+            <p class="pixel-card__subtitle">Conversion tracking</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pixel-card" data-pixel="facebook">
+        <div class="pixel-card__body">
+          <div class="pixel-card__icon pixel-card__icon--facebook">
+            <img src="https://assets.tracklead.com/social/facebook_ads_logo-min.png" alt="Facebook Ads" width="42" height="42">
+          </div>
+          <div class="pixel-card__content">
+            <h5 class="pixel-card__title">Facebook Ads</h5>
+            <p class="pixel-card__subtitle">Meta pixel tracking</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pixel-card" data-pixel="tiktok">
+        <div class="pixel-card__body">
+          <div class="pixel-card__icon pixel-card__icon--tiktok">
+            <img src="https://assets.tracklead.com/social/tiktok_ads_logo-min.png" alt="TikTok Ads" width="42" height="42">
+          </div>
+          <div class="pixel-card__content">
+            <h5 class="pixel-card__title">TikTok Ads</h5>
+            <p class="pixel-card__subtitle">TikTok pixel tracking</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pixel-card" data-pixel="pinterest">
+        <div class="pixel-card__body">
+          <div class="pixel-card__icon pixel-card__icon--pinterest">
+            <img src="https://assets.tracklead.com/social/pinterest_ads_logo-min.png" alt="Pinterest Ads" width="42" height="42">
+          </div>
+          <div class="pixel-card__content">
+            <h5 class="pixel-card__title">Pinterest Ads</h5>
+            <p class="pixel-card__subtitle">Pinterest tag tracking</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pixel-card" data-pixel="taboola">
+        <div class="pixel-card__body">
+          <div class="pixel-card__icon pixel-card__icon--taboola">
+            <img src="https://assets.tracklead.com/social/taboola_ads_logo-min.png" alt="Taboola Ads" width="42" height="42">
+          </div>
+          <div class="pixel-card__content">
+            <h5 class="pixel-card__title">Taboola Ads</h5>
+            <p class="pixel-card__subtitle">Taboola pixel tracking</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pixel-card" data-pixel="ga4">
+        <div class="pixel-card__body">
+          <div class="pixel-card__icon pixel-card__icon--ga4">
+            <img src="https://assets.tracklead.com/social/ga4_logo-min.png" alt="Google Analytics 4" width="42" height="42">
+          </div>
+          <div class="pixel-card__content">
+            <h5 class="pixel-card__title">Google Analytics 4</h5>
+            <p class="pixel-card__subtitle">GA4 measurement ID</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/js/pixel/add-new-pixel.js"></script>
+  `
+}) %>

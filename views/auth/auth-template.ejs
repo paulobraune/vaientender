@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="<%= i18n ? i18n.language : 'en' %>" dir="<%= ['ar', 'fa', 'he', 'ur'].includes(i18n.language) ? 'rtl' : 'ltr' %>">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title><%= pageTitle %> | Tracklead</title>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.documentElement.style.transition = 'none';
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          document.documentElement.style.transition = '';
+        }, 50);
+      });
+      const savedLanguage = localStorage.getItem('language');
+      if (savedLanguage && savedLanguage !== '<%= i18n.language %>') {
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('lng', savedLanguage);
+        window.location.href = currentUrl.toString();
+      }
+    })();
+  </script>
+  <script src="https://js.tracklead.com/logo-utils.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://css.tracklead.com/theme-colors.css" />
+  <link rel="stylesheet" href="https://css.tracklead.com/base4.css" />
+  <link rel="stylesheet" href="https://css.tracklead.com/auth-template.css" />
+<style>
+@media (max-width: 767px) {
+    .auth-page {
+        background-color: var(--surface);
+    }
+}
+.auth-card {
+max-width: <%= cardWidth || '420px' %>;
+}
+</style>
+</head>
+<body class="auth-body">
+  <div class="content-wrapper">
+    <div class="auth-page">
+      <div class="auth-settings">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Change Theme">
+          <i class="fas fa-sun"></i>
+        </button>
+        <button class="language-toggle" id="language-toggle" aria-label="<%= i18n.t('language.selectLanguage') %>">
+          <% if (i18n.language === 'en') { %>
+            <div class="flag uk-flag"></div>
+            <span class="d-none d-sm-inline">EN</span>
+          <% } else if (i18n.language === 'pt-BR') { %>
+            <div class="flag br-flag"></div>
+            <span class="d-none d-sm-inline">PT</span>
+          <% } else if (i18n.language === 'fr') { %>
+            <div class="flag fr-flag"></div>
+            <span class="d-none d-sm-inline">FR</span>
+          <% } else if (i18n.language === 'es') { %>
+            <div class="flag es-flag"></div>
+            <span class="d-none d-sm-inline">ES</span>
+          <% } else if (i18n.language === 'it') { %>
+            <div class="flag it-flag"></div>
+            <span class="d-none d-sm-inline">IT</span>
+          <% } else if (i18n.language === 'de') { %>
+            <div class="flag de-flag"></div>
+            <span class="d-none d-sm-inline">DE</span>
+          <% } %>
+        </button>
+      </div>
+      <div class="auth-card">
+        <div class="auth-logo text-center">
+          <img id="brand-logo" alt="Tracklead" class="img-fluid">
+        </div>
+        <div id="alert-container">
+          <% if (typeof error !== "undefined" && error) { %>
+            <div class="alert alert-danger">
+              <i class="fas fa-exclamation-circle me-2"></i>
+              <%= error %>
+            </div>
+          <% } %>
+        </div>
+        <%- pageContent %>
+      </div>
+    </div>
+    <div class="auth-settings-bottom">
+      <button class="theme-toggle" id="theme-toggle-mobile" aria-label="Change Theme">
+        <i class="fas fa-sun"></i>
+      </button>
+      <button class="language-toggle" id="mobile-language-selector-btn" aria-label="<%= i18n.t('language.selectLanguage') %>">
+        <% if (i18n.language === 'en') { %>
+          <div class="flag uk-flag"></div>
+          <span>English</span>
+        <% } else if (i18n.language === 'pt-BR') { %>
+          <div class="flag br-flag"></div>
+          <span>Português</span>
+        <% } else if (i18n.language === 'fr') { %>
+          <div class="flag fr-flag"></div>
+          <span>Français</span>
+        <% } else if (i18n.language === 'es') { %>
+          <div class="flag es-flag"></div>
+          <span>Español</span>
+        <% } else if (i18n.language === 'it') { %>
+          <div class="flag it-flag"></div>
+          <span>Italiano</span>
+        <% } else if (i18n.language === 'de') { %>
+          <div class="flag de-flag"></div>
+          <span>Deutsch</span>
+        <% } %>
+      </button>
+      <% if (typeof showProfileButton !== 'undefined' && showProfileButton) { %>
+        <button id="mobile-profile-btn" class="mobile-control-btn">
+          <i class="fas fa-user"></i>
+        </button>
+      <% } %>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"
+    integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://js.tracklead.com/theme-modal.js"></script>
+  <script src="https://js.tracklead.com/language-modal.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.logoUtils) {
+        window.logoUtils.initLogoSystem();
+      }
+      if (themeModal) {
+        themeModal.updateThemeIcons();
+        const desktopThemeIcon = document.querySelector('#theme-toggle i');
+        const mobileThemeIcon = document.querySelector('#theme-toggle-mobile i');
+        if (desktopThemeIcon && mobileThemeIcon) {
+          mobileThemeIcon.className = desktopThemeIcon.className;
+        }
+      }
+      if (languageModal) {
+        languageModal.initialize();
+      }
+      const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+      if (themeToggleMobile) {
+        themeToggleMobile.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (themeModal) {
+            themeModal.toggleModal();
+          }
+        });
+      }
+      const mobileLangButton = document.getElementById('mobile-language-selector-btn');
+      if (mobileLangButton) {
+        mobileLangButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (!languageModal.initialized) {
+            languageModal.initialize();
+          }
+          languageModal.toggleModal();
+        });
+      }
+      const desktopLangButton = document.getElementById('language-toggle');
+      if (desktopLangButton) {
+        desktopLangButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (!languageModal.initialized) {
+            languageModal.initialize();
+          }
+          languageModal.toggleModal();
+        });
+      }
+    });
+    function togglePasswordVisibility(inputId) {
+      const passwordInput = document.getElementById(inputId);
+      const icon = passwordInput.parentElement.querySelector('.password-toggle i');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+    document.addEventListener('touchmove', function(e) {
+    }, { passive: true });
+  </script>
+</body>
+</html>

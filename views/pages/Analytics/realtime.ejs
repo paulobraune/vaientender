@@ -1,0 +1,217 @@
+<%- include("../../dashboard-layout", {
+  pageTitle: 'Real-Time Analytics',
+  body: `
+<link rel="stylesheet" href="/css/analytics/analytics.css">
+<link rel="stylesheet" href="/css/analytics/realtime.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
+
+<div class="page-title-wrapper mb-4">
+  <h1 class="page-title">Real-Time Analytics</h1>
+  <p class="page-subtitle">Monitor visitor activity happening on your website right now</p>
+</div>
+
+<div class="real-time-header">
+  </div>
+
+<div class="all-metrics-container">
+  <div class="realtime-metric">
+    <div class="metric-header">
+      <h4 class="metric-title">Current Visitors</h4>
+      <div class="data-tag">Real-time</div>
+    </div>
+    <div class="metric-value-wrapper">
+      <span class="metric-value" id="visitor-count">0</span>
+    </div>
+    <div id="current-visitors-counter">
+      <div class="refresh-info">
+        <span>Data auto-refreshes every minute</span>
+        <span class="refresh-badge pulse" id="refresh-badge">
+          <i class="fas fa-sync-alt"></i>
+          <span id="refresh-countdown">60s</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="realtime-metric">
+    <div class="metric-header">
+      <h4 class="metric-title">Total Visits</h4>
+      <div class="data-tag-today">Today</div>
+    </div>
+    <div class="metric-value-wrapper">
+      <span class="metric-value" id="daily-total-visits-value">1,482</span>
+    </div>
+    <div class="metric-trend neutral" id="daily-total-visits-trend">
+      <span>+5.2% vs same time yesterday</span>
+    </div>
+  </div>
+  
+  <div class="realtime-metric">
+    <div class="metric-header">
+      <h4 class="metric-title">Unique Visitors</h4>
+      <div class="data-tag-today">Today</div>
+    </div>
+    <div class="metric-value-wrapper">
+      <span class="metric-value" id="daily-unique-visitors-value">847</span>
+    </div>
+    <div class="metric-trend neutral" id="daily-unique-visitors-trend">
+      <span>+3.8% vs same time yesterday</span>
+    </div>
+  </div>
+
+  <div class="realtime-metric">
+    <div class="metric-header">
+      <h4 class="metric-title">Average Time on Site</h4>
+      <div class="data-tag-today">Today</div>
+    </div>
+    <div class="metric-value-wrapper">
+      <span class="metric-value" id="daily-avg-time-value">3:25</span>
+      <span class="metric-unit">min</span>
+    </div>
+    <div class="metric-trend neutral" id="daily-avg-time-trend">
+      <span>+2.5% vs same time yesterday</span>
+    </div>
+  </div>
+  
+  <div class="realtime-metric">
+    <div class="metric-header">
+      <h4 class="metric-title">Bounce Rate</h4>
+      <div class="data-tag-today">Today</div>
+    </div>
+    <div class="metric-value-wrapper">
+      <span class="metric-value" id="daily-bounce-rate-value">32.7</span>
+      <span class="metric-unit">%</span>
+    </div>
+    <div class="metric-trend neutral" id="daily-bounce-rate-trend">
+      <span>-1.3% vs same time yesterday</span>
+    </div>
+  </div>
+  
+  <div class="realtime-metric">
+    <div class="metric-header">
+      <h4 class="metric-title">Conversion Rate</h4>
+      <div class="data-tag-today">Today</div>
+    </div>
+    <div class="metric-value-wrapper">
+      <span class="metric-value" id="daily-conversion-rate-value">4.2</span>
+      <span class="metric-unit">%</span>
+    </div>
+    <div class="metric-trend neutral" id="daily-conversion-rate-trend">
+      <span>+0.8% vs same time yesterday</span>
+    </div>
+  </div>
+  
+  <div class="realtime-metric">
+    <div class="metric-header">
+      <h4 class="metric-title">Total Revenue</h4>
+      <div class="data-tag-today">Today</div>
+    </div>
+    <div class="metric-value-wrapper">
+      <span class="metric-value" id="daily-total-revenue-value">R$ 4,852</span>
+    </div>
+    <div class="metric-trend neutral" id="daily-total-revenue-trend">
+      <span>+12.3% vs same time yesterday</span>
+    </div>
+  </div>
+  
+  <div class="realtime-metric">
+    <div class="metric-header">
+      <h4 class="metric-title">Total Orders</h4>
+      <div class="data-tag-today">Today</div>
+    </div>
+    <div class="metric-value-wrapper">
+      <span class="metric-value" id="daily-total-orders-value">23</span>
+    </div>
+    <div class="metric-trend neutral" id="daily-total-orders-trend">
+      <span>+8.7% vs same time yesterday</span>
+    </div>
+  </div>
+  
+  <div class="realtime-metric">
+    <div class="metric-header">
+      <h4 class="metric-title">Avg. Order Value</h4>
+      <div class="data-tag-today">Today</div>
+    </div>
+    <div class="metric-value-wrapper">
+      <span class="metric-value" id="daily-avg-order-value">R$ 210</span>
+    </div>
+    <div class="metric-trend neutral" id="daily-avg-order-value-trend">
+      <span>+3.4% vs same time yesterday</span>
+    </div>
+  </div>
+</div>
+<div class="chart-card full-width mb-4">
+  <div class="card-header">
+    <h5 class="card-title">Active Visitors</h5>
+  </div>
+  <div class="card-body">
+    <div class="chart-container">
+      <div id="visitorsRealtimeChart"></div>
+    </div>
+  </div>
+</div>
+
+<div class="chart-card full-width mb-4">
+  <div class="card-header">
+    <h5 class="card-title">Top Products Sold Today</h5>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="products-table" id="top-products-table">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Total Sold</th>
+            <th>Total Revenue</th>
+            <th>Conversion Rate</th>
+            <th data-tooltip="Percentage of total sales volume">% of Sales</th>
+          </tr>
+        </thead>
+        <tbody id="top-products-list">
+          </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="chart-card full-width mb-4">
+  <div class="card-header">
+    <h5 class="card-title">Top Campaigns Sold Today</h5>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="products-table" id="top-campaigns-table">
+        <thead>
+          <tr>
+            <th>Campaign Name</th>
+            <th>Total Sold</th>
+            <th>Total Revenue</th>
+            <th>Conversion Rate</th>
+            <th data-tooltip="Percentage of total sales from this campaign">% of Sales</th>
+          </tr>
+        </thead>
+        <tbody id="top-campaigns-list">
+          </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="chart-card full-width mb-4">
+  <div class="card-header">
+    <h5 class="card-title">Recent Visitor Activity</h5>
+  </div>
+  <div class="card-body" id="recent-visitors-container">
+    <div id="visitors-list">
+      </div>
+  </div>
+</div>
+
+<div class="confetti-container" id="confetti-container" style="display:none;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="/js/analytics/analytics-service.js"></script>
+<script src="/js/analytics/chart-utils.js"></script>
+<script src="/js/analytics/realtime.js"></script>
+`
+}) %>

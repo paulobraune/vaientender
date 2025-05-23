@@ -1,0 +1,68 @@
+<%- include('auth-template', {
+  pageTitle: 'Invitation Code',
+  cardWidth: '480px',
+  pageContent: `
+    <link rel="stylesheet" href="https://css.tracklead.com/invitation.css">
+    <div class="invitation-container">
+      <h2 class="text-center mb-4">Access Required</h2>
+      <p class="text-center mb-4">Tracklead is currently in closed beta. Please enter your invitation code to proceed.</p>
+      <div class="invitation-tabs">
+        <div class="tab-header">
+          <button class="tab-button active" data-tab="invite-code-tab">Invitation Code</button>
+          <button class="tab-button" data-tab="waitlist-tab">Join Waitlist</button>
+        </div>
+        <div class="tab-content">
+          <div id="invite-code-tab" class="tab-pane active">
+            <form id="invitation-form" class="mb-4">
+              <div class="mb-3 auth-input-group">
+                <label for="inviteCode" class="form-label">Invitation Code</label>
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="fas fa-key"></i>
+                  </span>
+                  <input type="text" class="form-control" id="inviteCode" name="inviteCode" placeholder="XXXX-XXXX" required maxlength="9">
+                </div>
+                <div id="inviteCodeHelp" class="form-text">Enter the invitation code you received.</div>
+              </div>
+              <button type="submit" class="btn btn-primary auth-btn w-100" id="validate-button">
+                <i class="fas fa-check-circle me-2"></i> Continue to Registration
+              </button>
+            </form>
+          </div>
+          <div id="waitlist-tab" class="tab-pane">
+            <form id="waitlist-form" class="mb-4">
+              <div class="mb-3 auth-input-group">
+                <label for="waitlistEmail" class="form-label">Email Address</label>
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="fas fa-envelope"></i>
+                  </span>
+                  <input type="email" class="form-control" id="waitlistEmail" name="waitlistEmail" placeholder="your@email.com" required>
+                </div>
+                <div id="waitlistHelp" class="form-text">We'll notify you when access becomes available.</div>
+              </div>
+              <button type="submit" class="btn btn-primary auth-btn w-100" id="waitlist-button">
+                <i class="fas fa-paper-plane me-2"></i> Join Waitlist
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="waitlist-success" id="waitlist-success" style="display: none;">
+        <div class="text-center">
+          <i class="fas fa-envelope-open text-primary mb-3" style="font-size: 3rem;"></i>
+          <h3 class="mb-3">Thank You!</h3>
+          <p>We've added you to our waitlist. We'll notify you as soon as we open access to Tracklead.</p>
+          <button type="button" class="btn btn-outline-primary mt-3" id="back-to-form">
+            <i class="fas fa-arrow-left me-2"></i> Back
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="auth-footer">
+      Already have an account? <a href="/login">Login here</a>
+    </div>
+    <script src="https://js.tracklead.com/invitation.js"></script>
+  `,
+  error: typeof error !== 'undefined' ? error : null
+}) %>

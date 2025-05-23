@@ -1,0 +1,42 @@
+<%- include('auth-template', {
+  pageTitle: 'Login',
+  cardWidth: '420px',
+  pageContent: `
+    <link rel="stylesheet" href="/css/auth/login.css">
+    <form method="POST" action="/login" id="login-form">
+      <div class="mb-3 auth-input-group">
+        <label for="username" class="form-label">${i18n.t('login.email') || "Email"}</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-user"></i>
+          </span>
+          <input type="text" class="form-control" id="username" name="username" required autocomplete="username" />
+        </div>
+      </div>
+      <div class="mb-3 auth-input-group">
+        <label for="password" class="form-label">${i18n.t('login.password') || "Password"}</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-lock"></i>
+          </span>
+          <input type="password" class="form-control" id="password" name="password" required autocomplete="current-password" />
+          <span class="input-group-text password-toggle" onclick="togglePasswordVisibility('password')">
+            <i class="fas fa-eye"></i>
+          </span>
+        </div>
+      </div>
+      <div class="text-end mb-3">
+        <a href="/forgot-password" class="text-primary small">Forgot password?</a>
+      </div>
+      <button type="submit" class="btn btn-primary auth-btn w-100" id="login-button">
+        <i class="fas fa-sign-in-alt me-2"></i>
+        ${i18n.t('login.loginButton') || "Sign In"}
+      </button>
+    </form>
+    <div class="auth-footer">
+      ${i18n.t('login.newUser') || "New user?"} <a href="/invitation">${i18n.t('login.registerHere') || "Register here"}</a>
+    </div>
+    <script src="https://js.tracklead.com/login.js"></script>
+  `,
+  error: typeof error !== "undefined" ? error : null
+}) %>

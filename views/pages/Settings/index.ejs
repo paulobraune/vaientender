@@ -1,0 +1,98 @@
+<%- include("../../dashboard-layout", {
+  pageTitle: "Configurações",
+  body: `
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">Configurações</h1>
+      <p class="page-subtitle text-secondary">Gerencie as configurações da sua conta e negócio.</p>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex align-items-center mb-3">
+              <div class="me-3 fs-3" style="color: var(--text-primary);">
+                <i class="bi bi-person-circle"></i>
+              </div>
+              <h5 class="card-title mb-0" style="color: var(--text-primary);">Meu Perfil</h5>
+            </div>
+            <p class="card-text text-secondary mb-4 flex-grow-1">Edite suas informações pessoais, como nome, telefone, e-mail e senha.</p>
+            <a href="/settings/account" class="btn btn-primary mt-auto align-self-start">
+              Editar Perfil <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex align-items-center mb-3">
+              <div class="me-3 fs-3" style="color: var(--text-primary);">
+                <i class="bi bi-briefcase-fill"></i>
+              </div>
+              <h5 class="card-title mb-0" style="color: var(--text-primary);">Meu Negócio</h5>
+            </div>
+            <p class="card-text text-secondary mb-4 flex-grow-1">Atualize os detalhes do seu negócio ativo, incluindo domínio, fuso horário e moeda.</p>
+            <a href="/settings/business" class="btn btn-primary mt-auto align-self-start">
+              Gerenciar Negócio <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex align-items-center mb-3">
+              <div class="me-3 fs-3" style="color: var(--text-primary);">
+                <i class="bi bi-file-earmark-text-fill"></i>
+              </div>
+              <h5 class="card-title mb-0" style="color: var(--text-primary);">Informações Fiscais</h5>
+            </div>
+            <p class="card-text text-secondary mb-4 flex-grow-1">Mantenha suas informações de faturamento e fiscais atualizadas.</p>
+            <a href="/settings/billing" class="btn btn-primary mt-auto align-self-start">
+              Informações Fiscais <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex align-items-center mb-3">
+              <div class="me-3 fs-3" style="color: var(--text-primary);">
+                <i class="bi bi-credit-card-fill"></i>
+              </div>
+              <h5 class="card-title mb-0" style="color: var(--text-primary);">Assinatura</h5>
+            </div>
+            <p class="card-text text-secondary mb-4 flex-grow-1">Gerencie seu plano atual, visualize faturas e altere forma de pagamento.</p>
+            <a href="/settings/subscription" class="btn btn-primary mt-auto align-self-start">
+              Gerenciar Assinatura <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex align-items-center mb-3">
+              <div class="me-3 fs-3" style="color: var(--text-primary);">
+                <i class="bi bi-plug-fill"></i>
+              </div>
+              <h5 class="card-title mb-0" style="color: var(--text-primary);">Integrações</h5>
+            </div>
+            <p class="card-text text-secondary mb-4 flex-grow-1">Conecte sua plataforma de e-commerce para sincronizar dados.</p>
+            <a href="/settings/integrations" class="btn btn-primary mt-auto align-self-start">
+              Gerenciar Integrações <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  `
+}) %>

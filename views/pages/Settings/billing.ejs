@@ -1,0 +1,161 @@
+<% const billingInfo = (locals.activeBusiness && locals.activeBusiness.billingInfo) || {}; %>
+<%- include('../../dashboard-layout', {
+  pageTitle: 'Informações Fiscais',
+  body: `
+    <link rel="stylesheet" href="https://css.tracklead.com/settings/billing.css">
+    
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">Informações Fiscais</h1>
+      <p class="page-subtitle">Gerencie suas informações para faturamento.</p>
+    </div>
+
+    <div class="billing-card">
+      <div class="billing-card-header">
+        <div class="billing-card-icon">
+          <i class="bi bi-receipt"></i>
+        </div>
+        <h4>Informações de Cobrança</h4>
+      </div>
+      
+      <div class="billing-card-content">
+        <form id="billingForm">
+          <div class="billing-section">
+            <div class="section-title">
+              <i class="bi bi-building"></i>
+              <span>Tipo de Conta</span>
+            </div>
+            
+            <div class="account-type-selector">
+              <div class="account-type-option">
+                <input type="radio" id="typePersonal" name="accountType" value="personal" class="account-type-input"
+                  ${billingInfo.type === 'personal' ? 'checked' : ''}>
+                <label for="typePersonal" class="account-type-label">
+                  <div class="account-type-icon">
+                    <i class="bi bi-person-fill"></i>
+                  </div>
+                  <div class="account-type-info">
+                    <span class="account-type-name">Pessoa Física</span>
+                    <span class="account-type-description">Para indivíduos e profissionais autônomos</span>
+                  </div>
+                </label>
+              </div>
+              
+              <div class="account-type-option">
+                <input type="radio" id="typeBusiness" name="accountType" value="business" class="account-type-input"
+                  ${billingInfo.type === 'business' || !billingInfo.type ? 'checked' : ''}>
+                <label for="typeBusiness" class="account-type-label">
+                  <div class="account-type-icon">
+                    <i class="bi bi-building"></i>
+                  </div>
+                  <div class="account-type-info">
+                    <span class="account-type-name">Pessoa Jurídica</span>
+                    <span class="account-type-description">Para empresas e organizações</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="billing-section">
+            <div class="section-title">
+              <i class="bi bi-pin-map-fill"></i>
+              <span>Localização e Endereço</span>
+            </div>
+            
+            <div class="billing-form-group">
+              <label for="country">País</label>
+              <div class="select-wrapper">
+                <select id="country" name="country" required>
+                  <option value="">Selecione...</option>
+                  <option value="BR" ${billingInfo.country === 'BR' ? 'selected' : ''}>Brasil</option>
+                  <option value="US" ${billingInfo.country === 'US' ? 'selected' : ''}>Estados Unidos</option>
+                  <option value="PT" ${billingInfo.country === 'PT' ? 'selected' : ''}>Portugal</option>
+                  <option value="AR" ${billingInfo.country === 'AR' ? 'selected' : ''}>Argentina</option>
+                  <option value="CO" ${billingInfo.country === 'CO' ? 'selected' : ''}>Colômbia</option>
+                  <option value="CL" ${billingInfo.country === 'CL' ? 'selected' : ''}>Chile</option>
+                  <option value="MX" ${billingInfo.country === 'MX' ? 'selected' : ''}>México</option>
+                  <option value="ES" ${billingInfo.country === 'ES' ? 'selected' : ''}>Espanha</option>
+                  <option value="CA" ${billingInfo.country === 'CA' ? 'selected' : ''}>Canadá</option>
+                  <option value="GB" ${billingInfo.country === 'GB' ? 'selected' : ''}>Reino Unido</option>
+                  <option value="DE" ${billingInfo.country === 'DE' ? 'selected' : ''}>Alemanha</option>
+                  <option value="FR" ${billingInfo.country === 'FR' ? 'selected' : ''}>França</option>
+                  <option value="IT" ${billingInfo.country === 'IT' ? 'selected' : ''}>Itália</option>
+                </select>
+                <i class="bi bi-chevron-down"></i>
+              </div>
+              <span class="form-hint">País onde sua empresa está registrada oficialmente</span>
+            </div>
+            
+            <div class="billing-form-group">
+              <label for="address1">Endereço</label>
+              <input type="text" id="address1" name="address1" value="${billingInfo.address1 || ''}" required>
+              <span class="form-hint">Endereço principal para correspondência</span>
+            </div>
+            
+            <div class="billing-form-row">
+              <div class="billing-form-group">
+                <label for="address2">Complemento</label>
+                <input type="text" id="address2" name="address2" value="${billingInfo.address2 || ''}">
+                <span class="form-hint">Apartamento, sala, andar, etc.</span>
+              </div>
+              
+              <div class="billing-form-group">
+                <label for="zipcode">CEP / Código Postal</label>
+                <input type="text" id="zipcode" name="zipcode" value="${billingInfo.zipcode || ''}" required>
+                <span class="form-hint">Código postal válido</span>
+              </div>
+            </div>
+            
+            <div class="billing-form-row">
+              <div class="billing-form-group">
+                <label for="city">Cidade</label>
+                <input type="text" id="city" name="city" value="${billingInfo.city || ''}" required>
+              </div>
+              
+              <div class="billing-form-group">
+                <label for="state">Estado / Província</label>
+                <input type="text" id="state" name="state" value="${billingInfo.state || ''}" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="billing-section">
+            <div class="section-title">
+              <i class="bi bi-card-heading"></i>
+              <span>Informações Fiscais</span>
+            </div>
+            
+            <div class="billing-form-group">
+              <label for="billingName" id="billingNameLabel">Nome / Razão Social</label>
+              <input type="text" id="billingName" name="name" value="${billingInfo.name || ''}" required>
+              <span class="form-hint">Nome completo (pessoa física) ou razão social (pessoa jurídica)</span>
+            </div>
+            
+            <div class="billing-form-group">
+              <label for="taxId" id="taxIdLabel">CPF / CNPJ</label>
+              <input type="text" id="taxId" name="taxId" value="${billingInfo.taxId || ''}" required>
+              <span class="form-hint">Documento fiscal válido conforme país selecionado</span>
+            </div>
+          </div>
+          
+          <div class="billing-form-actions">
+            <button type="button" class="btn-secondary" onclick="window.history.back()">
+              <i class="bi bi-arrow-left"></i>
+              Voltar
+            </button>
+            <button type="submit" class="btn-primary" id="saveBillingBtn">
+              <i class="bi bi-save"></i>
+              Salvar Informações
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <div id="billing-toast-container"></div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="https://js.tracklead.com/billing.js"></script>
+  `
+}) %>

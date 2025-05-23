@@ -1,0 +1,115 @@
+<%- include('auth-template', {
+  pageTitle: i18n.t('register.pageTitle') || 'Register',
+  cardWidth: '480px',
+  pageContent: `
+    <link rel="stylesheet" href="https://css.tracklead.com/registration.css">
+    <form id="registration-form" method="POST" action="/register">
+      <div class="mb-3 auth-input-group">
+        <label for="name" class="form-label">${i18n.t('register.fullName') || "Full Name"}</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-user"></i>
+          </span>
+          <input type="text" class="form-control" id="name" name="name" required autocomplete="name" />
+        </div>
+      </div>
+
+      <div class="mb-3 auth-input-group">
+        <label for="email" class="form-label">${i18n.t('register.emailAddress') || "Email Address"}</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <input type="email" class="form-control" id="email" name="email" required autocomplete="email" />
+        </div>
+      </div>
+
+      <div class="mb-3 auth-input-group">
+        <label for="phone" class="form-label">${i18n.t('register.phoneNumber') || "Phone Number"}</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-phone"></i>
+          </span>
+          <select id="country-code" name="countryCode" class="country-code-select">
+            <option value="+55" data-mask="(00) 00000-0000" data-flag="https://assets.tracklead.com/svg/brazil.svg" selected>+55</option>
+            <option value="+54" data-mask="(00) 0000-0000" data-flag="https://assets.tracklead.com/svg/argentina.svg">+54</option>
+            <option value="+57" data-mask="000 000 0000" data-flag="https://assets.tracklead.com/svg/colombia.svg">+57</option>
+            <option value="+51" data-mask="000 000 000" data-flag="https://assets.tracklead.com/svg/peru.svg">+51</option>
+            <option value="+56" data-mask="0 0000 0000" data-flag="https://assets.tracklead.com/svg/chile.svg">+56</option>
+            <option value="+52" data-mask="(00) 0000-0000" data-flag="https://assets.tracklead.com/svg/mexico.svg">+52</option>
+            <option value="+1" data-mask="(000) 000-0000" data-flag="https://assets.tracklead.com/svg/united-states.svg">+1</option>
+            <option value="+1_CA" data-mask="(000) 000-0000" data-flag="https://assets.tracklead.com/svg/canada.svg">+1</option>
+            <option value="+44" data-mask="0000 000 000" data-flag="https://assets.tracklead.com/svg/united-kingdom.svg">+44</option>
+            <option value="+33" data-mask="0 00 00 00 00" data-flag="https://assets.tracklead.com/svg/france.svg">+33</option>
+            <option value="+49" data-mask="0000 0000000" data-flag="https://assets.tracklead.com/svg/germany.svg">+49</option>
+            <option value="+34" data-mask="000 00 00 00" data-flag="https://assets.tracklead.com/svg/spain.svg">+34</option>
+            <option value="+39" data-mask="000 000 0000" data-flag="https://assets.tracklead.com/svg/italy.svg">+39</option>
+          </select>
+          <input type="tel" class="form-control" id="phone" name="phone" required autocomplete="tel" />
+        </div>
+      </div>
+
+      <div class="mb-3 auth-input-group">
+        <label for="password" class="form-label">${i18n.t('register.password') || "Password"}</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-lock"></i>
+          </span>
+          <input type="password" class="form-control" id="password" name="password" required autocomplete="new-password" />
+          <span class="input-group-text password-toggle" onclick="togglePasswordVisibility('password')">
+            <i class="fas fa-eye"></i>
+          </span>
+        </div>
+        <div class="password-requirements">
+          <div class="password-requirement" id="req-length">
+            <i class="fas fa-circle"></i> ${i18n.t('register.passwordRequirements.length') || "At least 8 characters"}
+          </div>
+          <div class="password-requirement" id="req-uppercase">
+            <i class="fas fa-circle"></i> ${i18n.t('register.passwordRequirements.uppercase') || "At least one uppercase letter"}
+          </div>
+          <div class="password-requirement" id="req-lowercase">
+            <i class="fas fa-circle"></i> ${i18n.t('register.passwordRequirements.lowercase') || "At least one lowercase letter"}
+          </div>
+          <div class="password-requirement" id="req-number">
+            <i class="fas fa-circle"></i> ${i18n.t('register.passwordRequirements.number') || "At least one number"}
+          </div>
+        </div>
+      </div>
+
+      <div id="referral-code-section" class="mb-3">
+        <a href="#" id="referral-link" class="text-muted small">${i18n.t('register.haveReferralCode') || "Have a referral code?"}</a>
+        <div id="referral-code-container" class="auth-input-group mt-2" style="display: none;">
+          <label for="referralCode" class="form-label">${i18n.t('register.referralCode') || "Referral Code"}</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fas fa-ticket-alt"></i>
+            </span>
+            <input type="text" class="form-control" id="referralCode" name="referralCode" placeholder="${i18n.t('register.enterReferralCode') || 'Enter your referral code'}" autocomplete="off">
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-4 form-check d-flex align-items-center justify-content-center" style="padding-top: 1rem;">
+        <input type="checkbox" class="form-check-input me-2" id="terms" name="terms" required checked>
+        <label class="form-check-label" for="terms" style="font-size: 0.9rem;">
+          ${i18n.t('register.termsAgreement') || "I agree to the"} 
+          <a href="#" class="primary-link">${i18n.t('register.terms') || "Terms of Service"}</a> 
+          ${i18n.t('register.and') || "and"} 
+          <a href="#" class="primary-link">${i18n.t('register.privacy') || "Privacy Policy"}</a>
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary auth-btn w-100" id="register-button">
+        <i class="fas fa-user-plus me-2"></i>
+        ${i18n.t('register.createAccount') || "Create Account"}
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      ${i18n.t('register.alreadyHaveAccount') || "Already have an account?"} 
+      <a href="/login">${i18n.t('register.loginHere') || "Login here"}</a>
+    </div>
+    <script src="https://js.tracklead.com/login.js"></script>
+  `,
+  error: typeof error !== "undefined" ? error : null
+}) %>

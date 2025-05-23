@@ -1,0 +1,303 @@
+<%- include("../../dashboard-layout", {
+  pageTitle: "Pixel Settings",
+  body: `
+    <link rel="stylesheet" href="/css/pixel/pixels-style.css">
+    <link rel="stylesheet" href="/css/pixel/pixel-settings.css">
+
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">Pixel Settings</h1>
+      <p class="page-subtitle">Configure advanced settings for your tracking pixels</p>
+    </div>
+
+    <div class="settings-cards-grid">
+      <div class="settings-card" id="high-ticket-card">
+        <div class="settings-card__icon">
+          <i class="fas fa-tag"></i>
+        </div>
+        <div class="settings-card__content">
+          <h6 class="settings-card__title">High Ticket Event</h6>
+          <p class="settings-card__description">Configure special events for high-value purchases</p>
+        </div>
+        <div class="settings-card__status" id="high-ticket-status">
+          <span class="badge bg-secondary">Disabled</span>
+        </div>
+      </div>
+
+      <div class="settings-card" id="order-paid-card">
+        <div class="settings-card__icon">
+          <i class="fas fa-money-check-alt"></i>
+        </div>
+        <div class="settings-card__content">
+          <h6 class="settings-card__title">Order Paid Event</h6>
+          <p class="settings-card__description">Configure events for when an order is marked as paid</p>
+        </div>
+        <div class="settings-card__status" id="order-paid-status">
+          <span class="badge bg-secondary">Disabled</span>
+        </div>
+      </div>
+
+      <div class="settings-card" id="payment-method-card" style="display: none;">
+        <div class="settings-card__icon">
+          <i class="fas fa-credit-card"></i>
+        </div>
+        <div class="settings-card__content">
+          <h6 class="settings-card__title">Payment Method Events</h6>
+          <p class="settings-card__description">Configure events for specific payment methods</p>
+        </div>
+        <div class="settings-card__status" id="payment-method-status">
+          <span class="badge bg-secondary">Disabled</span>
+        </div>
+      </div>
+
+      <div class="settings-card" id="facebook-single-pixel-card">
+        <div class="settings-card__icon">
+          <i class="fab fa-facebook-f"></i>
+        </div>
+        <div class="settings-card__content">
+          <h6 class="settings-card__title">Facebook Single Pixel</h6>
+          <p class="settings-card__description">View and copy your Facebook Single Pixel IDs</p>
+        </div>
+        <div class="settings-card__status" id="facebook-single-pixel-status">
+          <span class="badge bg-secondary">Disabled</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pixel-modal" id="high-ticket-modal">
+      <div class="pixel-modal__content">
+        <div class="pixel-modal__header">
+          <h5 class="pixel-modal__title">High Ticket Event Settings</h5>
+          <button type="button" class="pixel-modal__close" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="pixel-modal__body">
+          <form id="high-ticket-form" class="pixel-form">
+            <div class="pixel-alert pixel-alert--info mb-4">
+              <div class="pixel-alert__icon">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="pixel-alert__content">
+                <h5 class="pixel-alert__title">Facebook Pixel High Ticket Event</h5>
+                <p class="pixel-alert__text">This feature allows you to fire an additional event when a high-value purchase is made. It's useful for optimizing campaigns targeting higher-value customers.</p>
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <h6 class="mb-3">High Ticket Event Settings</h6>
+
+            <div class="pixel-form__switch">
+              <input class="pixel-form__switch-input" type="checkbox" id="high-ticket-enabled">
+              <label class="pixel-form__switch-label" for="high-ticket-enabled">Enable High Ticket Event</label>
+            </div>
+
+            <div id="high-ticket-settings" class="pixel-settings-section pixel-settings-section--disabled">
+              <div class="pixel-form__group">
+                <label class="pixel-form__label" for="high-ticket-threshold">Minimum Value Threshold</label>
+                <div class="pixel-form__input-group">
+                  <span class="pixel-form__input-addon pixel-form__input-addon--prefix">$</span>
+                  <input type="number" class="pixel-form__input pixel-form__input--with-prefix" id="high-ticket-threshold" min="1" step="1" placeholder="600">
+                </div>
+                <div class="pixel-form__help">Minimum purchase amount required to trigger the high ticket event.</div>
+              </div>
+
+              <div class="pixel-form__group">
+                <label class="pixel-form__label" for="high-ticket-event-name">Event Name</label>
+                <input type="text" class="pixel-form__input" id="high-ticket-event-name" placeholder="Purchase - High Ticket">
+                <div class="pixel-form__help">Name of the custom event that will be sent to Facebook.</div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="pixel-modal__footer">
+          <button type="button" class="pixel-form__btn pixel-form__btn--secondary" id="cancel-high-ticket-btn">Cancel</button>
+          <button type="button" class="pixel-form__btn pixel-form__btn--primary" id="save-high-ticket-btn">
+            <i class="fas fa-save me-1"></i> Save Settings
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pixel-modal" id="order-paid-modal">
+      <div class="pixel-modal__content">
+        <div class="pixel-modal__header">
+          <h5 class="pixel-modal__title">Order Paid Event Settings</h5>
+          <button type="button" class="pixel-modal__close" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="pixel-modal__body">
+          <form id="order-paid-form" class="pixel-form">
+            <div class="pixel-alert pixel-alert--info mb-4">
+              <div class="pixel-alert__icon">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="pixel-alert__content">
+                <h5 class="pixel-alert__title">Order Paid Event Tracking</h5>
+                <p class="pixel-alert__text">This feature sends tracking events when an order is marked as paid. It's particularly useful for businesses with delayed payment processes or installment payments.</p>
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <h6 class="mb-3">Order Paid Event Settings</h6>
+
+            <div class="pixel-form__switch">
+              <input class="pixel-form__switch-input" type="checkbox" id="order-paid-enabled">
+              <label class="pixel-form__switch-label" for="order-paid-enabled">Enable Order Paid Event</label>
+            </div>
+
+            <div id="order-paid-settings" class="pixel-settings-section pixel-settings-section--disabled">
+              <div class="pixel-form__group">
+                <label class="pixel-form__label" for="order-paid-delay">Delay (in hours)</label>
+                <input type="number" class="pixel-form__input" id="order-paid-delay" min="0" step="1" placeholder="24">
+                <div class="pixel-form__help">Number of hours to wait after the order is paid before sending the event. Use 0 for immediate tracking.</div>
+              </div>
+
+              <div class="pixel-form__group">
+                <label class="pixel-form__label" for="order-paid-event-name">Event Name</label>
+                <input type="text" class="pixel-form__input" id="order-paid-event-name" placeholder="Purchase - Order Paid">
+                <div class="pixel-form__help">Name of the custom event that will be sent when an order is paid.</div>
+              </div>
+
+              <div class="pixel-form__switch mt-4">
+                <input class="pixel-form__switch-input" type="checkbox" id="order-paid-track-all" checked>
+                <label class="pixel-form__switch-label" for="order-paid-track-all">Track All Orders</label>
+              </div>
+              <div class="pixel-form__help">If enabled, all orders will be tracked. If disabled, only orders that were not tracked at checkout will be tracked.</div>
+            </div>
+          </form>
+        </div>
+        <div class="pixel-modal__footer">
+          <button type="button" class="pixel-form__btn pixel-form__btn--secondary" id="cancel-order-paid-btn">Cancel</button>
+          <button type="button" class="pixel-form__btn pixel-form__btn--primary" id="save-order-paid-btn">
+            <i class="fas fa-save me-1"></i> Save Settings
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pixel-modal" id="payment-method-modal">
+      <div class="pixel-modal__content">
+        <div class="pixel-modal__header">
+          <h5 class="pixel-modal__title">Payment Method Event Settings</h5>
+          <button type="button" class="pixel-modal__close" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="pixel-modal__body">
+          <form id="payment-method-form" class="pixel-form">
+            <div class="pixel-alert pixel-alert--info mb-4">
+              <div class="pixel-alert__icon">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="pixel-alert__content">
+                <h5 class="pixel-alert__title">Payment Method Event Tracking</h5>
+                <p class="pixel-alert__text">Configure custom events for different payment methods to optimize your marketing campaigns based on customer payment preferences.</p>
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <h6 class="mb-3">Credit Card Payment</h6>
+            <div class="pixel-form__switch">
+              <input class="pixel-form__switch-input" type="checkbox" id="credit-card-enabled">
+              <label class="pixel-form__switch-label" for="credit-card-enabled">Enable Credit Card Event</label>
+            </div>
+            <div id="credit-card-settings" class="pixel-settings-section pixel-settings-section--disabled mb-4">
+              <div class="pixel-form__group">
+                <label class="pixel-form__label" for="credit-card-event-name">Event Name</label>
+                <input type="text" class="pixel-form__input" id="credit-card-event-name" placeholder="Purchase - credit_card">
+                <div class="pixel-form__help">Name of the custom event that will be sent for credit card purchases.</div>
+              </div>
+            </div>
+
+            <h6 class="mb-3">PIX Payment</h6>
+            <div class="pixel-form__switch">
+              <input class="pixel-form__switch-input" type="checkbox" id="pix-enabled">
+              <label class="pixel-form__switch-label" for="pix-enabled">Enable PIX Event</label>
+            </div>
+            <div id="pix-settings" class="pixel-settings-section pixel-settings-section--disabled mb-4">
+              <div class="pixel-form__group">
+                <label class="pixel-form__label" for="pix-event-name">Event Name</label>
+                <input type="text" class="pixel-form__input" id="pix-event-name" placeholder="Purchase - pix">
+                <div class="pixel-form__help">Name of the custom event that will be sent for PIX payments.</div>
+              </div>
+            </div>
+
+            <h6 class="mb-3">Billet Payment</h6>
+            <div class="pixel-form__switch">
+              <input class="pixel-form__switch-input" type="checkbox" id="billet-enabled">
+              <label class="pixel-form__switch-label" for="billet-enabled">Enable Billet Event</label>
+            </div>
+            <div id="billet-settings" class="pixel-settings-section pixel-settings-section--disabled">
+              <div class="pixel-form__group">
+                <label class="pixel-form__label" for="billet-event-name">Event Name</label>
+                <input type="text" class="pixel-form__input" id="billet-event-name" placeholder="Purchase - billet">
+                <div class="pixel-form__help">Name of the custom event that will be sent for billet payments.</div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="pixel-modal__footer">
+          <button type="button" class="pixel-form__btn pixel-form__btn--secondary" id="cancel-payment-method-btn">Cancel</button>
+          <button type="button" class="pixel-form__btn pixel-form__btn--primary" id="save-payment-method-btn">
+            <i class="fas fa-save me-1"></i> Save Settings
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pixel-modal" id="facebook-single-pixel-modal">
+      <div class="pixel-modal__content">
+        <div class="pixel-modal__header">
+          <h5 class="pixel-modal__title">Facebook Single Pixel</h5>
+          <button type="button" class="pixel-modal__close" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="pixel-modal__body">
+          <div class="pixel-alert pixel-alert--info mb-4">
+            <div class="pixel-alert__icon">
+              <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="pixel-alert__content">
+              <h5 class="pixel-alert__title">Facebook Single Pixel</h5>
+              <p class="pixel-alert__text">
+                Use these IDs in your Facebook Single Pixel implementation.
+                <a href="#" class="text-decoration-underline" id="facebook-single-pixel-help-link">Learn how to use Facebook Single Pixel</a>
+              </p>
+            </div>
+          </div>
+
+          <div id="facebook-pixel-list">
+            <div class="text-center p-3">
+              <div class="spinner-border spinner-border-sm text-primary mb-2" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mb-0">Loading Facebook pixels...</p>
+            </div>
+          </div>
+
+          <div id="no-facebook-pixels" style="display: none;">
+            <div class="text-center py-4">
+              <i class="fab fa-facebook-f fa-3x text-muted mb-3"></i>
+              <p class="mb-0">No Facebook pixels found for this business.</p>
+              <p class="mt-2">
+                <a href="/pixels/add-new-pixel" class="btn btn-sm btn-primary">
+                  <i class="fas fa-plus me-1"></i> Add Facebook Pixel
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="pixel-modal__footer">
+          <button type="button" class="pixel-form__btn pixel-form__btn--secondary" id="close-facebook-single-pixel-btn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/pixel/pixel-settings.js"></script>
+  `
+}) %>

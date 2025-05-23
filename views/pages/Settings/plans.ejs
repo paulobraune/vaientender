@@ -1,0 +1,413 @@
+<%
+const business = locals.activeBusiness || {};
+const needsCountry = locals.needsCountry || false;
+
+// Get the current currency based on billingInfo.country
+const isBRL = business.billingInfo && business.billingInfo.country === 'BR';
+const currency = isBRL ? 'BRL' : 'USD';
+
+// Plan data based on currency
+const plans = {
+  starter: {
+    name: 'Starter',
+    price: isBRL ? 'R$97' : '$19',
+    orderLimit: '300',
+    orderExcess: isBRL ? 'R$0,59' : '$0.18',
+    features: [
+      'Analytics Tracklead',
+      'Pixels Ilimitados',
+      'Feed para catálogo'
+    ],
+    recommended: false,
+    cta: business.plan === 'starter' ? 'Plano Atual' : 'Escolher Plano'
+  },
+  pro: {
+    name: 'Pro',
+    price: isBRL ? 'R$197' : '$39',
+    orderLimit: '800',
+    orderExcess: isBRL ? 'R$0,49' : '$0.16',
+    features: [
+      'Analytics Tracklead',
+      'Pixels Ilimitados',
+      'Feed para catálogo'
+    ],
+    recommended: false,
+    cta: business.plan === 'pro' ? 'Plano Atual' : 'Escolher Plano'
+  },
+  business: {
+    name: 'Business',
+    price: isBRL ? 'R$397' : '$79',
+    orderLimit: '2000',
+    orderExcess: isBRL ? 'R$0,39' : '$0.14',
+    features: [
+      'Analytics Tracklead',
+      'Pixels Ilimitados',
+      'Feed para catálogo'
+    ],
+    recommended: false,
+    cta: business.plan === 'business' ? 'Plano Atual' : 'Escolher Plano'
+  },
+  enterprise: {
+    name: 'Enterprise',
+    price: isBRL ? 'R$697' : '$149',
+    orderLimit: 'Ilimitados',
+    features: [
+      'Analytics Tracklead',
+      'Pixels Ilimitados',
+      'Feed para catálogo'
+    ],
+    recommended: false,
+    cta: business.plan === 'enterprise' ? 'Plano Atual' : 'Escolher Plano'
+  }
+};
+
+// Define countries for the country selection
+const countries = [
+  { code: 'BR', name: 'Brasil', currency: 'BRL' },
+  { code: 'US', name: 'Estados Unidos', currency: 'USD' },
+  { code: 'PT', name: 'Portugal', currency: 'USD' },
+  { code: 'AR', name: 'Argentina', currency: 'USD' },
+  { code: 'CO', name: 'Colômbia', currency: 'USD' },
+  { code: 'CL', name: 'Chile', currency: 'USD' },
+  { code: 'MX', name: 'México', currency: 'USD' },
+  { code: 'ES', name: 'Espanha', currency: 'USD' },
+  { code: 'CA', name: 'Canadá', currency: 'USD' },
+  { code: 'GB', name: 'Reino Unido', currency: 'USD' },
+  { code: 'DE', name: 'Alemanha', currency: 'USD' },
+  { code: 'FR', name: 'França', currency: 'USD' },
+  { code: 'IT', name: 'Itália', currency: 'USD' }
+];
+%>
+
+<%- include("../../dashboard-layout", {
+  pageTitle: "Escolher Plano",
+  body: `
+  <link rel="stylesheet" href="/css/settings/plans.css">
+  
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">Escolha seu Plano</h1>
+      <p class="page-subtitle">Selecione o plano que melhor se adequa às necessidades do seu negócio.</p>
+    </div>
+
+    ${needsCountry ? `
+    <div class="country-selector-container">
+      <div class="country-selector-card">
+        <div class="country-card-header">
+          <div class="country-card-icon">
+            <i class="bi bi-globe"></i>
+          </div>
+          <h4>Selecione seu país</h4>
+        </div>
+        <div class="country-card-body">
+          <p class="country-card-description">Para mostrarmos os preços na moeda correta, precisamos saber em qual país sua empresa está localizada.</p>
+          
+          <form id="countryForm">
+            <div class="country-form-group">
+              <label for="country">País</label>
+              <div class="select-wrapper">
+                <select id="country" name="country" required>
+                  <option value="">Selecione seu país...</option>
+                  ${countries.map(country => `
+                    <option value="${country.code}">${country.name}</option>
+                  `).join('')}
+                </select>
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+            
+            <div class="country-form-actions">
+              <button type="submit" class="btn-primary" id="submitCountryBtn">
+                <i class="bi bi-check2-circle"></i> Continuar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div id="plansContainer" style="display: none;">
+    ` : `<div id="plansContainer">`}
+    
+      <div class="plans-container">
+        <!-- Starter Plan -->
+        <div class="plan-card ${business.plan === 'starter' ? 'plan-active' : ''}">
+          ${business.plan === 'starter' ? 
+            '<div class="plan-badge current-badge"><i class="bi bi-check-circle-fill"></i> Plano Atual</div>' : ''}
+          
+          <div class="plan-header">
+            <h3 class="plan-name">${plans.starter.name}</h3>
+            <div class="plan-price">
+              <span class="price-value">${plans.starter.price}</span>
+              <span class="price-period">/mês</span>
+            </div>
+          </div>
+          
+          <div class="plan-feature highlight-feature">
+            <i class="bi bi-cart-check-fill"></i>
+            <div class="feature-detail">
+              <div class="feature-label">Pedidos inclusos</div>
+              <div class="feature-value">${plans.starter.orderLimit}/mês</div>
+            </div>
+          </div>
+          
+          <div class="plan-features">
+            <div class="plan-feature excess-feature">
+              <i class="bi bi-cart-plus"></i>
+              <div class="feature-detail">
+                <div class="feature-label">Pedido excedente</div>
+                <div class="feature-value">${plans.starter.orderExcess} por pedido</div>
+              </div>
+            </div>
+            
+            ${plans.starter.features.map(feature => `
+              <div class="plan-feature">
+                <i class="bi bi-check-circle"></i>
+                <span>${feature}</span>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="plan-action">
+            <button class="plan-button ${business.plan === 'starter' ? 'current-plan' : 'choose-plan'}" 
+              data-plan="starter" data-currency="${currency}"
+              ${business.plan === 'starter' ? 'disabled' : ''}>
+              <i class="bi ${business.plan === 'starter' ? 'bi-check-circle-fill' : 'bi-check-circle'}"></i>
+              ${business.plan === 'starter' ? 'Plano Atual' : 'Escolher Plano'}
+            </button>
+          </div>
+        </div>
+        
+        <!-- Pro Plan -->
+        <div class="plan-card ${business.plan === 'pro' ? 'plan-active' : ''} ${plans.pro.recommended ? 'plan-recommended' : ''}">
+          ${business.plan === 'pro' ? 
+            '<div class="plan-badge current-badge"><i class="bi bi-check-circle-fill"></i> Plano Atual</div>' : 
+            plans.pro.recommended ? '<div class="plan-badge recommended-badge"><i class="bi bi-star-fill"></i> Mais Popular</div>' : ''}
+          
+          <div class="plan-header">
+            <h3 class="plan-name">${plans.pro.name}</h3>
+            <div class="plan-price">
+              <span class="price-value">${plans.pro.price}</span>
+              <span class="price-period">/mês</span>
+            </div>
+          </div>
+          
+          <div class="plan-feature highlight-feature">
+            <i class="bi bi-cart-check-fill"></i>
+            <div class="feature-detail">
+              <div class="feature-label">Pedidos inclusos</div>
+              <div class="feature-value">${plans.pro.orderLimit}/mês</div>
+            </div>
+          </div>
+          
+          <div class="plan-features">
+            <div class="plan-feature excess-feature">
+              <i class="bi bi-cart-plus"></i>
+              <div class="feature-detail">
+                <div class="feature-label">Pedido excedente</div>
+                <div class="feature-value">${plans.pro.orderExcess} por pedido</div>
+              </div>
+            </div>
+            
+            ${plans.pro.features.map(feature => `
+              <div class="plan-feature">
+                <i class="bi bi-check-circle"></i>
+                <span>${feature}</span>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="plan-action">
+            <button class="plan-button ${business.plan === 'pro' ? 'current-plan' : 'choose-plan'}" 
+              data-plan="pro" data-currency="${currency}"
+              ${business.plan === 'pro' ? 'disabled' : ''}>
+              <i class="bi ${business.plan === 'pro' ? 'bi-check-circle-fill' : 'bi-check-circle'}"></i>
+              ${business.plan === 'pro' ? 'Plano Atual' : 'Escolher Plano'}
+            </button>
+          </div>
+        </div>
+        
+        <!-- Business Plan -->
+        <div class="plan-card ${business.plan === 'business' ? 'plan-active' : ''}">
+          ${business.plan === 'business' ? 
+            '<div class="plan-badge current-badge"><i class="bi bi-check-circle-fill"></i> Plano Atual</div>' : ''}
+          
+          <div class="plan-header">
+            <h3 class="plan-name">${plans.business.name}</h3>
+            <div class="plan-price">
+              <span class="price-value">${plans.business.price}</span>
+              <span class="price-period">/mês</span>
+            </div>
+          </div>
+          
+          <div class="plan-feature highlight-feature">
+            <i class="bi bi-cart-check-fill"></i>
+            <div class="feature-detail">
+              <div class="feature-label">Pedidos inclusos</div>
+              <div class="feature-value">${plans.business.orderLimit}/mês</div>
+            </div>
+          </div>
+          
+          <div class="plan-features">
+            <div class="plan-feature excess-feature">
+              <i class="bi bi-cart-plus"></i>
+              <div class="feature-detail">
+                <div class="feature-label">Pedido excedente</div>
+                <div class="feature-value">${plans.business.orderExcess} por pedido</div>
+              </div>
+            </div>
+            
+            ${plans.business.features.map(feature => `
+              <div class="plan-feature">
+                <i class="bi bi-check-circle"></i>
+                <span>${feature}</span>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="plan-action">
+            <button class="plan-button ${business.plan === 'business' ? 'current-plan' : 'choose-plan'}" 
+              data-plan="business" data-currency="${currency}"
+              ${business.plan === 'business' ? 'disabled' : ''}>
+              <i class="bi ${business.plan === 'business' ? 'bi-check-circle-fill' : 'bi-check-circle'}"></i>
+              ${business.plan === 'business' ? 'Plano Atual' : 'Escolher Plano'}
+            </button>
+          </div>
+        </div>
+        
+        <!-- Enterprise Plan -->
+        <div class="plan-card ${business.plan === 'enterprise' ? 'plan-active' : ''}">
+          ${business.plan === 'enterprise' ? 
+            '<div class="plan-badge current-badge"><i class="bi bi-check-circle-fill"></i> Plano Atual</div>' : ''}
+          
+          <div class="plan-header">
+            <h3 class="plan-name">${plans.enterprise.name}</h3>
+            <div class="plan-price">
+              <span class="price-value">${plans.enterprise.price}</span>
+              <span class="price-period">/mês</span>
+            </div>
+          </div>
+          
+          <div class="plan-feature highlight-feature">
+            <i class="bi bi-infinity"></i>
+            <div class="feature-detail">
+              <div class="feature-label">Pedidos inclusos</div>
+              <div class="feature-value">Ilimitados</div>
+            </div>
+          </div>
+          
+          <div class="plan-features">
+            <div class="plan-feature placeholder-feature">
+              <div class="feature-spacer"></div>
+            </div>
+            
+            ${plans.enterprise.features.map(feature => `
+              <div class="plan-feature">
+                <i class="bi bi-check-circle"></i>
+                <span>${feature}</span>
+              </div>
+            `).join('')}
+            
+            <div class="plan-feature">
+              <i class="bi bi-headset"></i>
+              <span>Suporte Prioritário</span>
+            </div>
+          </div>
+          
+          <div class="plan-action">
+            <button class="plan-button ${business.plan === 'enterprise' ? 'current-plan' : 'choose-plan'}" 
+              data-plan="enterprise" data-currency="${currency}"
+              ${business.plan === 'enterprise' ? 'disabled' : ''}>
+              <i class="bi ${business.plan === 'enterprise' ? 'bi-check-circle-fill' : 'bi-check-circle'}"></i>
+              ${business.plan === 'enterprise' ? 'Plano Atual' : 'Escolher Plano'}
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="plans-faq-section">
+        <h3>Perguntas Frequentes</h3>
+        
+        <div class="plans-faq-grid">
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="bi bi-question-circle-fill"></i>
+              <span>Como funcionam os pedidos excedentes?</span>
+            </div>
+            <div class="faq-answer">
+              Cada plano inclui uma quantidade de pedidos por mês. Se você exceder esse limite, continuará a usar o serviço normalmente, mas haverá uma cobrança adicional por cada pedido extra, conforme o valor indicado no plano.
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="bi bi-question-circle-fill"></i>
+              <span>Posso mudar de plano a qualquer momento?</span>
+            </div>
+            <div class="faq-answer">
+              Sim! Você pode atualizar seu plano a qualquer momento. A mudança entra em vigor imediatamente e o valor será ajustado proporcionalmente ao tempo restante do ciclo de cobrança atual.
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="bi bi-question-circle-fill"></i>
+              <span>O que acontece se eu cancelar?</span>
+            </div>
+            <div class="faq-answer">
+              Ao cancelar, sua assinatura permanece ativa até o final do período já pago. Após esse período, seu acesso será limitado, mas seus dados ficam armazenados por 30 dias.
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="bi bi-question-circle-fill"></i>
+              <span>Como é feita a contagem de pedidos?</span>
+            </div>
+            <div class="faq-answer">
+              Contamos apenas pedidos pagos e confirmados. Pedidos cancelados ou abandonados não são contabilizados para o limite mensal do seu plano.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- End plansContainer -->
+    
+    <!-- Confirmation Modal -->
+    <div class="plan-modal" id="planConfirmModal">
+      <div class="plan-modal-content">
+        <div class="plan-modal-header">
+          <h5 class="plan-modal-title">Confirmação de Plano</h5>
+          <button type="button" class="plan-modal-close" id="modalCloseBtn">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="plan-modal-body">
+          <div class="plan-confirmation-details">
+            <div class="confirmation-icon">
+              <i class="bi bi-check-circle"></i>
+            </div>
+            <div class="confirmation-info">
+              <h4>Você está alterando para o plano <span id="selectedPlanName"></span></h4>
+              <div class="confirmation-price">
+                Valor: <strong id="selectedPlanPrice"></strong> por mês
+              </div>
+              <p class="confirmation-message">
+                Tem certeza que deseja prosseguir com essa alteração?
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="plan-modal-footer">
+          <button type="button" class="plan-modal-btn plan-modal-btn-secondary" id="modalCancelBtn">
+            <i class="bi bi-x"></i> Cancelar
+          </button>
+          <button type="button" class="plan-modal-btn plan-modal-btn-primary" id="confirmPlanButton">
+            <i class="bi bi-check2"></i> Confirmar Alteração
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="plans-toast-container"></div>
+<script src="/js/settings/plans.js"></script>
+  `
+}) %>

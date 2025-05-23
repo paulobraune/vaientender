@@ -1,0 +1,516 @@
+<%- include('../../dashboard-layout', {
+  pageTitle: 'Meu Perfil',
+  body: `
+  <link rel="stylesheet" href="https://css.tracklead.com/settings/account.css>
+
+<div class="page-title-wrapper mb-4">
+  <h1 class="page-title">Meu Perfil</h1>
+  <p class="page-subtitle">Atualize suas informações pessoais e de segurança.</p>
+</div>
+
+<div class="profile-layout">
+  <div class="profile-sidebar">
+    <div class="profile-avatar-container">
+      <div class="profile-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <h5 class="profile-name">${locals.user ? user.name : ''}</h5>
+      <p class="profile-email">${locals.user ? user.email : ''}</p>
+      <div class="profile-role">
+        <span class="profile-role-badge">Administrador</span>
+      </div>
+    </div>
+    
+    <div class="profile-navigation">
+      <a href="#personal-info" class="profile-nav-item active">
+        <i class="bi bi-person-fill"></i>
+        Informações Pessoais
+      </a>
+      <a href="#security" class="profile-nav-item">
+        <i class="bi bi-shield-lock-fill"></i>
+        Segurança
+      </a>
+    </div>
+  </div>
+
+  <div class="profile-content">
+    <div class="profile-card" id="personal-info">
+      <div class="profile-card-header">
+        <h4>Informações Pessoais</h4>
+        <p class="profile-card-description">Atualize suas informações de perfil e contato</p>
+      </div>
+      
+      <div class="profile-card-body">
+        <form id="profileForm">
+          <div class="profile-form-grid">
+            <div class="profile-form-group">
+              <label for="name" class="profile-form-label">Nome Completo</label>
+              <div class="profile-input-group">
+                <span class="profile-input-icon"><i class="bi bi-person-fill"></i></span>
+                <input
+                  type="text"
+                  class="profile-form-control"
+                  id="name"
+                  name="name"
+                  value="${locals.user ? user.name : ''}"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="profile-form-group">
+              <label for="email" class="profile-form-label">Email</label>
+              <div class="profile-input-group">
+                <span class="profile-input-icon"><i class="bi bi-envelope-fill"></i></span>
+                <input
+                  type="email"
+                  class="profile-form-control"
+                  id="email"
+                  name="email"
+                  value="${locals.user ? user.email : ''}"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-form-group">
+            <label for="phone" class="profile-form-label">Telefone</label>
+            <div class="profile-input-group">
+              <span class="profile-input-icon"><i class="bi bi-telephone-fill"></i></span>
+              <select
+                id="country-code"
+                name="countryCode"
+                class="profile-select"
+              >
+                <option value="+55" data-mask="(00) 00000-0000">🇧🇷 +55</option>
+                <option value="+54" data-mask="(00) 0000-0000">🇦🇷 +54</option>
+                <option value="+57" data-mask="000 000 0000">🇨🇴 +57</option>
+                <option value="+51" data-mask="000 000 000">🇵🇪 +51</option>
+                <option value="+56" data-mask="0 0000 0000">🇨🇱 +56</option>
+                <option value="+1" data-mask="(000) 000-0000">🇺🇸 +1</option>
+                <option value="+1_CA" data-mask="(000) 000-0000">🇨🇦 +1</option>
+                <option value="+44" data-mask="0000 000 000">🇬🇧 +44</option>
+                <option value="+33" data-mask="0 00 00 00 00">🇫🇷 +33</option>
+                <option value="+49" data-mask="0000 0000000">🇩🇪 +49</option>
+                <option value="+34" data-mask="000 00 00 00">🇪🇸 +34</option>
+                <option value="+39" data-mask="000 000 0000">🇮🇹 +39</option>
+              </select>
+              <input
+                type="tel"
+                class="profile-form-control with-select"
+                id="phone"
+                name="phone"
+                required
+                autocomplete="tel"
+              >
+              <input type="hidden" id="fullPhone" name="fullPhone">
+            </div>
+          </div>
+
+          <div class="profile-divider"></div>
+          
+          <div class="profile-form-action">
+            <button type="submit" class="profile-btn profile-btn-primary" id="saveProfileBtn">
+              <i class="fas fa-save"></i>
+              Salvar Informações Pessoais
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="profile-card" id="security">
+      <div class="profile-card-header">
+        <h4>Segurança</h4>
+        <p class="profile-card-description">Atualize sua senha e configure opções de segurança</p>
+      </div>
+      
+      <div class="profile-card-body">
+        <form id="securityForm">
+          <div class="profile-form-group">
+            <label for="currentPassword" class="profile-form-label">Senha Atual</label>
+            <div class="profile-input-group">
+              <span class="profile-input-icon"><i class="bi bi-lock-fill"></i></span>
+              <input
+                type="password"
+                class="profile-form-control"
+                id="currentPassword"
+                name="currentPassword"
+                autocomplete="current-password"
+              >
+              <button type="button" class="profile-toggle-password" onclick="togglePasswordVisibility('currentPassword')">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            <div class="profile-form-text">Deixe em branco se não quiser alterar a senha.</div>
+          </div>
+
+          <div class="profile-form-grid">
+            <div class="profile-form-group">
+              <label for="newPassword" class="profile-form-label">Nova Senha</label>
+              <div class="profile-input-group">
+                <span class="profile-input-icon"><i class="bi bi-key-fill"></i></span>
+                <input
+                  type="password"
+                  class="profile-form-control"
+                  id="newPassword"
+                  name="newPassword"
+                  autocomplete="new-password"
+                >
+                <button type="button" class="profile-toggle-password" onclick="togglePasswordVisibility('newPassword')">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="profile-form-group">
+              <label for="confirmNewPassword" class="profile-form-label">Confirmar Nova Senha</label>
+              <div class="profile-input-group">
+                <span class="profile-input-icon"><i class="bi bi-key-fill"></i></span>
+                <input
+                  type="password"
+                  class="profile-form-control"
+                  id="confirmNewPassword"
+                  name="confirmNewPassword"
+                  autocomplete="new-password"
+                >
+                <button type="button" class="profile-toggle-password" onclick="togglePasswordVisibility('confirmNewPassword')">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="password-requirements">
+            <h6>Requisitos de senha:</h6>
+            <div class="requirement-list">
+              <div id="req-length" class="requirement-item">
+                <i class="fas fa-circle"></i> Mínimo 8 caracteres
+              </div>
+              <div id="req-uppercase" class="requirement-item">
+                <i class="fas fa-circle"></i> Pelo menos 1 maiúscula
+              </div>
+              <div id="req-lowercase" class="requirement-item">
+                <i class="fas fa-circle"></i> Pelo menos 1 minúscula
+              </div>
+              <div id="req-number" class="requirement-item">
+                <i class="fas fa-circle"></i> Pelo menos 1 número
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-divider"></div>
+          
+          <div class="profile-form-action">
+            <button type="button" class="profile-btn profile-btn-secondary" id="saveSecurityBtn">
+              <i class="fas fa-shield-alt"></i>
+              Atualizar Senha
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    function togglePasswordVisibility(inputId) {
+    const pw = document.getElementById(inputId);
+    const icon = pw.parentElement.querySelector('.profile-toggle-password i');
+    if (pw.type === 'password') {
+      pw.type = 'text';
+      icon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+      pw.type = 'password';
+      icon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+  }
+  
+  function showGlobalAlert(type, message) {
+    const container = document.getElementById('profile-toast-container');
+    const toast = document.createElement('div');
+    toast.className = 'profile-toast profile-toast-' + type;
+    toast.innerHTML = '<div class="profile-toast-icon"><i class="fas fa-' + 
+      (type === 'success' ? 'check-circle' : 'exclamation-circle') + '"></i></div>' +
+      '<div class="profile-toast-content">' + message + '</div>' +
+      '<button class="profile-toast-close"><i class="fas fa-times"></i></button>';
+    
+    container.appendChild(toast);
+    
+    // Add show class after a small delay for animation
+    setTimeout(() => toast.classList.add('show'), 10);
+    
+    // Auto close after 5 seconds
+    const closeTimeout = setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300); // Wait for animation
+    }, 5000);
+    
+    // Manual close
+    toast.querySelector('.profile-toast-close').addEventListener('click', () => {
+      clearTimeout(closeTimeout);
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300); 
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Navigation tabs
+    const navItems = document.querySelectorAll('.profile-nav-item');
+    const profileCards = document.querySelectorAll('.profile-card');
+    
+    navItems.forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Remove active from all items
+        navItems.forEach(i => i.classList.remove('active'));
+        
+        // Add active to clicked item
+        this.classList.add('active');
+        
+        // Show corresponding section
+        const targetId = this.getAttribute('href').substring(1);
+        profileCards.forEach(card => {
+          if (card.id === targetId) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Activate first tab by default
+    navItems[0].click();
+    
+    // Password validation
+    const passwordInput = document.getElementById('newPassword');
+    passwordInput.addEventListener('input', function() {
+      validatePassword();
+    });
+    
+    passwordInput.addEventListener('focus', function() {
+      document.querySelector('.password-requirements').classList.add('show');
+    });
+    
+    passwordInput.addEventListener('blur', function() {
+      if (!this.value) {
+        document.querySelector('.password-requirements').classList.remove('show');
+      }
+    });
+    
+    function validatePassword() {
+      const password = passwordInput.value;
+      
+      // Check length
+      const reqLength = document.getElementById('req-length');
+      if (password.length >= 8) {
+        reqLength.classList.add('requirement-met');
+        reqLength.querySelector('i').classList.replace('fa-circle', 'fa-check-circle');
+      } else {
+        reqLength.classList.remove('requirement-met');
+        reqLength.querySelector('i').classList.replace('fa-check-circle', 'fa-circle');
+      }
+      
+      // Check uppercase
+      const reqUppercase = document.getElementById('req-uppercase');
+      if (/[A-Z]/.test(password)) {
+        reqUppercase.classList.add('requirement-met');
+        reqUppercase.querySelector('i').classList.replace('fa-circle', 'fa-check-circle');
+      } else {
+        reqUppercase.classList.remove('requirement-met');
+        reqUppercase.querySelector('i').classList.replace('fa-check-circle', 'fa-circle');
+      }
+      
+      // Check lowercase
+      const reqLowercase = document.getElementById('req-lowercase');
+      if (/[a-z]/.test(password)) {
+        reqLowercase.classList.add('requirement-met');
+        reqLowercase.querySelector('i').classList.replace('fa-circle', 'fa-check-circle');
+      } else {
+        reqLowercase.classList.remove('requirement-met');
+        reqLowercase.querySelector('i').classList.replace('fa-check-circle', 'fa-circle');
+      }
+      
+      // Check number
+      const reqNumber = document.getElementById('req-number');
+      if (/[0-9]/.test(password)) {
+        reqNumber.classList.add('requirement-met');
+        reqNumber.querySelector('i').classList.replace('fa-circle', 'fa-check-circle');
+      } else {
+        reqNumber.classList.remove('requirement-met');
+        reqNumber.querySelector('i').classList.replace('fa-check-circle', 'fa-circle');
+      }
+    }
+
+    // Phone input masking
+    $(function() {
+      const phoneInput = $('#phone');
+      const countryCodeSelect = $('#country-code');
+      const fullPhoneInput = $('#fullPhone');
+      const currentUserPhone = ${JSON.stringify(locals.user && user.phone ? user.phone : '')};
+
+      function applyPhoneMask() {
+        const mask = countryCodeSelect.find('option:selected').data('mask');
+        phoneInput.unmask();
+        if (mask) phoneInput.mask(mask);
+      }
+
+      function setPhoneNumber() {
+        if (currentUserPhone) {
+          let best = '+55';
+          countryCodeSelect.find('option').each(function() {
+            const code = $(this).val().replace('_CA', '');
+            if (currentUserPhone.startsWith(code) && code.length >= best.replace('_CA', '').length) {
+              best = $(this).val();
+            }
+          });
+          countryCodeSelect.val(best);
+          applyPhoneMask();
+          const num = currentUserPhone.substring(best.replace('_CA', '').length);
+          phoneInput.val(num).trigger('input');
+        } else {
+          applyPhoneMask();
+        }
+      }
+
+      countryCodeSelect.on('change', () => {
+        applyPhoneMask();
+        phoneInput.val('').trigger('input');
+      });
+
+      setPhoneNumber();
+    });
+
+    // Profile form submission
+    $('#profileForm').on('submit', async (e) => {
+      e.preventDefault();
+      const saveBtn = $('#saveProfileBtn');
+      saveBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Salvando...');
+
+      const name = $('#name').val();
+      const email = $('#email').val();
+      const countryCode = $('#country-code').val().replace('_CA', '');
+      const raw = $('#phone').val() || '';
+      const phoneNum = raw.replace(/\\D/g, '');
+      $('#fullPhone').val(countryCode + phoneNum);
+
+      const errors = [];
+      if (!name) errors.push('Nome é obrigatório.');
+      if (!email) errors.push('Email é obrigatório.');
+      else if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) errors.push('Email inválido.');
+      if (!raw || phoneNum.length < 8) errors.push('Telefone inválido ou muito curto.');
+
+      if (errors.length) {
+        showGlobalAlert('error', errors.join('<br>'));
+        return saveBtn.prop('disabled', false)
+          .html('<i class="fas fa-save"></i> Salvar Informações Pessoais');
+      }
+
+      try {
+        const res = await fetch('/api/user/profile', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            name, 
+            email, 
+            fullPhone: countryCode + phoneNum 
+          })
+        });
+        const json = await res.json();
+        if (res.ok && json.success) {
+          showGlobalAlert('success', 'Perfil atualizado com sucesso!');
+          setTimeout(() => {
+            window.history.back();
+          }, 1500);
+        } else {
+          showGlobalAlert('error', json.message || 'Erro ao atualizar perfil.');
+        }
+      } catch (err) {
+        console.error(err);
+        showGlobalAlert('error', 'Erro de comunicação com o servidor.');
+      } finally {
+        saveBtn.prop('disabled', false).html('<i class="fas fa-save"></i> Salvar Informações Pessoais');
+      }
+    });
+    
+    // Security form submission
+    $('#saveSecurityBtn').on('click', async function() {
+      const saveBtn = $(this);
+      
+      const currentPassword = $('#currentPassword').val();
+      const newPassword = $('#newPassword').val();
+      const confirmNewPassword = $('#confirmNewPassword').val();
+      
+      const errors = [];
+      if (!currentPassword && (newPassword || confirmNewPassword)) {
+        errors.push('Senha atual é obrigatória para alterar a senha.');
+      }
+      
+      if (newPassword) {
+        if (!confirmNewPassword) {
+          errors.push('Confirmação da nova senha é obrigatória.');
+        } else if (newPassword !== confirmNewPassword) {
+          errors.push('As novas senhas não coincidem.');
+        }
+        
+        if (newPassword.length < 8 || 
+            !/[A-Z]/.test(newPassword) || 
+            !/[a-z]/.test(newPassword) || 
+            !/\\d/.test(newPassword)) {
+          errors.push('Nova senha não atende aos requisitos de segurança.');
+        }
+      }
+      
+      if (errors.length) {
+        showGlobalAlert('error', errors.join('<br>'));
+        return;
+      }
+      
+      if (!newPassword && !currentPassword) {
+        showGlobalAlert('error', 'Informe sua senha atual e uma nova senha para atualizar.');
+        return;
+      }
+      
+      saveBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Salvando...');
+      
+      try {
+        const name = $('#name').val();
+        const email = $('#email').val();
+        const fullPhone = $('#fullPhone').val() || ($('#country-code').val().replace('_CA', '') + ($('#phone').val() || '').replace(/\\D/g, ''));
+        
+        const res = await fetch('/api/user/profile', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            name, 
+            email, 
+            fullPhone,
+            currentPassword,
+            newPassword
+          })
+        });
+        
+        const json = await res.json();
+        if (res.ok && json.success) {
+          showGlobalAlert('success', 'Senha atualizada com sucesso!');
+          $('#currentPassword').val('');
+          $('#newPassword').val('');
+          $('#confirmNewPassword').val('');
+          document.querySelector('.password-requirements').classList.remove('show');
+        } else {
+          showGlobalAlert('error', json.message || 'Erro ao atualizar senha.');
+        }
+      } catch (err) {
+        console.error(err);
+        showGlobalAlert('error', 'Erro de comunicação com o servidor.');
+      } finally {
+        saveBtn.prop('disabled', false).html('<i class="fas fa-shield-alt"></i> Atualizar Senha');
+      }
+    });
+  });
+</script>
+<div id="profile-toast-container" class="profile-toast-container"></div>
+  `
+}) %>

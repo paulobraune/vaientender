@@ -1,0 +1,364 @@
+<%
+  function getPlanName(planCode) {
+    const planNames = {
+      'none': 'Nenhum',
+      'starter': 'Starter',
+      'pro': 'Pro',
+      'business': 'Business',
+      'enterprise': 'Enterprise'
+    };
+    return planNames[planCode] || 'Nenhum';
+  }
+
+  function getPlanColor(planCode) {
+    const planColors = {
+      'none': 'secondary',
+      'starter': 'info',
+      'pro': 'primary',
+      'business': 'success',
+      'enterprise': 'danger'
+    };
+    return planColors[planCode] || 'secondary';
+  }
+
+  function getStatusName(statusCode) {
+    const statusNames = {
+      'none': 'Nenhum',
+      'trial': 'Teste',
+      'active': 'Ativo',
+      'overdue': 'Atrasado',
+      'cancelled': 'Cancelado'
+    };
+    return statusNames[statusCode] || 'Nenhum';
+  }
+
+  function getStatusColor(statusCode) {
+    const statusColors = {
+      'none': 'secondary',
+      'trial': 'info',
+      'active': 'success',
+      'overdue': 'warning',
+      'cancelled': 'danger'
+    };
+    return statusColors[statusCode] || 'secondary';
+  }
+
+  function formatCurrency(amount, currency) {
+    if (currency === 'BRL') {
+      return `R$${amount.toFixed(2).replace('.', ',')}`;
+    } else {
+      return `$${amount.toFixed(2)}`;
+    }
+  }
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR');
+  }
+
+  const business = locals.activeBusiness || {};
+  const invoices = locals.invoices || [];
+  const hasPlan = business.plan && business.plan !== 'none';
+  const planName = getPlanName(business.plan || 'none');
+  const planColor = getPlanColor(business.plan || 'none');
+  const statusName = getStatusName(business.billingStatus || 'none');
+  const statusColor = getStatusColor(business.billingStatus || 'none');
+%>
+
+<%- include("../../dashboard-layout", {
+  pageTitle: "Assinatura",
+  body: `
+  <link rel="stylesheet" href="/css/settings/subscription.css">
+
+    <div class="page-title-wrapper mb-4">
+      <h1 class="page-title">Assinatura</h1>
+      <p class="page-subtitle">Gerencie seu plano de assinatura e visualize o histórico de pagamentos.</p>
+    </div>
+
+    <div class="subscription-container">
+      <div class="subscription-main">
+        <div class="subscription-card">
+          <div class="subscription-card-header">
+            <div class="subscription-card-icon">
+              <i class="bi bi-credit-card-2-front-fill"></i>
+            </div>
+            <h4 class="subscription-card-title">Plano Atual</h4>
+          </div>
+          
+          <div class="subscription-card-body">
+            <div class="subscription-plan-details">
+              <div class="subscription-summary-grid">
+                <div class="subscription-summary-item">
+                  <div class="summary-label">Plano</div>
+                  <div class="summary-value">
+                    <span class="plan-badge plan-badge-${planColor}">
+                      ${planName}
+                    </span>
+                    ${business.plan === 'enterprise' ? '<span class="enterprise-badge">Ilimitado</span>' : ''}
+                  </div>
+                </div>
+                
+                <div class="subscription-summary-item">
+                  <div class="summary-label">Status</div>
+                  <div class="summary-value">
+                    <span class="status-badge status-${statusColor}">
+                      ${statusName}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              ${hasPlan ? `
+              <div class="subscription-summary-grid mt-4">
+                <div class="subscription-summary-item">
+                  <div class="summary-label">Próxima cobrança</div>
+                  <div class="summary-value billing-amount">
+                    ${formatCurrency(
+                      business.plan === 'starter' ? (business.planCurrency === 'BRL' ? 97 : 19) :
+                      business.plan === 'pro' ? (business.planCurrency === 'BRL' ? 197 : 39) :
+                      business.plan === 'business' ? (business.planCurrency === 'BRL' ? 397 : 79) :
+                      business.plan === 'enterprise' ? (business.planCurrency === 'BRL' ? 697 : 149) : 0,
+                      business.planCurrency || 'BRL'
+                    )}
+                    <span class="billing-date">
+                      em ${new Date(new Date().setDate(new Date().getDate() + 15)).toLocaleDateString('pt-BR')}
+                    </span>
+                  </div>
+                </div>
+                
+                <div class="subscription-summary-item">
+                  <div class="summary-label">Limite de pedidos</div>
+                  <div class="summary-value">
+                    ${business.plan === 'enterprise' ? 
+                    `<div class="order-limit">
+                      <i class="bi bi-infinity"></i>
+                      <span>Ilimitados</span>
+                    </div>` : 
+                    `<div class="order-limit">
+                      <span class="order-count">${business.plan === 'starter' ? '300' : business.plan === 'pro' ? '800' : '2000'}</span>
+                      <span class="order-period">/ mês</span>
+                    </div>
+                    <div class="excess-price">
+                      Excedente: ${formatCurrency(
+                        business.plan === 'starter' ? (business.planCurrency === 'BRL' ? 0.59 : 0.18) :
+                        business.plan === 'pro' ? (business.planCurrency === 'BRL' ? 0.49 : 0.16) :
+                        business.plan === 'business' ? (business.planCurrency === 'BRL' ? 0.39 : 0.14) : 0,
+                        business.planCurrency || 'BRL'
+                      )} por pedido
+                    </div>`}
+                  </div>
+                </div>
+              </div>
+              ` : ''}
+              
+              <div class="subscription-actions">
+                <a href="/settings/plans" class="subscription-btn subscription-btn-primary">
+                  <i class="bi ${hasPlan ? 'bi-arrow-repeat' : 'bi-check2-circle'}"></i>
+                  ${hasPlan ? 'Alterar Plano' : 'Escolher Plano'}
+                </a>
+                
+                ${hasPlan && business.gatewayUrl ? `
+                <a href="${business.gatewayUrl}" target="_blank" class="subscription-btn subscription-btn-secondary">
+                  <i class="bi bi-credit-card-2-front"></i>
+                  Alterar Forma de Pagamento
+                </a>
+                ` : ''}
+                
+                ${hasPlan ? `
+                <button type="button" class="subscription-btn subscription-btn-danger" id="cancelSubscriptionBtn">
+                  <i class="bi bi-x-circle"></i>
+                  Cancelar Assinatura
+                </button>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="subscription-card mt-4">
+          <div class="subscription-card-header">
+            <div class="subscription-card-icon">
+              <i class="bi bi-receipt"></i>
+            </div>
+            <h4 class="subscription-card-title">Histórico de Faturas</h4>
+          </div>
+          
+          <div class="subscription-card-body">
+            <div class="invoice-table-container">
+              <table class="invoice-table">
+                <thead>
+                  <tr>
+                    <th>Número</th>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${invoices.length > 0 ? 
+                    invoices.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map(invoice => `
+                      <tr>
+                        <td><div class="invoice-number">${invoice.invoiceNumber}</div></td>
+                        <td>${formatDate(invoice.createdAt)}</td>
+                        <td>${invoice.description}</td>
+                        <td><div class="invoice-amount">${formatCurrency(invoice.amount, invoice.currency)}</div></td>
+                        <td>
+                          <span class="invoice-status invoice-status-${invoice.status === 'paid' ? 'paid' : invoice.status === 'pending' ? 'pending' : 'failed'}">
+                            ${invoice.status === 'paid' ? 'Pago' : invoice.status === 'pending' ? 'Pendente' : 'Falha'}
+                          </span>
+                        </td>
+                        <td class="invoice-actions">
+                          <button class="invoice-action-btn invoice-view-btn" title="Visualizar Fatura">
+                            <i class="bi bi-file-earmark-text"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    `).join('') : 
+                    `<tr class="empty-state-row">
+                      <td colspan="6">
+                        <div class="empty-state">
+                          <i class="bi bi-receipt"></i>
+                          <span>Nenhuma fatura encontrada</span>
+                        </div>
+                      </td>
+                    </tr>`
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="subscription-sidebar">
+        <div class="features-card">
+          <div class="features-card-header">
+            <h4><i class="bi bi-list-check"></i> Recursos do Plano</h4>
+          </div>
+          
+          <div class="features-card-body">
+            <div class="plan-features-list">
+              ${['starter','pro','business','enterprise'].includes(business.plan) ? `
+                <div class="plan-feature-item">
+                  <i class="bi bi-check-circle-fill feature-included"></i>
+                  <span>Analytics Tracklead</span>
+                </div>
+                <div class="plan-feature-item">
+                  <i class="bi bi-check-circle-fill feature-included"></i>
+                  <span>Pixels Ilimitados</span>
+                </div>
+                <div class="plan-feature-item">
+                  <i class="bi bi-check-circle-fill feature-included"></i>
+                  <span>Feed para Catálogo</span>
+                </div>
+              ` : `
+                <div class="plan-feature-item feature-disabled">
+                  <i class="bi bi-x-circle-fill feature-excluded"></i>
+                  <span>Analytics Tracklead</span>
+                </div>
+                <div class="plan-feature-item feature-disabled">
+                  <i class="bi bi-x-circle-fill feature-excluded"></i>
+                  <span>Pixels Ilimitados</span>
+                </div>
+                <div class="plan-feature-item feature-disabled">
+                  <i class="bi bi-x-circle-fill feature-excluded"></i>
+                  <span>Feed para Catálogo</span>
+                </div>
+              `}
+              
+              ${['pro','business','enterprise'].includes(business.plan) ? `
+                <div class="plan-feature-item">
+                  <i class="bi bi-check-circle-fill feature-included"></i>
+                  <span>Suporte Prioritário</span>
+                </div>
+              ` : `
+                <div class="plan-feature-item feature-disabled">
+                  <i class="bi bi-x-circle-fill feature-excluded"></i>
+                  <span>Suporte Prioritário</span>
+                </div>
+              `}
+              
+              ${business.plan === 'enterprise' ? `
+                <div class="plan-feature-item">
+                  <i class="bi bi-check-circle-fill feature-included"></i>
+                  <span>Onboarding Dedicado</span>
+                </div>
+              ` : `
+                <div class="plan-feature-item feature-disabled">
+                  <i class="bi bi-x-circle-fill feature-excluded"></i>
+                  <span>Onboarding Dedicado</span>
+                </div>
+              `}
+            </div>
+          </div>
+        </div>
+        
+        <div class="support-card mt-4">
+          <div class="support-card-icon">
+            <i class="bi bi-headset"></i>
+          </div>
+          <div class="support-card-content">
+            <h5>Precisa de ajuda?</h5>
+            <p>Nossa equipe está disponível para ajudar com dúvidas sobre planos e faturamento.</p>
+            <a href="#" class="support-link">
+              <i class="bi bi-envelope-fill"></i>
+              Entrar em contato
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cancelation Modal -->
+    <div class="subscription-modal" id="cancelSubscriptionModal">
+      <div class="subscription-modal-content">
+        <div class="subscription-modal-header">
+          <h4 class="subscription-modal-title">Confirmar Cancelamento</h4>
+          <button class="subscription-modal-close" id="cancelModalClose">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+        <div class="subscription-modal-body">
+          <div class="cancel-warning">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span>Atenção! Esta ação não pode ser desfeita.</span>
+          </div>
+          
+          <div class="cancel-consequences">
+            <p>Ao cancelar sua assinatura:</p>
+            <ul>
+              <li>
+                <i class="bi bi-dash-circle-fill"></i>
+                <span>Você perderá acesso a recursos premium imediatamente</span>
+              </li>
+              <li>
+                <i class="bi bi-dash-circle-fill"></i>
+                <span>Seus dados serão mantidos por 30 dias</span>
+              </li>
+              <li>
+                <i class="bi bi-dash-circle-fill"></i>
+                <span>Não haverá reembolso para o período atual já pago</span>
+              </li>
+            </ul>
+            <p class="confirmation-question">Tem certeza que deseja prosseguir com o cancelamento?</p>
+          </div>
+        </div>
+        <div class="subscription-modal-footer">
+          <button class="subscription-btn subscription-btn-secondary" id="cancelKeepSubBtn">
+            <i class="bi bi-arrow-return-left"></i>
+            Não, manter assinatura
+          </button>
+          <button class="subscription-btn subscription-btn-danger" id="confirmCancelBtn">
+            <i class="bi bi-x-circle"></i>
+            Sim, cancelar assinatura
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="subscription-toast-container"></div>
+    <script src="/js/settings/subscription.js"></script>
+  `
+}) %>
